@@ -50,7 +50,7 @@
 //     // ---- Static asset filenames (src/main/resources/static/) ----
 //     private static final String LOGO_FILE              = "logo.png";
 //     private static final String COORDINATOR_SIGN_FILE  = "coordinator-sign.png";
-//     private static final String PRINCIPAL_SIGN_FILE    = "principal-sign.png";
+//     private static final String PRINCIPAL_SIGN_FILE    = "principal-sign-new.png";
 
 //     private final CertificateRepository certificateRepository;
 //     private final StudentRepository studentRepository;
@@ -92,15 +92,14 @@
 
 //         ByteArrayOutputStream out = new ByteArrayOutputStream();
 
-//         // Landscape A4, generous margins so the gold border has room.
-//         // Margins are intentionally large (top/bottom 30, left/right 50) to keep
-//         // the whole certificate inside ONE page only.
-//         Document document = new Document(PageSize.A4.rotate(), 50, 50, 30, 30);
+//         // Landscape A4. Margins: left/right 50, bottom 20, top 28 (slightly
+//         // more than bottom) so the logo/heading has breathing room below the
+//         // gold border frame instead of crowding it — matches the target
+//         // design's spacing.
+//         Document document = new Document(PageSize.A4.rotate(), 50, 50, 28, 20);
 
 //         PdfWriter writer = PdfWriter.getInstance(document, out);
 //         // Draws ONLY the cream background + gold border frame on every page.
-//         // Deliberately contains no content-dependent drawing (like a seal),
-//         // so it can never duplicate or misalign with flowing content.
 //         writer.setPageEvent(new BorderPageEvent());
 
 //         document.open();
@@ -125,30 +124,29 @@
 
 //         addCentered(document, "(AUTONOMOUS)", autonomousFont, 1);
 //         addCentered(document, "Approved by AICTE, New Delhi | Affiliated to Anna University, Chennai", subInfoFont, 1);
-//         addCentered(document, "Accredited by NAAC (A+ Grade) | Pullipalayam, Tamil Nadu", subInfoFont, 6);
+//         addCentered(document, "Accredited by NAAC (A+ Grade) | Pullipalayam, Tamil Nadu", subInfoFont, 4);
 
 //         addRuleLine(document);
 
-//         addCentered(document, "NATIONAL LEVEL TECHNICAL SYMPOSIUM", symposiumFont, 8);
+//         addCentered(document, "NATIONAL LEVEL TECHNICAL SYMPOSIUM", symposiumFont, 6);
 //         addCentered(document, "CERTIFICATE", certificateFont, 0);
-//         addCentered(document, "OF PARTICIPATION", ofParticipationFont, 10);
+//         addCentered(document, "OF PARTICIPATION", ofParticipationFont, 8);
 
-//         addCentered(document, "This Certificate is Presented To", bodyFont, 6);
-//         addCentered(document, student.getName(), nameFont, 4);
-//         addCentered(document, student.getCollege().toUpperCase(), collegeNameFont, 8);
+//         addCentered(document, "This Certificate is Presented To", bodyFont, 5);
+//         addCentered(document, student.getName(), nameFont, 3);
+//         addCentered(document, student.getCollege().toUpperCase(), collegeNameFont, 6);
 
-//         addCentered(document, "For active participation in the event", bodyFont, 5);
-//         addCentered(document, event.getName(), eventNameFont, 8);
+//         addCentered(document, "For active participation in the event", bodyFont, 4);
+//         addCentered(document, event.getName(), eventNameFont, 6);
 
-//         addCentered(document, "Organized by Sri Shanmugha College of Engineering and Technology", bodyFont, 6);
+//         addCentered(document, "Organized by Sri Shanmugha College of Engineering and Technology", bodyFont, 5);
 //         addCentered(document, "Date of Symposium : " + event.getDate(), boldBodyFont, 2);
-//         addCentered(document, "Certificate No : " + certificate.getCertificateCode(), smallGrayFont, 10);
+//         addCentered(document, "Certificate No : " + certificate.getCertificateCode(), smallGrayFont, 8);
 
-//         // ---- Seal/badge (vector, in normal flow — won't overlap or duplicate) ----
-//         addSealInFlow(document, writer);
+//         // Seal removed per request (was addSealInFlow(document, writer)).
 
 //         // ---- Signature row: real signature images + underline + label ----
-//         addSignatureRow(document, signatureLabelFont);
+//         addSignatureRow(document, writer, signatureLabelFont);
 
 //         document.close();
 
@@ -175,7 +173,7 @@
 //         Chunk line = new Chunk(new com.lowagie.text.pdf.draw.LineSeparator(1f, 90f, GOLD_DARK, Element.ALIGN_CENTER, -2));
 //         Paragraph p = new Paragraph();
 //         p.add(line);
-//         p.setSpacingAfter(6f);
+//         p.setSpacingAfter(4f);
 //         document.add(p);
 //     }
 
@@ -197,8 +195,22 @@
 //     }
 
 //     /**
-//      * Header row: logo on the left (if present), college name block centered.
-//      * Uses a 2-column table so the logo doesn't push the heading off-center.
+//      * Header row: logo on the left (if present), college name centered on
+//      * the FULL page width.
+//      *
+//      * FIX (previous bug): the old version used a 2-column table
+//      * (logo | name). That made the name's "center" be the center of the
+//      * narrow text column only — which sits to the right of true page-center
+//      * because the logo column eats space only on the left. The name also
+//      * wrapped to two lines at 20pt, breaking visual alignment with the
+//      * (AUTONOMOUS) / AICTE lines below it, which ARE centered on the full
+//      * page (they're added directly via addCentered, not inside this table).
+//      *
+//      * FIX (this version): a 3-column table (logo | name | empty spacer) of
+//      * matching outer widths (1f / 7f / 1f) balances the logo visually, so
+//      * the name's center lines up with true page-center. Font size reduced
+//      * slightly (20pt -> 17pt) and NoWrap forces a single line, matching the
+//      * target design where the college name is on ONE line.
 //      */
 //     private void addHeaderWithLogo(Document document, Font collegeFont) throws Exception {
 //         Image logo = loadStaticImage(LOGO_FILE);
@@ -211,126 +223,206 @@
 
 //         logo.scaleToFit(55f, 55f);
 
-//         PdfPTable headerTable = new PdfPTable(new float[]{1f, 5f});
+//         PdfPTable headerTable = new PdfPTable(new float[]{1f, 7f, 1f});
 //         headerTable.setWidthPercentage(100);
 
+//         // --- Logo cell (left) ---
 //         PdfPCell logoCell = new PdfPCell(logo, false);
 //         logoCell.setBorder(Rectangle.NO_BORDER);
 //         logoCell.setHorizontalAlignment(Element.ALIGN_LEFT);
 //         logoCell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 //         headerTable.addCell(logoCell);
 
+//         // --- College name cell (center, full-width balanced) ---
+//         // Slightly smaller than the original 20pt so it reliably fits on
+//         // ONE line at this column width without wrapping.
+//         Font nameFontFit = FontFactory.getFont(FontFactory.TIMES_BOLD, 17, NAVY);
+
 //         PdfPCell nameCell = new PdfPCell(
-//                 new Phrase("SRI SHANMUGHA COLLEGE OF ENGINEERING AND TECHNOLOGY", collegeFont));
+//                 new Phrase("SRI SHANMUGHA COLLEGE OF ENGINEERING AND TECHNOLOGY", nameFontFit));
 //         nameCell.setBorder(Rectangle.NO_BORDER);
 //         nameCell.setHorizontalAlignment(Element.ALIGN_CENTER);
 //         nameCell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+//         nameCell.setNoWrap(true);
 //         headerTable.addCell(nameCell);
+
+//         // --- Spacer cell (right) — mirrors the logo column so the name
+//         // cell's center matches true page-center ---
+//         PdfPCell spacerCell = new PdfPCell();
+//         spacerCell.setBorder(Rectangle.NO_BORDER);
+//         headerTable.addCell(spacerCell);
 
 //         headerTable.setSpacingAfter(2f);
 //         document.add(headerTable);
 //     }
 
 //     /**
-//      * Draws the gold/maroon seal as a small inline image-free vector graphic,
-//      * but — critically — placed via document flow (a PdfPCell with a custom
-//      * PdfPTableEvent-free single cell using a Chunk) so it occupies real space
-//      * in the layout and can never land on a different page than the rest of
-//      * the certificate, and is only ever drawn once.
+//      * Signature row: coordinator signature image (left), circular gold
+//      * "CERTIFIED" seal (center), and principal signature image (right).
+//      * Each signature has its own underline + label beneath it.
+//      *
+//      * FIX (previous bug): the table was only 60% width with 2 columns, which
+//      * squeezed both signature cells close together — close enough that
+//      * their two separate bottom-border underlines visually merged into one
+//      * continuous line, and the signatures themselves looked cramped/close
+//      * together instead of spread toward the page edges like the target.
+//      *
+//      * This version uses a 3-column FULL WIDTH table (signature | seal |
+//      * signature) so the two signature columns sit near the left/right edges
+//      * with real horizontal separation, and the center column holds the
+//      * "CERTIFIED" seal that was previously removed.
+//      *
+//      * NOTE on the white box behind each signature: that box is the actual
+//      * background pixel data baked into coordinator-sign.png / principal-sign.png.
+//      * iText/OpenPDF just paints whatever pixels the PNG contains — it is not
+//      * adding a white background itself. To make the box disappear, the PNG
+//      * files themselves need a transparent background (alpha channel) instead
+//      * of white.
 //      */
-//     private void addSealInFlow(Document document, PdfWriter writer) throws Exception {
-//         float size = 46f;
-//         Image sealImage = renderSealAsImage(writer, size);
-
-//         Paragraph sealParagraph = new Paragraph();
-//         sealParagraph.setAlignment(Element.ALIGN_CENTER);
-//         sealParagraph.setSpacingAfter(4f);
-//         if (sealImage != null) {
-//             sealImage.setAlignment(Image.MIDDLE);
-//             Chunk chunk = new Chunk(sealImage, 0, 0);
-//             sealParagraph.add(chunk);
-//         }
-//         document.add(sealParagraph);
-//     }
-
-//     /**
-//      * Renders the seal/rosette to its own small standalone PDF template
-//      * (an OpenPDF "PdfTemplate"), which behaves like an Image and can be
-//      * embedded inline in document flow — unlike direct canvas drawing,
-//      * which is page-absolute and was the root cause of the earlier
-//      * overlap/second-page bug.
-//      */
-//     private Image renderSealAsImage(PdfWriter writer, float size) {
-//         try {
-//             com.lowagie.text.pdf.PdfTemplate template = writer.getDirectContent().createTemplate(size, size);
-//             float cx = size / 2f;
-//             float cy = size / 2f;
-
-//             template.saveState();
-
-//             // Ribbon tails
-//             template.setColorFill(MAROON);
-//             template.moveTo(cx - 9, cy - 18);
-//             template.lineTo(cx - 2, cy - 45 + 18);
-//             template.lineTo(cx - 9, cy - 38 + 18);
-//             template.lineTo(cx - 16, cy - 45 + 18);
-//             template.closePath();
-//             template.fillStroke();
-
-//             template.moveTo(cx + 9, cy - 18);
-//             template.lineTo(cx + 16, cy - 45 + 18);
-//             template.lineTo(cx + 9, cy - 38 + 18);
-//             template.lineTo(cx + 2, cy - 45 + 18);
-//             template.closePath();
-//             template.fillStroke();
-
-//             // Outer gold circle
-//             template.setColorFill(GOLD);
-//             template.circle(cx, cy, 19);
-//             template.fill();
-
-//             // Inner cream circle
-//             template.setColorFill(CREAM);
-//             template.circle(cx, cy, 14);
-//             template.fill();
-
-//             // Center dot
-//             template.setColorFill(MAROON);
-//             template.circle(cx, cy, 4.5f);
-//             template.fill();
-
-//             template.restoreState();
-
-//             return Image.getInstance(template);
-//         } catch (Exception e) {
-//             return null;
-//         }
-//     }
-
-//     /**
-//      * Signature row: coordinator signature image (left) and principal
-//      * signature image (right), each with an underline and label beneath.
-//      * Falls back to a blank underline if an image is missing.
-//      */
-//     private void addSignatureRow(Document document, Font signatureLabelFont) throws Exception {
-//         PdfPTable sigTable = new PdfPTable(2);
-//         sigTable.setWidthPercentage(60);
+//     private void addSignatureRow(Document document, PdfWriter writer, Font signatureLabelFont) throws Exception {
+//         PdfPTable sigTable = new PdfPTable(new float[]{3f, 2f, 3f});
+//         sigTable.setWidthPercentage(85);
 //         sigTable.getDefaultCell().setBorder(Rectangle.NO_BORDER);
 
 //         Image coordinatorSign = loadStaticImage(COORDINATOR_SIGN_FILE);
 //         Image principalSign   = loadStaticImage(PRINCIPAL_SIGN_FILE);
 
+//         // Row 1: signature images, with the seal in the middle spanning
+//         // down through the underline/label rows visually via a tall cell.
 //         sigTable.addCell(signatureImageCell(coordinatorSign));
+//         sigTable.addCell(sealCell(writer));
 //         sigTable.addCell(signatureImageCell(principalSign));
 
 //         sigTable.addCell(signatureUnderlineCell());
+//         PdfPCell emptyMiddle1 = new PdfPCell();
+//         emptyMiddle1.setBorder(Rectangle.NO_BORDER);
+//         sigTable.addCell(emptyMiddle1);
 //         sigTable.addCell(signatureUnderlineCell());
 
 //         sigTable.addCell(signatureLabelCell("Faculty Coordinator", signatureLabelFont));
+//         PdfPCell emptyMiddle2 = new PdfPCell();
+//         emptyMiddle2.setBorder(Rectangle.NO_BORDER);
+//         sigTable.addCell(emptyMiddle2);
 //         sigTable.addCell(signatureLabelCell("Principal", signatureLabelFont));
 
 //         sigTable.setSpacingBefore(4f);
 //         document.add(sigTable);
+//     }
+
+//     /**
+//      * Builds the center cell containing the circular gold "CERTIFIED" seal,
+//      * drawn as vector shapes (no external image file needed, so it can
+//      * never go missing).
+//      */
+//     private PdfPCell sealCell(PdfWriter writer) throws Exception {
+//         Image sealImage = createCertifiedSealImage(writer);
+//         PdfPCell cell = new PdfPCell(sealImage, false);
+//         cell.setBorder(Rectangle.NO_BORDER);
+//         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+//         cell.setVerticalAlignment(Element.ALIGN_TOP);
+//         cell.setFixedHeight(34f);
+//         return cell;
+//     }
+
+//     /**
+//      * Draws a circular gold medallion with a center star and "CERTIFIED"
+//      * text, plus a ribbon tail beneath it, onto an in-memory template and
+//      * returns it as an Image so it can be placed in a table cell like any
+//      * other image.
+//      */
+//     private Image createCertifiedSealImage(PdfWriter writer) throws Exception {
+//         float w = 90f;
+//         float h = 110f;
+
+//         com.lowagie.text.pdf.PdfTemplate template =
+//                 writer.getDirectContent().createTemplate(w, h);
+
+//         float cx = w / 2f;
+//         float cy = h - 45f; // leave room below the circle for the ribbon tails
+//         float outerR = 32f;
+//         float innerR = 27f;
+
+//         // Ribbon tails (drawn first, behind the medallion)
+//         template.saveState();
+//         template.setColorFill(MAROON);
+//         template.moveTo(cx - 14f, cy - 5f);
+//         template.lineTo(cx - 14f, cy - 48f);
+//         template.lineTo(cx - 4f, cy - 38f);
+//         template.lineTo(cx + 6f, cy - 48f);
+//         template.lineTo(cx + 6f, cy - 5f);
+//         template.closePath();
+//         template.fill();
+//         template.restoreState();
+
+//         // Outer ring (gold)
+//         template.saveState();
+//         template.setColorFill(GOLD);
+//         template.circle(cx, cy, outerR);
+//         template.fill();
+//         template.restoreState();
+
+//         // Inner disc (slightly darker gold)
+//         template.saveState();
+//         template.setColorFill(GOLD_DARK);
+//         template.circle(cx, cy, innerR);
+//         template.fill();
+//         template.restoreState();
+
+//         // Inner cream disc so the ring reads as a double border
+//         template.saveState();
+//         template.setColorFill(CREAM);
+//         template.circle(cx, cy, innerR - 3f);
+//         template.fill();
+//         template.restoreState();
+
+//         // Five-pointed star in the middle (maroon)
+//         template.saveState();
+//         template.setColorFill(MAROON);
+//         drawStar(template, cx, cy + 6f, 9f, 4f);
+//         template.fill();
+//         template.restoreState();
+
+//         // "CERTIFIED" text along the lower part of the disc
+//         template.saveState();
+//         template.setColorFill(NAVY);
+//         template.beginText();
+//         template.setFontAndSize(
+//                 com.lowagie.text.pdf.BaseFont.createFont(
+//                         com.lowagie.text.pdf.BaseFont.HELVETICA_BOLD,
+//                         com.lowagie.text.pdf.BaseFont.WINANSI,
+//                         com.lowagie.text.pdf.BaseFont.NOT_EMBEDDED),
+//                 6f);
+//         template.showTextAligned(Element.ALIGN_CENTER, "CERTIFIED", cx, cy - 8f, 0);
+//         template.endText();
+//         template.restoreState();
+
+//         Image sealImage = Image.getInstance(template);
+//         sealImage.scaleToFit(w, h);
+//         return sealImage;
+//     }
+
+//     /**
+//      * Draws a filled five-pointed star path (does not fill — caller fills
+//      * after calling this) centered at (cx, cy) with the given outer and
+//      * inner radii.
+//      */
+//     private void drawStar(PdfContentByte canvas, float cx, float cy, float outerR, float innerR) {
+//         int points = 5;
+//         double angleStep = Math.PI / points;
+//         double startAngle = Math.PI / 2; // point straight up
+
+//         for (int i = 0; i < 2 * points; i++) {
+//             double angle = startAngle + i * angleStep;
+//             float r = (i % 2 == 0) ? outerR : innerR;
+//             float x = cx + (float) (r * Math.cos(angle));
+//             float y = cy + (float) (r * Math.sin(angle));
+//             if (i == 0) {
+//                 canvas.moveTo(x, y);
+//             } else {
+//                 canvas.lineTo(x, y);
+//             }
+//         }
+//         canvas.closePath();
 //     }
 
 //     private PdfPCell signatureImageCell(Image signatureImage) {
@@ -364,11 +456,7 @@
 
 //     /**
 //      * Draws ONLY the cream background and gold double-border frame on every
-//      * page. Intentionally has no content-aware drawing (no seal, no text),
-//      * because anything tied to certificate content must live in document
-//      * flow instead — otherwise it can desync from the flowing content and
-//      * either duplicate across pages or land on the wrong page, which is
-//      * exactly what happened before.
+//      * page.
 //      */
 //     private static class BorderPageEvent extends PdfPageEventHelper {
 
@@ -405,6 +493,8 @@
 //         }
 //     }
 // }
+
+
 
 
 
@@ -503,10 +593,11 @@ public class CertificateController {
 
         ByteArrayOutputStream out = new ByteArrayOutputStream();
 
-        // Landscape A4. Margins trimmed slightly (top/bottom 20, left/right 50)
-        // vs. before (30) to reclaim vertical room — combined with the seal
-        // removal and tighter spacing below, this keeps everything on ONE page.
-        Document document = new Document(PageSize.A4.rotate(), 50, 50, 20, 20);
+        // Landscape A4. Margins: left/right 50, bottom 20, top 28 (slightly
+        // more than bottom) so the logo/heading has breathing room below the
+        // gold border frame instead of crowding it — matches the target
+        // design's spacing.
+        Document document = new Document(PageSize.A4.rotate(), 50, 50, 28, 20);
 
         PdfWriter writer = PdfWriter.getInstance(document, out);
         // Draws ONLY the cream background + gold border frame on every page.
@@ -556,7 +647,7 @@ public class CertificateController {
         // Seal removed per request (was addSealInFlow(document, writer)).
 
         // ---- Signature row: real signature images + underline + label ----
-        addSignatureRow(document, signatureLabelFont);
+        addSignatureRow(document, writer, signatureLabelFont);
 
         document.close();
 
@@ -605,8 +696,22 @@ public class CertificateController {
     }
 
     /**
-     * Header row: logo on the left (if present), college name block centered.
-     * Uses a 2-column table so the logo doesn't push the heading off-center.
+     * Header row: logo on the left (if present), college name centered on
+     * the FULL page width.
+     *
+     * FIX (previous bug): the old version used a 2-column table
+     * (logo | name). That made the name's "center" be the center of the
+     * narrow text column only — which sits to the right of true page-center
+     * because the logo column eats space only on the left. The name also
+     * wrapped to two lines at 20pt, breaking visual alignment with the
+     * (AUTONOMOUS) / AICTE lines below it, which ARE centered on the full
+     * page (they're added directly via addCentered, not inside this table).
+     *
+     * FIX (this version): a 3-column table (logo | name | empty spacer) of
+     * matching outer widths (1f / 7f / 1f) balances the logo visually, so
+     * the name's center lines up with true page-center. Font size reduced
+     * slightly (20pt -> 17pt) and NoWrap forces a single line, matching the
+     * target design where the college name is on ONE line.
      */
     private void addHeaderWithLogo(Document document, Font collegeFont) throws Exception {
         Image logo = loadStaticImage(LOGO_FILE);
@@ -619,57 +724,206 @@ public class CertificateController {
 
         logo.scaleToFit(55f, 55f);
 
-        PdfPTable headerTable = new PdfPTable(new float[]{1f, 5f});
+        PdfPTable headerTable = new PdfPTable(new float[]{1f, 7f, 1f});
         headerTable.setWidthPercentage(100);
 
+        // --- Logo cell (left) ---
         PdfPCell logoCell = new PdfPCell(logo, false);
         logoCell.setBorder(Rectangle.NO_BORDER);
         logoCell.setHorizontalAlignment(Element.ALIGN_LEFT);
         logoCell.setVerticalAlignment(Element.ALIGN_MIDDLE);
         headerTable.addCell(logoCell);
 
+        // --- College name cell (center, full-width balanced) ---
+        // Slightly smaller than the original 20pt so it reliably fits on
+        // ONE line at this column width without wrapping.
+        Font nameFontFit = FontFactory.getFont(FontFactory.TIMES_BOLD, 17, NAVY);
+
         PdfPCell nameCell = new PdfPCell(
-                new Phrase("SRI SHANMUGHA COLLEGE OF ENGINEERING AND TECHNOLOGY", collegeFont));
+                new Phrase("SRI SHANMUGHA COLLEGE OF ENGINEERING AND TECHNOLOGY", nameFontFit));
         nameCell.setBorder(Rectangle.NO_BORDER);
         nameCell.setHorizontalAlignment(Element.ALIGN_CENTER);
         nameCell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+        nameCell.setNoWrap(true);
         headerTable.addCell(nameCell);
+
+        // --- Spacer cell (right) — mirrors the logo column so the name
+        // cell's center matches true page-center ---
+        PdfPCell spacerCell = new PdfPCell();
+        spacerCell.setBorder(Rectangle.NO_BORDER);
+        headerTable.addCell(spacerCell);
 
         headerTable.setSpacingAfter(2f);
         document.add(headerTable);
     }
 
     /**
-     * Signature row: coordinator signature image (left) and principal
-     * signature image (right), each with an underline and label beneath.
-     * Falls back to a blank underline if an image is missing.
+     * Signature row: coordinator signature image (left), circular gold
+     * "CERTIFIED" seal (center), and principal signature image (right).
+     * Each signature has its own underline + label beneath it.
+     *
+     * FIX (previous bug): the table was only 60% width with 2 columns, which
+     * squeezed both signature cells close together — close enough that
+     * their two separate bottom-border underlines visually merged into one
+     * continuous line, and the signatures themselves looked cramped/close
+     * together instead of spread toward the page edges like the target.
+     *
+     * This version uses a 3-column FULL WIDTH table (signature | seal |
+     * signature) so the two signature columns sit near the left/right edges
+     * with real horizontal separation, and the center column holds the
+     * "CERTIFIED" seal that was previously removed.
      *
      * NOTE on the white box behind each signature: that box is the actual
      * background pixel data baked into coordinator-sign.png / principal-sign.png.
      * iText/OpenPDF just paints whatever pixels the PNG contains — it is not
      * adding a white background itself. To make the box disappear, the PNG
      * files themselves need a transparent background (alpha channel) instead
-     * of white. See chat reply for two ways to do that.
+     * of white.
      */
-    private void addSignatureRow(Document document, Font signatureLabelFont) throws Exception {
-        PdfPTable sigTable = new PdfPTable(2);
-        sigTable.setWidthPercentage(60);
+    private void addSignatureRow(Document document, PdfWriter writer, Font signatureLabelFont) throws Exception {
+        PdfPTable sigTable = new PdfPTable(new float[]{3f, 2f, 3f});
+        sigTable.setWidthPercentage(85);
         sigTable.getDefaultCell().setBorder(Rectangle.NO_BORDER);
 
         Image coordinatorSign = loadStaticImage(COORDINATOR_SIGN_FILE);
         Image principalSign   = loadStaticImage(PRINCIPAL_SIGN_FILE);
 
+        // Row 1: signature images, with the seal in the middle spanning
+        // down through the underline/label rows visually via a tall cell.
         sigTable.addCell(signatureImageCell(coordinatorSign));
+        sigTable.addCell(sealCell(writer));
         sigTable.addCell(signatureImageCell(principalSign));
 
         sigTable.addCell(signatureUnderlineCell());
+        PdfPCell emptyMiddle1 = new PdfPCell();
+        emptyMiddle1.setBorder(Rectangle.NO_BORDER);
+        sigTable.addCell(emptyMiddle1);
         sigTable.addCell(signatureUnderlineCell());
 
         sigTable.addCell(signatureLabelCell("Faculty Coordinator", signatureLabelFont));
+        PdfPCell emptyMiddle2 = new PdfPCell();
+        emptyMiddle2.setBorder(Rectangle.NO_BORDER);
+        sigTable.addCell(emptyMiddle2);
         sigTable.addCell(signatureLabelCell("Principal", signatureLabelFont));
 
         sigTable.setSpacingBefore(4f);
         document.add(sigTable);
+    }
+
+    /**
+     * Builds the center cell containing the circular gold "CERTIFIED" seal,
+     * drawn as vector shapes (no external image file needed, so it can
+     * never go missing).
+     */
+    private PdfPCell sealCell(PdfWriter writer) throws Exception {
+        Image sealImage = createCertifiedSealImage(writer);
+        PdfPCell cell = new PdfPCell(sealImage, false);
+        cell.setBorder(Rectangle.NO_BORDER);
+        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+        cell.setVerticalAlignment(Element.ALIGN_TOP);
+        cell.setFixedHeight(34f);
+        return cell;
+    }
+
+    /**
+     * Draws a circular gold medallion with a center star and "CERTIFIED"
+     * text, plus a ribbon tail beneath it, onto an in-memory template and
+     * returns it as an Image so it can be placed in a table cell like any
+     * other image.
+     */
+    private Image createCertifiedSealImage(PdfWriter writer) throws Exception {
+        float w = 90f;
+        float h = 110f;
+
+        com.lowagie.text.pdf.PdfTemplate template =
+                writer.getDirectContent().createTemplate(w, h);
+
+        float cx = w / 2f;
+        float cy = h - 45f; // leave room below the circle for the ribbon tails
+        float outerR = 32f;
+        float innerR = 27f;
+
+        // Ribbon tails (drawn first, behind the medallion)
+        template.saveState();
+        template.setColorFill(MAROON);
+        template.moveTo(cx - 14f, cy - 5f);
+        template.lineTo(cx - 14f, cy - 48f);
+        template.lineTo(cx - 4f, cy - 38f);
+        template.lineTo(cx + 6f, cy - 48f);
+        template.lineTo(cx + 6f, cy - 5f);
+        template.closePath();
+        template.fill();
+        template.restoreState();
+
+        // Outer ring (gold)
+        template.saveState();
+        template.setColorFill(GOLD);
+        template.circle(cx, cy, outerR);
+        template.fill();
+        template.restoreState();
+
+        // Inner disc (slightly darker gold)
+        template.saveState();
+        template.setColorFill(GOLD_DARK);
+        template.circle(cx, cy, innerR);
+        template.fill();
+        template.restoreState();
+
+        // Inner cream disc so the ring reads as a double border
+        template.saveState();
+        template.setColorFill(CREAM);
+        template.circle(cx, cy, innerR - 3f);
+        template.fill();
+        template.restoreState();
+
+        // Five-pointed star in the middle (maroon)
+        template.saveState();
+        template.setColorFill(MAROON);
+        drawStar(template, cx, cy + 6f, 9f, 4f);
+        template.fill();
+        template.restoreState();
+
+        // "CERTIFIED" text along the lower part of the disc
+        template.saveState();
+        template.setColorFill(NAVY);
+        template.beginText();
+        template.setFontAndSize(
+                com.lowagie.text.pdf.BaseFont.createFont(
+                        com.lowagie.text.pdf.BaseFont.HELVETICA_BOLD,
+                        com.lowagie.text.pdf.BaseFont.WINANSI,
+                        com.lowagie.text.pdf.BaseFont.NOT_EMBEDDED),
+                6f);
+        template.showTextAligned(Element.ALIGN_CENTER, "CERTIFIED", cx, cy - 8f, 0);
+        template.endText();
+        template.restoreState();
+
+        Image sealImage = Image.getInstance(template);
+        sealImage.scaleToFit(w, h);
+        return sealImage;
+    }
+
+    /**
+     * Draws a filled five-pointed star path (does not fill — caller fills
+     * after calling this) centered at (cx, cy) with the given outer and
+     * inner radii.
+     */
+    private void drawStar(PdfContentByte canvas, float cx, float cy, float outerR, float innerR) {
+        int points = 5;
+        double angleStep = Math.PI / points;
+        double startAngle = Math.PI / 2; // point straight up
+
+        for (int i = 0; i < 2 * points; i++) {
+            double angle = startAngle + i * angleStep;
+            float r = (i % 2 == 0) ? outerR : innerR;
+            float x = cx + (float) (r * Math.cos(angle));
+            float y = cy + (float) (r * Math.sin(angle));
+            if (i == 0) {
+                canvas.moveTo(x, y);
+            } else {
+                canvas.lineTo(x, y);
+            }
+        }
+        canvas.closePath();
     }
 
     private PdfPCell signatureImageCell(Image signatureImage) {
