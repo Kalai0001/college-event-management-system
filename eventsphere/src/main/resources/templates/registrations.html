@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Registrations</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+
+<nav class="navbar navbar-dark bg-dark">
+    <div class="container">
+        <a class="navbar-brand" href="/">🎉 EventSphere</a>
+    </div>
+</nav>
+
+<div class="container mt-5">
+
+    <h1 class="mb-4">All Registrations</h1>
+
+    <table class="table table-bordered table-striped">
+
+        <thead class="table-dark">
+            <tr>
+                <th>ID</th>
+                <th>Student</th>
+                <th>Event</th>
+                <th>Certificate</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+            <tr th:each="registration : ${registrations}">
+
+                <td th:text="${registration.id}"></td>
+
+                <td>
+                    <span th:each="student : ${students}"
+                          th:if="${student.id == registration.studentId}"
+                          th:text="${student.name}">
+                    </span>
+                </td>
+
+                <td>
+                    <span th:each="event : ${events}"
+                          th:if="${event.id == registration.eventId}"
+                          th:text="${event.name}">
+                    </span>
+                </td>
+
+                <td>
+                    <a th:href="@{/certificate/{id}(id=${registration.id})}"
+                       class="btn btn-success btn-sm">
+                        Download PDF
+                    </a>
+                </td>
+
+                <td>
+
+                    <a th:href="@{/edit-registration/{id}(id=${registration.id})}"
+                       class="btn btn-warning btn-sm">
+                        Edit
+                    </a>
+
+                    <a th:href="@{/delete-registration/{id}(id=${registration.id})}"
+                       class="btn btn-danger btn-sm">
+                        Delete
+                    </a>
+
+                </td>
+
+            </tr>
+
+        </tbody>
+
+    </table>
+
+    <a href="/" class="btn btn-primary">
+        Home
+    </a>
+
+</div>
+
+</body>
+
+</html>

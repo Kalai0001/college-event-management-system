@@ -1,0 +1,1064 @@
+<!-- <!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Certificate of Participation</title>
+
+    <style>
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+        }
+
+        html, body{
+            height:100%;
+        }
+
+        body{
+            background:#d9d9d9;
+            font-family:"Times New Roman", serif;
+            display:flex;
+            flex-direction:column;
+            align-items:center;
+            justify-content:center;
+            padding:10px;
+        }
+
+        .certificate-wrapper{
+            width:100%;
+            max-width:850px;
+            margin:auto;
+            background:linear-gradient(135deg,#b8860b,#f7d774,#b8860b);
+            padding:6px;
+            border-radius:8px;
+            box-shadow:0 0 15px rgba(0,0,0,0.25);
+        }
+
+        .certificate{
+            background:#fffdf7;
+            border:2px solid #c9a227;
+            padding:18px 30px;
+            position:relative;
+        }
+
+        .header{
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            gap:14px;
+            margin-bottom:6px;
+        }
+
+        .logo{
+            height:55px;
+            width:auto;
+        }
+
+        .college-details{
+            text-align:center;
+        }
+
+        .college-details h1{
+            font-size:17px;
+            color:#002366;
+            margin-bottom:2px;
+            line-height:1.2;
+        }
+
+        .college-details h3{
+            font-size:11px;
+            margin-bottom:2px;
+        }
+
+        .college-details p{
+            font-size:9.5px;
+            margin:1px 0;
+        }
+
+        .line{
+            border-top:1.5px solid #c9a227;
+            margin:8px 0;
+        }
+
+        .symposium{
+            text-align:center;
+            font-size:12px;
+            font-weight:bold;
+            color:#002366;
+            letter-spacing:1.5px;
+            margin-top:6px;
+        }
+
+        .certificate-title{
+            text-align:center;
+            font-size:30px;
+            color:#8b0000;
+            font-weight:bold;
+            margin-top:6px;
+            line-height:1.1;
+        }
+
+        .certificate-subtitle{
+            text-align:center;
+            font-size:12px;
+            letter-spacing:3px;
+            margin-bottom:10px;
+        }
+
+        .content{
+            text-align:center;
+            font-size:13px;
+            line-height:1.4;
+            margin-top:8px;
+        }
+
+        .student-name{
+            font-size:24px;
+            color:#002366;
+            font-weight:bold;
+            margin:6px 0;
+        }
+
+        .college-name{
+            font-size:14px;
+            font-weight:bold;
+        }
+
+        .event-name{
+            font-size:18px;
+            color:#8b0000;
+            font-weight:bold;
+            margin:6px 0;
+        }
+
+        .date{
+            margin-top:10px;
+            font-size:12px;
+            font-weight:bold;
+        }
+
+        .certificate-code{
+            margin-top:4px;
+            font-size:10.5px;
+            color:#444;
+        }
+
+        .footer{
+            margin-top:20px;
+            display:flex;
+            justify-content:space-between;
+            padding:0 10px;
+        }
+
+        .signature{
+            width:160px;
+            text-align:center;
+        }
+
+        .signature img{
+            height:42px;
+        }
+
+        .signature-line{
+            border-top:1px solid black;
+            margin-top:3px;
+            padding-top:3px;
+            font-weight:bold;
+            font-size:11px;
+        }
+
+        .buttons{
+            width:100%;
+            max-width:850px;
+            text-align:center;
+            margin-top:14px;
+        }
+
+        .btn{
+            padding:8px 18px;
+            text-decoration:none;
+            color:white;
+            border-radius:6px;
+            margin:5px;
+            display:inline-block;
+            font-size:13px;
+        }
+
+        .btn-download{
+            background:#28a745;
+        }
+
+        .btn-back{
+            background:#6c757d;
+        }
+
+        @media print {
+            body{ background:#fff; padding:0; }
+            .buttons{ display:none; }
+        }
+
+    </style>
+</head>
+
+<body>
+
+<div class="certificate-wrapper">
+
+    <div class="certificate">
+
+        <div class="header">
+
+            <img src="/logo.png" class="logo">
+
+            <div class="college-details">
+
+                <h1>
+                    SRI SHANMUGHA COLLEGE OF ENGINEERING AND TECHNOLOGY
+                </h1>
+
+                <h3>(AUTONOMOUS)</h3>
+
+                <p>
+                    Approved by AICTE, New Delhi | Affiliated to Anna University, Chennai
+                </p>
+
+                <p>
+                    Accredited by NAAC (A+ Grade) | Pullipalayam, Tamil Nadu
+                </p>
+
+            </div>
+
+        </div>
+
+        <div class="line"></div>
+
+        <div class="symposium">
+            NATIONAL LEVEL TECHNICAL SYMPOSIUM
+        </div>
+
+        <div class="certificate-title">
+            CERTIFICATE
+        </div>
+
+        <div class="certificate-subtitle">
+            OF PARTICIPATION
+        </div>
+
+        <div class="content">
+
+            This Certificate is Presented To
+
+            <div class="student-name"
+                 th:text="${student.name}">
+                STUDENT NAME
+            </div>
+
+            <div class="college-name"
+                 th:text="${student.college}">
+                COLLEGE NAME
+            </div>
+
+            <br>
+
+            For active participation in the event
+
+            <div class="event-name"
+                 th:text="${event.name}">
+                EVENT NAME
+            </div>
+
+            Organized by Sri Shanmugha College of Engineering and Technology
+
+            <div class="date">
+                Date of Symposium :
+                <span th:text="${event.date}"></span>
+            </div>
+
+            <div class="certificate-code">
+                Certificate No :
+                <span th:text="${certificate.certificateCode}"></span>
+            </div>
+
+        </div>
+
+        <div class="footer">
+
+            <div class="signature">
+
+                <img src="/coordinator-sign.png">
+
+                <div class="signature-line">
+                    Faculty Coordinator
+                </div>
+
+            </div>
+
+            <div class="signature">
+
+                <img src="/principal-sign.png">
+
+                <div class="signature-line">
+                    Principal
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="buttons">
+
+    <a th:href="@{/certificate/{id}(id=${certificate.id})}"
+       class="btn btn-download">
+        Download PDF
+    </a>
+
+    <a href="/certificates"
+       class="btn btn-back">
+        Back
+    </a>
+
+</div>
+
+</body>
+</html> -->
+
+
+<!-- 
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Certificate of Participation</title>
+
+    <style>
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+        }
+
+        html, body{
+            height:100%;
+        }
+
+        body{
+            background:#d9d9d9;
+            font-family:"Times New Roman", serif;
+            display:flex;
+            flex-direction:column;
+            align-items:center;
+            justify-content:center;
+            padding:10px;
+        }
+
+        .certificate-wrapper{
+            width:100%;
+            max-width:850px;
+            margin:auto;
+            background:linear-gradient(135deg,#b8860b,#f7d774,#b8860b);
+            padding:6px;
+            border-radius:8px;
+            box-shadow:0 0 15px rgba(0,0,0,0.25);
+        }
+
+        .certificate{
+            background:#fffdf7;
+            border:2px solid #c9a227;
+            padding:18px 30px;
+            position:relative;
+        }
+
+        .header{
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            gap:14px;
+            margin-bottom:6px;
+        }
+
+        .logo{
+            height:55px;
+            width:auto;
+        }
+
+        .college-details{
+            text-align:center;
+        }
+
+        .college-details h1{
+            font-size:17px;
+            color:#002366;
+            margin-bottom:2px;
+            line-height:1.2;
+        }
+
+        .college-details h3{
+            font-size:11px;
+            margin-bottom:2px;
+        }
+
+        .college-details p{
+            font-size:9.5px;
+            margin:1px 0;
+        }
+
+        .line{
+            border-top:1.5px solid #c9a227;
+            margin:8px 0;
+        }
+
+        .symposium{
+            text-align:center;
+            font-size:12px;
+            font-weight:bold;
+            color:#002366;
+            letter-spacing:1.5px;
+            margin-top:6px;
+        }
+
+        .certificate-title{
+            text-align:center;
+            font-size:30px;
+            color:#8b0000;
+            font-weight:bold;
+            margin-top:6px;
+            line-height:1.1;
+        }
+
+        .certificate-subtitle{
+            text-align:center;
+            font-size:12px;
+            letter-spacing:3px;
+            margin-bottom:10px;
+        }
+
+        .content{
+            text-align:center;
+            font-size:13px;
+            line-height:1.4;
+            margin-top:8px;
+        }
+
+        .student-name{
+            font-size:24px;
+            color:#002366;
+            font-weight:bold;
+            margin:6px 0;
+        }
+
+        .college-name{
+            font-size:14px;
+            font-weight:bold;
+        }
+
+        .event-name{
+            font-size:18px;
+            color:#8b0000;
+            font-weight:bold;
+            margin:6px 0;
+        }
+
+        .date{
+            margin-top:10px;
+            font-size:12px;
+            font-weight:bold;
+        }
+
+        .certificate-code{
+            margin-top:4px;
+            font-size:10.5px;
+            color:#444;
+        }
+
+        .footer{
+            margin-top:14px;
+            display:flex;
+            justify-content:space-between;
+            align-items:flex-start;
+            padding:0 10px;
+        }
+
+        .signature{
+            width:160px;
+            text-align:center;
+        }
+
+        .signature img{
+            height:42px;
+        }
+
+        .signature-line{
+            border-top:1px solid black;
+            margin-top:3px;
+            padding-top:3px;
+            font-weight:bold;
+            font-size:11px;
+        }
+
+        .seal{
+            width:90px;
+            flex-shrink:0;
+            margin-top:-10px;
+        }
+
+        .seal svg{
+            width:100%;
+            height:auto;
+            display:block;
+        }
+
+        .buttons{
+            width:100%;
+            max-width:850px;
+            text-align:center;
+            margin-top:14px;
+        }
+
+        .btn{
+            padding:8px 18px;
+            text-decoration:none;
+            color:white;
+            border-radius:6px;
+            margin:5px;
+            display:inline-block;
+            font-size:13px;
+        }
+
+        .btn-download{
+            background:#28a745;
+        }
+
+        .btn-back{
+            background:#6c757d;
+        }
+
+        @media print {
+            body{ background:#fff; padding:0; }
+            .buttons{ display:none; }
+        }
+
+    </style>
+</head>
+
+<body>
+
+<div class="certificate-wrapper">
+
+    <div class="certificate">
+
+        <div class="header">
+
+            <img src="/logo.png" class="logo">
+
+            <div class="college-details">
+
+                <h1>
+                    SRI SHANMUGHA COLLEGE OF ENGINEERING AND TECHNOLOGY
+                </h1>
+
+                <h3>(AUTONOMOUS)</h3>
+
+                <p>
+                    Approved by AICTE, New Delhi | Affiliated to Anna University, Chennai
+                </p>
+
+                <p>
+                    Accredited by NAAC (A+ Grade) | Pullipalayam, Tamil Nadu
+                </p>
+
+            </div>
+
+        </div>
+
+        <div class="line"></div>
+
+        <div class="symposium">
+            NATIONAL LEVEL TECHNICAL SYMPOSIUM
+        </div>
+
+        <div class="certificate-title">
+            CERTIFICATE
+        </div>
+
+        <div class="certificate-subtitle">
+            OF PARTICIPATION
+        </div>
+
+        <div class="content">
+
+            This Certificate is Presented To
+
+            <div class="student-name"
+                 th:text="${student.name}">
+                STUDENT NAME
+            </div>
+
+            <div class="college-name"
+                 th:text="${student.college}">
+                COLLEGE NAME
+            </div>
+
+            <br>
+
+            For active participation in the event
+
+            <div class="event-name"
+                 th:text="${event.name}">
+                EVENT NAME
+            </div>
+
+            Organized by Sri Shanmugha College of Engineering and Technology
+
+            <div class="date">
+                Date of Symposium :
+                <span th:text="${event.date}"></span>
+            </div>
+
+            <div class="certificate-code">
+                Certificate No :
+                <span th:text="${certificate.certificateCode}"></span>
+            </div>
+
+        </div>
+
+        <div class="footer">
+
+            <div class="signature">
+
+                <img src="/coordinator-sign.png">
+
+                <div class="signature-line">
+                    Faculty Coordinator
+                </div>
+
+            </div>
+
+            <div class="seal">
+                <svg viewBox="0 0 200 240" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <radialGradient id="sealGradient" cx="50%" cy="35%" r="65%">
+                            <stop offset="0%" stop-color="#f7d774"/>
+                            <stop offset="100%" stop-color="#b8860b"/>
+                        </radialGradient>
+                    </defs>
+                    <path d="M75 95 L60 220 L100 200 L140 220 L125 95 Z" fill="#8b0000"/>
+                    <path d="M70 95 L58 215 L72 207 L85 95 Z" fill="#a52a2a"/>
+                    <path d="M130 95 L142 215 L128 207 L115 95 Z" fill="#a52a2a"/>
+                    <circle cx="100" cy="80" r="58" fill="url(#sealGradient)" stroke="#7a5c00" stroke-width="3"/>
+                    <circle cx="100" cy="80" r="46" fill="none" stroke="#fffdf7" stroke-width="2" stroke-dasharray="3,4"/>
+                    <circle cx="100" cy="80" r="38" fill="#fffdf7" stroke="#b8860b" stroke-width="2"/>
+                    <g transform="translate(100,68)">
+                        <path d="M0,-18 L5.3,-5.5 L18.8,-5.5 L7.8,2.5 L11.5,15.5 L0,7.5 L-11.5,15.5 L-7.8,2.5 L-18.8,-5.5 L-5.3,-5.5 Z" fill="#8b0000"/>
+                    </g>
+                    <text x="100" y="98" text-anchor="middle" font-family="Times New Roman, serif" font-size="11" font-weight="bold" fill="#002366" letter-spacing="1">CERTIFIED</text>
+                </svg>
+            </div>
+
+            <div class="signature">
+
+                <img src="/principal-sign.png">
+
+                <div class="signature-line">
+                    Principal
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="buttons">
+
+    <a th:href="@{/certificate/{id}(id=${certificate.id})}"
+       class="btn btn-download">
+        Download PDF
+    </a>
+
+    <a href="/certificates"
+       class="btn btn-back">
+        Back
+    </a>
+
+</div>
+
+</body>
+</html> -->
+
+
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Certificate of Participation</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            min-height: 100%;
+        }
+
+        body {
+            background: #d9d9d9;
+            font-family: "Times New Roman", serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 10px;
+        }
+
+        .certificate-wrapper {
+            width: 100%;
+            max-width: 850px;
+            margin: auto;
+            background: linear-gradient(135deg, #b8860b, #f7d774, #b8860b);
+            padding: 6px;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.25);
+        }
+
+        .certificate {
+            background: #fffdf7;
+            border: 2px solid #c9a227;
+            padding: 18px 30px;
+            position: relative;
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 14px;
+            margin-bottom: 6px;
+        }
+
+        .logo {
+            height: 55px;
+            width: auto;
+        }
+
+        .college-details {
+            text-align: center;
+        }
+
+        .college-details h1 {
+            font-size: 17px;
+            color: #002366;
+            margin-bottom: 2px;
+            line-height: 1.2;
+        }
+
+        .college-details h3 {
+            font-size: 11px;
+            margin-bottom: 2px;
+        }
+
+        .college-details p {
+            font-size: 9.5px;
+            margin: 1px 0;
+        }
+
+        .line {
+            border-top: 1.5px solid #c9a227;
+            margin: 8px 0;
+        }
+
+        .symposium {
+            text-align: center;
+            font-size: 12px;
+            font-weight: bold;
+            color: #002366;
+            letter-spacing: 1.5px;
+            margin-top: 6px;
+        }
+
+        .certificate-title {
+            text-align: center;
+            font-size: 30px;
+            color: #8b0000;
+            font-weight: bold;
+            margin-top: 6px;
+            line-height: 1.1;
+        }
+
+        .certificate-subtitle {
+            text-align: center;
+            font-size: 12px;
+            letter-spacing: 3px;
+            margin-bottom: 10px;
+        }
+
+        .content {
+            text-align: center;
+            font-size: 13px;
+            line-height: 1.4;
+            margin-top: 8px;
+        }
+
+        .student-name {
+            font-size: 24px;
+            color: #002366;
+            font-weight: bold;
+            margin: 6px 0;
+        }
+
+        .college-name {
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .event-name {
+            font-size: 18px;
+            color: #8b0000;
+            font-weight: bold;
+            margin: 6px 0;
+        }
+
+        .date {
+            margin-top: 10px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .certificate-code {
+            margin-top: 4px;
+            font-size: 10.5px;
+            color: #444;
+        }
+
+        .footer {
+            margin-top: 14px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            padding: 0 10px;
+        }
+
+        .signature {
+            width: 160px;
+            text-align: center;
+        }
+
+        .signature img {
+            height: 42px;
+        }
+
+        .signature-line {
+            border-top: 1px solid black;
+            margin-top: 3px;
+            padding-top: 3px;
+            font-weight: bold;
+            font-size: 11px;
+        }
+
+        .seal {
+            width: 90px;
+            flex-shrink: 0;
+            margin-top: -10px;
+        }
+
+        .seal svg {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .buttons {
+            width: 100%;
+            max-width: 850px;
+            text-align: center;
+            margin-top: 14px;
+        }
+
+        .btn {
+            padding: 8px 18px;
+            text-decoration: none;
+            color: white;
+            border-radius: 6px;
+            margin: 5px;
+            display: inline-block;
+            font-size: 13px;
+        }
+
+        .btn-download {
+            background: #28a745;
+        }
+
+        .btn-back {
+            background: #6c757d;
+        }
+
+        @media print {
+            body {
+                background: #fff;
+                padding: 0;
+            }
+
+            .buttons {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="certificate-wrapper">
+
+        <div class="certificate">
+
+            <div class="header">
+
+                <img src="/logo.png" class="logo">
+
+                <div class="college-details">
+
+                    <h1>
+                        SRI SHANMUGHA COLLEGE OF ENGINEERING AND TECHNOLOGY
+                    </h1>
+
+                    <h3>(AUTONOMOUS)</h3>
+
+                    <p>
+                        Approved by AICTE, New Delhi | Affiliated to Anna University, Chennai
+                    </p>
+
+                    <p>
+                        Accredited by NAAC (A+ Grade) | Pullipalayam, Tamil Nadu
+                    </p>
+
+                </div>
+
+            </div>
+
+            <div class="line"></div>
+
+            <div class="symposium">
+                NATIONAL LEVEL TECHNICAL SYMPOSIUM
+            </div>
+
+            <div class="certificate-title">
+                CERTIFICATE
+            </div>
+
+            <div class="certificate-subtitle">
+                OF PARTICIPATION
+            </div>
+
+            <div class="content">
+
+                This Certificate is Presented To
+
+                <div class="student-name" th:text="${student.name}">
+                    STUDENT NAME
+                </div>
+
+                <div class="college-name" th:text="${student.college}">
+                    COLLEGE NAME
+                </div>
+
+                <br>
+
+                For active participation in the event
+
+                <div class="event-name" th:text="${event.name}">
+                    EVENT NAME
+                </div>
+
+                Organized by Sri Shanmugha College of Engineering and Technology
+
+                <div class="date">
+                    Date of Symposium :
+                    <span th:text="${event.date}"></span>
+                </div>
+
+                <div class="certificate-code">
+                    Certificate No :
+                    <span th:text="${certificate.certificateCode}"></span>
+                </div>
+
+            </div>
+
+            <div class="footer">
+
+                <div class="signature">
+
+                    <img src="/coordinator-sign.png">
+
+                    <div class="signature-line">
+                        Faculty Coordinator
+                    </div>
+
+                </div>
+
+                <div class="seal">
+                <svg viewBox="0 0 200 240" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <radialGradient id="sealGradient" cx="50%" cy="35%" r="65%">
+                            <stop offset="0%" stop-color="#f7d774"/>
+                            <stop offset="100%" stop-color="#b8860b"/>
+                        </radialGradient>
+                    </defs>
+                    <path d="M75 95 L60 220 L100 200 L140 220 L125 95 Z" fill="#8b0000"/>
+                    <path d="M70 95 L58 215 L72 207 L85 95 Z" fill="#a52a2a"/>
+                    <path d="M130 95 L142 215 L128 207 L115 95 Z" fill="#a52a2a"/>
+                    <circle cx="100" cy="80" r="58" fill="url(#sealGradient)" stroke="#7a5c00" stroke-width="3"/>
+                    <circle cx="100" cy="80" r="46" fill="none" stroke="#fffdf7" stroke-width="2" stroke-dasharray="3,4"/>
+                    <circle cx="100" cy="80" r="38" fill="#fffdf7" stroke="#b8860b" stroke-width="2"/>
+                    <g transform="translate(100,68)">
+                        <path d="M0,-18 L5.3,-5.5 L18.8,-5.5 L7.8,2.5 L11.5,15.5 L0,7.5 L-11.5,15.5 L-7.8,2.5 L-18.8,-5.5 L-5.3,-5.5 Z" fill="#8b0000"/>
+                    </g>
+                    <text x="100" y="98" text-anchor="middle" font-family="Times New Roman, serif" font-size="11" font-weight="bold" fill="#002366" letter-spacing="1">CERTIFIED</text>
+                </svg>
+            </div> 
+
+                <div class="signature">
+
+                    <img src="/principal-sign.png">
+
+                    <div class="signature-line">
+                        Principal
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="buttons">
+
+        <a th:href="@{/certificate/{id}(id=${certificate.id})}" class="btn btn-download">
+            Download PDF
+        </a>
+
+        <a href="/certificates" class="btn btn-back">
+            Back
+        </a>
+
+    </div>
+
+</body>
+
+</html>
