@@ -461,7 +461,7 @@ public class CertificateController {
     // ---- Static asset filenames (src/main/resources/static/) ----
     private static final String LOGO_FILE              = "logo.png";
     private static final String COORDINATOR_SIGN_FILE  = "coordinator-sign.png";
-    private static final String PRINCIPAL_SIGN_FILE    = "principal-sign.png";
+    private static final String PRINCIPAL_SIGN_FILE    = "principal-sign-new.png";
 
     private final CertificateRepository certificateRepository;
     private final StudentRepository studentRepository;
