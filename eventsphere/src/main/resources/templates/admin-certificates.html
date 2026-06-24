@@ -1,0 +1,885 @@
+<!-- <!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Generate Certificates</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,500;8..60,600;8..60,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --ink: #1B2430;
+            --ink-soft: #4A5260;
+            --parchment: #FBF9F4;
+            --parchment-deep: #F2EEE3;
+            --gold: #C99A3D;
+            --gold-deep: #A87C26;
+            --sage: #3F6B52;
+            --sage-bg: #E9F0EA;
+            --terracotta: #B6492E;
+            --terracotta-bg: #F6E8E2;
+            --line: #DFD9C8;
+            --line-soft: #EAE6D9;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--parchment);
+            background-image: radial-gradient(circle at 1px 1px, rgba(27, 36, 48, 0.05) 1px, transparent 0);
+            background-size: 22px 22px;
+            min-height: 100vh;
+            padding: 56px 24px;
+            color: var(--ink);
+        }
+
+        .sheet {
+            max-width: 1080px;
+            margin: 0 auto;
+            background: #fff;
+            border: 1px solid var(--line);
+            border-radius: 4px;
+            box-shadow: 0 1px 2px rgba(27, 36, 48, 0.04), 0 18px 40px -20px rgba(27, 36, 48, 0.22);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .sheet::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 6px;
+            background: linear-gradient(90deg, var(--gold-deep), var(--gold) 35%, var(--gold) 65%, var(--gold-deep));
+        }
+
+        .letterhead {
+            padding: 44px 48px 32px;
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 24px;
+            border-bottom: 1px solid var(--line-soft);
+        }
+
+        .letterhead-text .eyebrow {
+            font-size: 11.5px;
+            font-weight: 600;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--gold-deep);
+            margin-bottom: 10px;
+        }
+
+        .letterhead-text h1 {
+            font-family: 'Source Serif 4', serif;
+            font-size: 33px;
+            font-weight: 600;
+            letter-spacing: -0.01em;
+            color: var(--ink);
+            line-height: 1.15;
+        }
+
+        .letterhead-text p {
+            margin-top: 8px;
+            font-size: 14.5px;
+            color: var(--ink-soft);
+            max-width: 480px;
+            line-height: 1.5;
+        }
+
+        .seal {
+            flex-shrink: 0;
+            width: 76px;
+            height: 76px;
+            border-radius: 50%;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: repeating-conic-gradient(var(--gold) 0deg 6deg, var(--gold-deep) 6deg 12deg);
+            box-shadow: 0 6px 16px -4px rgba(168, 124, 38, 0.45);
+        }
+
+        .seal::after {
+            content: "";
+            position: absolute;
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: var(--ink);
+            border: 2px solid #fff;
+        }
+
+        .seal span {
+            position: relative;
+            z-index: 1;
+            color: var(--gold);
+            font-family: 'Source Serif 4', serif;
+            font-weight: 600;
+            font-size: 19px;
+            letter-spacing: 0.02em;
+        }
+
+        .stat-strip {
+            display: flex;
+            gap: 1px;
+            background: var(--line-soft);
+            border-bottom: 1px solid var(--line-soft);
+        }
+
+        .stat { flex: 1; background: var(--parchment-deep); padding: 18px 48px; }
+        .stat:first-child { padding-left: 48px; }
+
+        .stat .num {
+            font-family: 'Source Serif 4', serif;
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--ink);
+        }
+
+        .stat .label {
+            font-size: 12px;
+            color: var(--ink-soft);
+            margin-top: 2px;
+            letter-spacing: 0.02em;
+        }
+
+        .table-wrap { padding: 8px 48px 48px; }
+
+        table { width: 100%; border-collapse: collapse; margin-top: 28px; }
+
+        thead th {
+            text-align: left;
+            font-size: 11.5px;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--ink-soft);
+            padding: 0 14px 12px;
+            border-bottom: 1.5px solid var(--ink);
+        }
+
+        thead th:first-child { padding-left: 4px; }
+        thead th:last-child { text-align: right; padding-right: 4px; }
+
+        tbody td {
+            padding: 18px 14px;
+            font-size: 14.5px;
+            color: var(--ink);
+            border-bottom: 1px solid var(--line-soft);
+            vertical-align: middle;
+        }
+
+        tbody td:first-child { padding-left: 4px; }
+        tbody td:last-child { text-align: right; padding-right: 4px; }
+
+        tbody tr { transition: background 0.15s ease; }
+        tbody tr:hover { background: var(--parchment-deep); }
+
+        td.mono {
+            font-family: 'Source Serif 4', serif;
+            font-weight: 600;
+            font-size: 15px;
+            color: var(--ink);
+            letter-spacing: 0.01em;
+        }
+
+        .status {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            font-size: 13px;
+            font-weight: 600;
+            padding: 5px 12px 5px 10px;
+            border-radius: 20px;
+        }
+
+        .status .dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+
+        .status.paid { background: var(--sage-bg); color: var(--sage); }
+        .status.paid .dot { background: var(--sage); }
+
+        .status.pending { background: var(--terracotta-bg); color: var(--terracotta); }
+        .status.pending .dot { background: var(--terracotta); }
+
+        a.action-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            background: var(--ink);
+            color: var(--parchment);
+            text-decoration: none;
+            padding: 9px 16px;
+            border-radius: 5px;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 0.01em;
+            transition: background 0.15s ease, transform 0.15s ease;
+        }
+
+        a.action-btn:hover { background: var(--gold-deep); transform: translateY(-1px); }
+        a.action-btn:focus-visible { outline: 2px solid var(--gold-deep); outline-offset: 2px; }
+        a.action-btn svg { width: 13px; height: 13px; }
+
+        .empty { text-align: center; padding: 64px 20px; color: var(--ink-soft); }
+        .empty .glyph { font-size: 28px; margin-bottom: 10px; }
+        .empty p { font-size: 14.5px; }
+
+        @media (max-width: 760px) {
+            body { padding: 24px 12px; }
+
+            .letterhead { flex-direction: column-reverse; padding: 32px 24px 24px; gap: 16px; }
+            .letterhead-text h1 { font-size: 26px; }
+
+            .stat-strip { flex-wrap: wrap; }
+            .stat, .stat:first-child { padding: 16px 24px; flex: 1 1 50%; }
+
+            .table-wrap { padding: 4px 16px 32px; }
+
+            thead { display: none; }
+
+            tbody tr {
+                display: block;
+                border: 1px solid var(--line-soft);
+                border-radius: 6px;
+                margin-top: 14px;
+                padding: 4px 14px;
+            }
+
+            tbody td {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 12px 0;
+                border-bottom: 1px solid var(--line-soft);
+                text-align: right;
+            }
+
+            tbody td:first-child, tbody td:last-child { padding-left: 0; padding-right: 0; }
+            tbody td:last-child { border-bottom: none; justify-content: flex-end; }
+
+            tbody td::before {
+                content: attr(data-label);
+                font-size: 11px;
+                font-weight: 600;
+                letter-spacing: 0.06em;
+                text-transform: uppercase;
+                color: var(--ink-soft);
+            }
+
+            tbody td:last-child::before { content: ""; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            * { transition: none !important; }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="sheet">
+
+        <div class="letterhead">
+            <div class="letterhead-text">
+                <div class="eyebrow">Event Management System</div>
+                <h1>Generate Certificates</h1>
+                <p>Review event registrations below and issue a certificate to each eligible student.</p>
+            </div>
+            <div class="seal"><span>EMS</span></div>
+        </div>
+
+        <div class="stat-strip">
+            <div class="stat">
+                <div class="num" th:text="${registrations != null ? registrations.size() : 0}">0</div>
+                <div class="label">Total Registrations</div>
+            </div>
+            <div class="stat">
+                <div class="num" th:text="${#lists.size(registrations.?[paymentStatus == 'PAID'])}">0</div>
+                <div class="label">Paid</div>
+            </div>
+            <div class="stat">
+                <div class="num" th:text="${#lists.size(registrations.?[paymentStatus != 'PAID'])}">0</div>
+                <div class="label">Pending</div>
+            </div>
+        </div>
+
+        <div class="table-wrap">
+            <table border="1">
+
+                <thead>
+                <tr>
+                    <th>Registration ID</th>
+                    <th>Student ID</th>
+                    <th>Event ID</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <tr th:each="r : ${registrations}">
+                    <td class="mono" data-label="Registration ID" th:text="${r.id}"></td>
+                    <td data-label="Student ID" th:text="${r.studentId}"></td>
+                    <td data-label="Event ID" th:text="${r.eventId}"></td>
+                    <td data-label="Status">
+                        <span class="status paid" th:class="${r.paymentStatus == 'PAID'} ? 'status paid' : 'status pending'">
+                            <span class="dot"></span>
+                            <span th:text="${r.paymentStatus}"></span>
+                        </span>
+                    </td>
+                    <td data-label="Action">
+                        <a class="action-btn" th:href="@{'/generate-certificate/' + ${r.id}}">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z"/><path d="m8.5 13.5-2 6 4-1.5 1.5 3.5 2-5"/><path d="m15.5 13.5 2 6-4-1.5-1.5 3.5-2-5"/></svg>
+                            Generate Certificate
+                        </a>
+                    </td>
+                </tr>
+                </tbody>
+
+            </table>
+
+            <div class="empty" th:if="${registrations == null or #lists.isEmpty(registrations)}">
+                <div class="glyph">📋</div>
+                <p>No registrations yet. Once students register for an event, they'll appear here.</p>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html> -->
+
+
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Generate Certificates</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,500;8..60,600;8..60,700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --ink: #1B2430;
+            --ink-soft: #5B6372;
+            --ink-faint: #8B92A0;
+            --parchment: #FAF7EF;
+            --parchment-deep: #F1EBDA;
+            --paper: #FFFEFB;
+            --gold: #C99A3D;
+            --gold-light: #E3BE6E;
+            --gold-deep: #9C7521;
+            --navy: #14213D;
+            --navy-deep: #0B1426;
+            --sage: #3F6B52;
+            --sage-bg: #E6EFE8;
+            --terracotta: #B6492E;
+            --terracotta-bg: #F7E7E1;
+            --line: #E2D9BF;
+            --line-soft: #EDE6D1;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--parchment);
+            background-image:
+                radial-gradient(circle at 1px 1px, rgba(27, 36, 48, 0.06) 1px, transparent 0),
+                radial-gradient(ellipse 900px 500px at 50% -10%, rgba(201, 154, 61, 0.12), transparent 60%);
+            background-size: 22px 22px, 100% 100%;
+            min-height: 100vh;
+            padding: 64px 24px 80px;
+            color: var(--ink);
+        }
+
+        .page {
+            max-width: 1120px;
+            margin: 0 auto;
+        }
+
+        /* ===== Hero ===== */
+        .hero {
+            background: linear-gradient(155deg, var(--navy) 0%, var(--navy-deep) 100%);
+            border-radius: 16px;
+            padding: 46px 52px;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: -1px;
+            box-shadow: 0 24px 50px -24px rgba(11, 20, 38, 0.55);
+        }
+
+        .hero::before {
+            content: "";
+            position: absolute;
+            top: -40%;
+            right: -8%;
+            width: 420px;
+            height: 420px;
+            background: radial-gradient(circle, rgba(201, 154, 61, 0.18), transparent 70%);
+            pointer-events: none;
+        }
+
+        .hero::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background-image:
+                repeating-linear-gradient(115deg, rgba(255,255,255,0.025) 0px, rgba(255,255,255,0.025) 1px, transparent 1px, transparent 64px);
+            pointer-events: none;
+        }
+
+        .hero-row {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 32px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 11.5px;
+            font-weight: 700;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            color: var(--gold-light);
+            margin-bottom: 14px;
+        }
+
+        .hero .eyebrow::before {
+            content: "";
+            width: 14px;
+            height: 1.5px;
+            background: var(--gold-light);
+        }
+
+        .hero h1 {
+            font-family: 'Source Serif 4', serif;
+            font-size: 38px;
+            font-weight: 600;
+            letter-spacing: -0.01em;
+            color: #fff;
+            line-height: 1.1;
+        }
+
+        .hero p {
+            margin-top: 12px;
+            font-size: 15px;
+            color: #B9C2D6;
+            max-width: 460px;
+            line-height: 1.6;
+        }
+
+        /* Seal */
+        .seal-wrap { flex-shrink: 0; position: relative; }
+
+        .seal {
+            width: 88px;
+            height: 88px;
+            border-radius: 50%;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: repeating-conic-gradient(var(--gold) 0deg 6deg, var(--gold-deep) 6deg 12deg);
+            box-shadow: 0 10px 24px -6px rgba(201, 154, 61, 0.5), 0 0 0 6px rgba(201, 154, 61, 0.08);
+        }
+
+        .seal::after {
+            content: "";
+            position: absolute;
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            background: var(--navy-deep);
+            border: 2px solid rgba(255,255,255,0.15);
+        }
+
+        .seal span {
+            position: relative;
+            z-index: 1;
+            color: var(--gold-light);
+            font-family: 'Source Serif 4', serif;
+            font-weight: 700;
+            font-size: 21px;
+            letter-spacing: 0.02em;
+        }
+
+        .seal-ribbon {
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 4px;
+        }
+
+        .seal-ribbon i {
+            width: 12px;
+            height: 22px;
+            background: var(--gold-deep);
+            clip-path: polygon(0 0, 100% 0, 100% 75%, 50% 100%, 0 75%);
+        }
+
+        .seal-ribbon i:last-child { background: var(--gold); }
+
+        /* ===== Stat strip ===== */
+        .stat-strip {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1px;
+            background: var(--line);
+            position: relative;
+            z-index: 1;
+        }
+
+        .stat {
+            background: var(--paper);
+            padding: 22px 52px;
+            display: flex;
+            align-items: baseline;
+            gap: 10px;
+        }
+
+        .stat .num {
+            font-family: 'Source Serif 4', serif;
+            font-size: 28px;
+            font-weight: 600;
+            color: var(--ink);
+            line-height: 1;
+        }
+
+        .stat .label {
+            font-size: 12px;
+            color: var(--ink-soft);
+            letter-spacing: 0.02em;
+            font-weight: 500;
+        }
+
+        .stat.paid .num { color: var(--sage); }
+        .stat.pending .num { color: var(--terracotta); }
+
+        /* ===== Card ===== */
+        .card {
+            background: var(--paper);
+            border-radius: 0 0 16px 16px;
+            box-shadow: 0 30px 60px -30px rgba(27, 36, 48, 0.25);
+            padding: 12px 52px 52px;
+        }
+
+        .section-head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 30px 0 18px;
+        }
+
+        .section-head h2 {
+            font-family: 'Source Serif 4', serif;
+            font-size: 19px;
+            font-weight: 600;
+            color: var(--ink);
+        }
+
+        .section-head .hint {
+            font-size: 12.5px;
+            color: var(--ink-faint);
+        }
+
+        table { width: 100%; border-collapse: collapse; }
+
+        thead th {
+            text-align: left;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.09em;
+            text-transform: uppercase;
+            color: var(--ink-faint);
+            padding: 0 14px 13px;
+            border-bottom: 2px solid var(--ink);
+        }
+
+        thead th:first-child { padding-left: 4px; }
+        thead th:last-child { text-align: right; padding-right: 4px; }
+
+        tbody td {
+            padding: 19px 14px;
+            font-size: 14.5px;
+            color: var(--ink);
+            border-bottom: 1px solid var(--line-soft);
+            vertical-align: middle;
+        }
+
+        tbody td:first-child { padding-left: 4px; }
+        tbody td:last-child { text-align: right; padding-right: 4px; }
+
+        tbody tr { transition: background 0.18s ease; }
+        tbody tr:hover { background: var(--parchment-deep); }
+        tbody tr:last-child td { border-bottom: 1px solid var(--line-soft); }
+
+        td.mono {
+            font-family: 'Source Serif 4', serif;
+            font-weight: 600;
+            font-size: 15.5px;
+            color: var(--ink);
+        }
+
+        td.mono::before {
+            content: "#";
+            color: var(--ink-faint);
+            font-weight: 500;
+            margin-right: 1px;
+        }
+
+        td.id-cell { color: var(--ink-soft); font-weight: 500; }
+
+        /* Status */
+        .status {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            font-size: 13px;
+            font-weight: 600;
+            padding: 6px 13px 6px 10px;
+            border-radius: 20px;
+        }
+
+        .status .dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+
+        .status.paid { background: var(--sage-bg); color: var(--sage); }
+        .status.paid .dot { background: var(--sage); box-shadow: 0 0 0 3px rgba(63, 107, 82, 0.15); }
+
+        .status.pending { background: var(--terracotta-bg); color: var(--terracotta); }
+        .status.pending .dot { background: var(--terracotta); box-shadow: 0 0 0 3px rgba(182, 73, 46, 0.15); }
+
+        /* Action button */
+        a.action-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            background: var(--navy);
+            color: #fff;
+            text-decoration: none;
+            padding: 10px 17px;
+            border-radius: 7px;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 0.01em;
+            transition: background 0.18s ease, transform 0.18s ease, box-shadow 0.18s ease;
+            box-shadow: 0 2px 6px rgba(20, 33, 61, 0.25);
+        }
+
+        a.action-btn:hover {
+            background: var(--gold-deep);
+            transform: translateY(-1.5px);
+            box-shadow: 0 6px 14px -2px rgba(156, 117, 33, 0.45);
+        }
+
+        a.action-btn:active { transform: translateY(0); }
+
+        a.action-btn:focus-visible {
+            outline: 2px solid var(--gold-deep);
+            outline-offset: 2px;
+        }
+
+        a.action-btn svg { width: 13px; height: 13px; }
+
+        .generated-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            background: var(--sage-bg);
+            color: var(--sage);
+            padding: 10px 15px;
+            border-radius: 7px;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 0.01em;
+            border: 1px solid rgba(63, 107, 82, 0.18);
+        }
+
+        .generated-badge .check { font-size: 14px; }
+
+        /* Empty state */
+        .empty { text-align: center; padding: 70px 20px; color: var(--ink-soft); }
+        .empty .glyph {
+            width: 56px; height: 56px; border-radius: 50%;
+            background: var(--parchment-deep);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 24px; margin: 0 auto 16px;
+        }
+        .empty p { font-size: 14.5px; }
+        .empty p.sub { font-size: 13px; color: var(--ink-faint); margin-top: 4px; }
+
+        /* Footer note */
+        .foot-note {
+            text-align: center;
+            margin-top: 28px;
+            font-size: 12px;
+            color: var(--ink-faint);
+            letter-spacing: 0.03em;
+        }
+
+        /* Responsive */
+        @media (max-width: 760px) {
+            body { padding: 32px 12px 56px; }
+
+            .hero { padding: 32px 26px 0; border-radius: 14px; }
+            .hero-row { flex-direction: column-reverse; gap: 18px; padding-bottom: 28px; }
+            .hero h1 { font-size: 28px; }
+            .seal { width: 64px; height: 64px; }
+            .seal::after { width: 46px; height: 46px; }
+            .seal span { font-size: 16px; }
+
+            .stat-strip { grid-template-columns: 1fr 1fr; }
+            .stat { padding: 16px 22px; }
+            .stat:nth-child(2) { grid-column: span 2; justify-content: center; border-top: 1px solid var(--line); }
+
+            .card { padding: 4px 18px 36px; border-radius: 0 0 14px 14px; }
+            .section-head { padding: 22px 4px 14px; }
+
+            thead { display: none; }
+
+            tbody tr {
+                display: block;
+                border: 1px solid var(--line-soft);
+                border-radius: 8px;
+                margin-top: 14px;
+                padding: 4px 14px;
+                background: var(--paper);
+            }
+
+            tbody td {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 12px 0;
+                border-bottom: 1px solid var(--line-soft);
+                text-align: right;
+            }
+
+            tbody td:first-child, tbody td:last-child { padding-left: 0; padding-right: 0; }
+            tbody td:last-child { border-bottom: none; justify-content: flex-end; padding-top: 14px; }
+
+            tbody td::before {
+                content: attr(data-label);
+                font-size: 11px;
+                font-weight: 700;
+                letter-spacing: 0.06em;
+                text-transform: uppercase;
+                color: var(--ink-faint);
+            }
+
+            tbody td:last-child::before { content: ""; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            * { transition: none !important; }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="page">
+
+        <div class="hero">
+            <div class="hero-row">
+                <div>
+                    <div class="eyebrow">Event Management System</div>
+                    <h1>Generate Certificates</h1>
+                    <p>Review event registrations and issue a certificate to each eligible student — one click, instantly recorded.</p>
+                </div>
+                <div class="seal-wrap">
+                    <div class="seal"><span>EMS</span></div>
+                    <div class="seal-ribbon"><i></i><i></i></div>
+                </div>
+            </div>
+
+            <div class="stat-strip">
+                <div class="stat">
+                    <span class="num" th:text="${registrations != null ? registrations.size() : 0}">0</span>
+                    <span class="label">Total Registrations</span>
+                </div>
+                <div class="stat paid">
+                    <span class="num" th:text="${#lists.size(registrations.?[paymentStatus == 'PAID'])}">0</span>
+                    <span class="label">Paid</span>
+                </div>
+                <div class="stat pending">
+                    <span class="num" th:text="${#lists.size(registrations.?[paymentStatus != 'PAID'])}">0</span>
+                    <span class="label">Pending</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+
+            <div class="section-head">
+                <h2>Registrations</h2>
+                <span class="hint">Sorted by registration order</span>
+            </div>
+
+            <table border="1">
+
+                <thead>
+                <tr>
+                    <th>Registration ID</th>
+                    <th>Student ID</th>
+                    <th>Event ID</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <tr th:each="r : ${registrations}">
+                    <td class="mono" data-label="Registration ID" th:text="${r.id}"></td>
+                    <td class="id-cell" data-label="Student ID" th:text="${r.studentId}"></td>
+                    <td class="id-cell" data-label="Event ID" th:text="${r.eventId}"></td>
+                    <td data-label="Status">
+                        <span class="status paid" th:class="${r.paymentStatus == 'PAID'} ? 'status paid' : 'status pending'">
+                            <span class="dot"></span>
+                            <span th:text="${r.paymentStatus}"></span>
+                        </span>
+                    </td>
+                    <td data-label="Action">
+                        <span class="generated-badge" th:if="${certificateRepository.existsByRegistrationId(r.id)}">
+                            <span class="check">✅</span> Certificate Generated
+                        </span>
+                        <a class="action-btn" th:unless="${certificateRepository.existsByRegistrationId(r.id)}" th:href="@{'/generate-certificate/' + ${r.id}}">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z"/><path d="m8.5 13.5-2 6 4-1.5 1.5 3.5 2-5"/><path d="m15.5 13.5 2 6-4-1.5-1.5 3.5-2-5"/></svg>
+                            Generate Certificate
+                        </a>
+                    </td>
+                </tr>
+                </tbody>
+
+            </table>
+
+            <div class="empty" th:if="${registrations == null or #lists.isEmpty(registrations)}">
+                <div class="glyph">📋</div>
+                <p>No registrations yet.</p>
+                <p class="sub">Once students register for an event, they'll appear here.</p>
+            </div>
+
+        </div>
+
+        <div class="foot-note">College Event Management System · Certificate Issuance Panel</div>
+
+    </div>
+
+</body>
+</html>

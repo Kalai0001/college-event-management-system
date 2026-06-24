@@ -5,6 +5,8 @@ import com.eventsphere.entity.Student;
 import com.eventsphere.repository.EventRepository;
 import com.eventsphere.repository.RegistrationRepository;
 import com.eventsphere.repository.StudentRepository;
+import com.eventsphere.repository.CertificateRepository;
+import com.eventsphere.entity.Certificate;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -20,15 +22,18 @@ public class RegistrationPageController {
         private final RegistrationRepository registrationRepository;
         private final StudentRepository studentRepository;
         private final EventRepository eventRepository;
+        private final CertificateRepository certificateRepository;
 
         public RegistrationPageController(
                         RegistrationRepository registrationRepository,
                         StudentRepository studentRepository,
-                        EventRepository eventRepository) {
+                        EventRepository eventRepository,
+                        CertificateRepository certificateRepository) {
 
                 this.registrationRepository = registrationRepository;
                 this.studentRepository = studentRepository;
                 this.eventRepository = eventRepository;
+                this.certificateRepository = certificateRepository;
         }
 
         @GetMapping("/registrations-page")
@@ -102,29 +107,6 @@ public class RegistrationPageController {
 
                 return "redirect:/payment/" + registration.getId();
         }
-
-        // @GetMapping("/payment/{registrationId}")
-        // public String paymentPage(
-        // @PathVariable Long registrationId,
-        // Model model) {
-
-        // Registration registration = registrationRepository.findById(registrationId)
-        // .orElse(null);
-
-        // if (registration == null) {
-        // return "redirect:/student-events";
-        // }
-
-        // model.addAttribute("registration", registration);
-
-        // model.addAttribute(
-        // "event",
-        // eventRepository.findById(
-        // registration.getEventId())
-        // .orElse(null));
-
-        // return "payment";
-        // }
 
         @GetMapping("/payment/{registrationId}")
         public String paymentPage(
@@ -229,12 +211,36 @@ public class RegistrationPageController {
                 return "my-registrations";
         }
 
-        @GetMapping("/abc")
-        public String abc() {
+        // @GetMapping("/abc")
+        // public String abc() {
 
-                System.out.println("ABC HIT");
+        //         System.out.println("ABC HIT");
 
-                return "payment";
+        //         return "payment";
+        // }
+
+        @GetMapping("/generate-certificate/{registrationId}")
+        public String generateCertificate(@PathVariable Long registrationId) {
+
+                Registration reg = registrationRepository.findById(registrationId).orElse(null);
+
+                if (reg == null || !"PAID".equals(reg.getPaymentStatus())) {
+                        return "redirect:/admin/certificates";
+                }
+
+                boolean exists = certificateRepository.existsByRegistrationId(registrationId);
+                if (exists) {
+                        return "redirect:/admin/certificates";
+                }
+
+                Certificate cert = new Certificate();
+                cert.setStudentId(reg.getStudentId());
+                cert.setEventId(reg.getEventId());
+                cert.setRegistrationId(registrationId);
+                cert.setCertificateCode("CERT-" + System.currentTimeMillis());
+
+                certificateRepository.save(cert);
+
+                return "redirect:/admin/certificates";
         }
-
 }

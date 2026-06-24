@@ -3,22 +3,18 @@ package com.eventsphere.entity;
 import jakarta.persistence.*;
 
 @Entity
-public class Certificate {
+public class Payment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private Long studentId;
-
     private Long eventId;
+    private double amount;
+    private String status;
 
-    private Long registrationId;
-
-    private String certificateCode;
-
-    public Certificate() {
-    }
+    // GETTERS AND SETTERS
 
     public Long getId() {
         return id;
@@ -44,19 +40,19 @@ public class Certificate {
         this.eventId = eventId;
     }
 
-    public Long getRegistrationId() {
-        return registrationId;
+    public double getAmount() {
+        return amount;
     }
 
-    public void setRegistrationId(Long registrationId) {
-        this.registrationId = registrationId;
+    public void setAmount(double amount) {
+        this.amount = amount;
     }
 
-    public String getCertificateCode() {
-        return certificateCode;
+    public String getStatus() {
+        return status;
     }
 
-    public void setCertificateCode(String certificateCode) {
-        this.certificateCode = certificateCode;
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

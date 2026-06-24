@@ -13,4 +13,5 @@ public interface RegistrationRepository
             Long eventId);
 
     List<Registration> findByStudentId(Long studentId);
+    List<Registration> findByPaymentStatus(String paymentStatus);
 }
