@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
@@ -227,4 +227,378 @@
 </div>
 
 </body>
+</html> -->
+
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Admin Login · EventPoratl</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=Inter:wght@400;500;600&display=swap"
+        rel="stylesheet">
+
+    <style>
+        :root {
+            /* Same design tokens as the main site, so every page feels like one product */
+            --ink: #101828;
+            --slate: #475467;
+            --slate-soft: #667085;
+            --line: #E4E7EC;
+            --line-soft: #EEF1F5;
+            --surface: #FFFFFF;
+            --surface-alt: #F8F9FB;
+            --primary: #2451D6;
+            --primary-dark: #1B3AA8;
+            --primary-tint: #EEF2FE;
+            --error: #B3261E;
+            --error-soft: #FBEAE9;
+            --radius: 16px;
+            --shadow-md: 0 4px 12px -4px rgba(16, 24, 40, 0.08), 0 2px 4px -2px rgba(16, 24, 40, 0.05);
+            --shadow-lg: 0 24px 48px -12px rgba(16, 24, 40, 0.22);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--ink);
+            background:
+                radial-gradient(circle at 12% 12%, var(--primary-tint) 0%, transparent 38%),
+                radial-gradient(circle at 88% 85%, var(--primary-tint) 0%, transparent 42%),
+                var(--surface-alt);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 28px;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        h1 {
+            font-family: 'Manrope', sans-serif;
+        }
+
+        .login-wrap {
+            width: 100%;
+            max-width: 400px;
+            animation: riseIn .5s ease-out both;
+        }
+
+        @keyframes riseIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ---------- brand (matches the mark used across the site) ---------- */
+        .brand {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 26px;
+        }
+
+        .brand .mark {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            background: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-family: 'Manrope', sans-serif;
+            font-weight: 800;
+            font-size: 0.95rem;
+        }
+
+        .brand .name {
+            font-family: 'Manrope', sans-serif;
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--ink);
+            letter-spacing: -0.01em;
+        }
+
+        /* ---------- card ---------- */
+        .card {
+            background: var(--surface);
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            padding: 36px 34px 32px;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .card-icon {
+            width: 46px;
+            height: 46px;
+            border-radius: 12px;
+            background: var(--primary-tint);
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 18px;
+        }
+
+        .card-icon svg {
+            width: 22px;
+            height: 22px;
+        }
+
+        .card h1 {
+            margin: 0 0 6px;
+            font-size: 1.32rem;
+            font-weight: 800;
+            color: var(--ink);
+            letter-spacing: -0.01em;
+        }
+
+        .card .sub {
+            margin: 0 0 26px;
+            font-size: 0.87rem;
+            line-height: 1.55;
+            color: var(--slate);
+        }
+
+        .field {
+            margin-bottom: 18px;
+        }
+
+        .field label {
+            display: block;
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: var(--ink);
+            margin-bottom: 6px;
+        }
+
+        .input-shell {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .input-shell svg {
+            position: absolute;
+            left: 13px;
+            width: 16px;
+            height: 16px;
+            color: var(--slate-soft);
+            pointer-events: none;
+        }
+
+        .field input {
+            width: 100%;
+            padding: 11px 13px 11px 38px;
+            font-size: 0.92rem;
+            font-family: 'Inter', sans-serif;
+            border: 1px solid var(--line);
+            border-radius: 10px;
+            background: var(--surface-alt);
+            color: var(--ink);
+            transition: border-color .15s ease, box-shadow .15s ease, background .15s ease;
+        }
+
+        .field input::placeholder {
+            color: var(--slate-soft);
+        }
+
+        .field input:focus {
+            outline: none;
+            border-color: var(--primary);
+            background: var(--surface);
+            box-shadow: 0 0 0 3px var(--primary-tint);
+        }
+
+        .error-box {
+            display: none;
+            align-items: center;
+            gap: 9px;
+            background: var(--error-soft);
+            color: var(--error);
+            font-size: 0.83rem;
+            font-weight: 600;
+            padding: 11px 13px;
+            border-radius: 10px;
+            margin-bottom: 18px;
+        }
+
+        .error-box.show {
+            display: flex;
+        }
+
+        .error-box svg {
+            width: 16px;
+            height: 16px;
+            flex-shrink: 0;
+        }
+
+        button[type="submit"] {
+            width: 100%;
+            padding: 12px;
+            margin-top: 6px;
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 700;
+            letter-spacing: 0.1px;
+            cursor: pointer;
+            box-shadow: 0 2px 8px -2px rgba(36, 81, 214, 0.45);
+            transition: background .15s ease, transform .1s ease;
+        }
+
+        button[type="submit"]:hover {
+            background: var(--primary-dark);
+        }
+
+        button[type="submit"]:active {
+            transform: translateY(1px);
+        }
+
+        button[type="submit"]:focus-visible {
+            outline: 2px solid var(--primary);
+            outline-offset: 2px;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: 20px;
+            font-size: 0.83rem;
+            font-weight: 600;
+            color: var(--slate);
+            text-decoration: none;
+        }
+
+        .back-link svg {
+            width: 14px;
+            height: 14px;
+        }
+
+        .back-link:hover {
+            color: var(--primary);
+        }
+
+        .foot-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .foot-note {
+            text-align: center;
+            margin-top: 22px;
+            font-size: 0.78rem;
+            color: var(--slate-soft);
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .login-wrap {
+                animation: none;
+            }
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div class="login-wrap">
+
+        <a href="/" class="brand">
+            <span class="mark">E</span>
+            <span class="name">Event Portal</span>
+        </a>
+
+        <div class="card">
+
+            <div class="card-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <path d="M12 3l7 3.2v5.3c0 4.6-3 8.9-7 10-4-1.1-7-5.4-7-10V6.2L12 3z" />
+                    <path d="M9.2 12.1l2 2 3.6-3.8" />
+                </svg>
+            </div>
+
+            <h1>Admin sign in</h1>
+            <p class="sub">Sign in to manage events, registrations, and certificates.</p>
+
+            <div class="error-box" th:class="${loginError} ? 'error-box show' : 'error-box'">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="9" />
+                    <path d="M12 8v5" />
+                    <path d="M12 16h.01" />
+                </svg>
+                Incorrect username or password. Please try again.
+            </div>
+
+            <form action="/admin-login" method="post">
+
+                <div class="field">
+                    <label for="username">Username</label>
+                    <div class="input-shell">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M20 21a8 8 0 0 0-16 0" />
+                            <circle cx="12" cy="7" r="4" />
+                        </svg>
+                        <input type="text" id="username" name="username" placeholder="Enter your username"
+                            autocomplete="username" required>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label for="password">Password</label>
+                    <div class="input-shell">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="4" y="10" width="16" height="10" rx="2" />
+                            <path d="M8 10V7a4 4 0 0 1 8 0v3" />
+                        </svg>
+                        <input type="password" id="password" name="password" placeholder="Enter your password"
+                            autocomplete="current-password" required>
+                    </div>
+                </div>
+
+                <button type="submit">Log in</button>
+
+            </form>
+
+        </div>
+
+        <div class="foot-row">
+            <p class="foot-note">Restricted to authorized administrators only.</p>
+        </div>
+
+    </div>
+
+</body>
+
 </html>

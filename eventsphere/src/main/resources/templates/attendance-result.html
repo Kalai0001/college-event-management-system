@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Attendance Result | EventPortal</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <style>
+        :root {
+            --ink: #0f172a;
+            --muted: #64748b;
+            --border: #e6e9f2;
+            --glass: rgba(255, 255, 255, 0.72);
+
+            /* success (default) theme */
+            --accent: #16a34a;
+            --accent-dark: #15803d;
+            --accent-soft: #ecfdf3;
+            --accent-glow: rgba(22, 163, 74, 0.18);
+        }
+
+        body.warning {
+            --accent: #ea580c;
+            --accent-dark: #c2410c;
+            --accent-soft: #fff7ed;
+            --accent-glow: rgba(234, 88, 12, 0.18);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, Helvetica, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 18px;
+            color: var(--ink);
+            background:
+                radial-gradient(600px circle at 12% 8%, #ecfdf3 0%, transparent 60%),
+                radial-gradient(500px circle at 90% 15%, #dbeafe 0%, transparent 55%),
+                radial-gradient(700px circle at 50% 100%, #ede9fe 0%, transparent 60%),
+                #f8fafc;
+            transition: background 0.3s ease;
+        }
+
+        /* ---------- Card ---------- */
+        .card {
+            width: 420px;
+            max-width: 100%;
+            background: var(--glass);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            border-radius: 20px;
+            box-shadow: 0 20px 45px rgba(30, 41, 59, 0.12), 0 2px 8px rgba(30, 41, 59, 0.06);
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(18px);
+            animation: cardIn 0.55s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes cardIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ---------- Status body ---------- */
+        .body {
+            padding: 26px 32px 8px;
+            text-align: center;
+        }
+
+        .icon-ring {
+            width: 88px;
+            height: 88px;
+            margin: 4px auto 6px;
+            border-radius: 50%;
+            background: var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: ringPop 0.5s 0.15s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+        }
+
+        @keyframes ringPop {
+            from {
+                transform: scale(0.5);
+                opacity: 0;
+            }
+
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .icon-ring i {
+            font-size: 38px;
+            color: #fff;
+        }
+
+        h1 {
+            margin-top: 20px;
+            font-family: 'Sora', sans-serif;
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--accent-dark);
+        }
+
+        .subtext {
+            margin-top: 8px;
+            color: var(--muted);
+            font-size: 14.5px;
+            line-height: 1.6;
+        }
+
+        /* ---------- Action ---------- */
+        .action {
+            padding: 24px 32px 28px;
+        }
+
+        .btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            padding: 13px 20px;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
+            color: #fff;
+            text-decoration: none;
+            border-radius: 10px;
+            font-size: 14.5px;
+            font-weight: 600;
+            box-shadow: 0 6px 16px var(--accent-glow);
+            transition: transform 0.18s ease, box-shadow 0.18s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 22px var(--accent-glow);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .btn:focus-visible {
+            outline: 2px solid var(--accent-dark);
+            outline-offset: 2px;
+        }
+
+        @media (max-width: 480px) {
+            .card {
+                width: 100%;
+                border-radius: 16px;
+            }
+
+            .body {
+                padding: 24px 24px 6px;
+            }
+
+            .action {
+                padding: 22px 24px 26px;
+            }
+
+            h1 {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body th:classappend="${alreadyMarked} ? 'warning' : ''">
+
+    <div class="card">
+
+        <div class="body">
+
+            <div class="icon-ring">
+                <svg viewBox="0 0 24 24" width="38" height="38" fill="none" stroke="#fff" stroke-width="3"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M5 13 L10 18 L19 6"></path>
+                </svg>
+            </div>
+
+            <h1 th:text="${message}">Attendance Marked Successfully</h1>
+
+            <p class="subtext" th:if="${alreadyMarked == null or !alreadyMarked}">
+                Your attendance has been recorded successfully.
+            </p>
+            <p class="subtext" th:if="${alreadyMarked}">
+                Looks like you've already checked in for this event.
+            </p>
+
+        </div>
+
+        <div class="action">
+            <a href="/dashboard" class="btn">
+                <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="3" width="7" height="9" rx="1"></rect>
+                    <rect x="14" y="3" width="7" height="5" rx="1"></rect>
+                    <rect x="14" y="12" width="7" height="9" rx="1"></rect>
+                    <rect x="3" y="16" width="7" height="5" rx="1"></rect>
+                </svg>
+                Go To Dashboard
+            </a>
+        </div>
+
+    </div>
+
+</body>
+
+</html>

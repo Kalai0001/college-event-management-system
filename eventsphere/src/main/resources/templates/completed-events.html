@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registrations · EventPortal</title>
+    <title>Completed Events · EventPortal</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -24,8 +24,6 @@
             --accent: #2563eb;
             --accent-dark: #1d4ed8;
             --accent-soft: #dbeafe;
-            --success: #0f9d70;
-            --success-soft: #e2f8ef;
             --warn: #d97706;
             --warn-soft: #fdf3e0;
             --danger: #dc2626;
@@ -50,8 +48,6 @@
             --accent: #60a5fa;
             --accent-dark: #3b82f6;
             --accent-soft: rgba(96, 165, 250, .14);
-            --success: #34d9a8;
-            --success-soft: rgba(52, 217, 168, .14);
             --warn: #f0a93a;
             --warn-soft: rgba(240, 169, 58, .14);
             --danger: #ff6b6b;
@@ -259,63 +255,6 @@
             border-radius: 20px;
         }
 
-        .theme-toggle {
-            position: relative;
-            width: 52px;
-            height: 28px;
-            border-radius: 999px;
-            border: 1px solid var(--border);
-            background: var(--card-2);
-            cursor: pointer;
-            padding: 2px;
-            display: flex;
-            align-items: center;
-            flex-shrink: 0;
-            transition: background .2s ease;
-        }
-
-        .theme-toggle .track-icon {
-            position: absolute;
-            width: 14px;
-            height: 14px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--slate-light);
-            opacity: .8;
-        }
-
-        .theme-toggle .track-icon.sun {
-            left: 6px;
-        }
-
-        .theme-toggle .track-icon.moon {
-            right: 6px;
-        }
-
-        .theme-thumb {
-            width: 22px;
-            height: 22px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #fff;
-            transform: translateX(0);
-            transition: transform .28s cubic-bezier(.4, 0, .2, 1);
-            box-shadow: 0 2px 6px rgba(37, 99, 235, .45);
-            z-index: 1;
-        }
-
-        html[data-theme="dark"] .theme-thumb {
-            transform: translateX(24px);
-        }
-
-        .theme-thumb svg {
-            width: 13px;
-            height: 13px;
-        }
-
         .avatar {
             width: 38px;
             height: 38px;
@@ -330,7 +269,7 @@
         }
 
         .page {
-            max-width: 1200px;
+            max-width: 1240px;
             width: 100%;
             margin: 0 auto;
             padding: 32px 34px 60px;
@@ -341,7 +280,7 @@
             position: relative;
             overflow: hidden;
             border-radius: 18px;
-            padding: 26px 34px;
+            padding: 28px 34px;
             margin-bottom: 26px;
             background: linear-gradient(120deg, var(--ink) 0%, #1c3a5e 55%, var(--accent-dark) 130%);
             box-shadow: 0 10px 28px -10px rgba(16, 35, 61, .35);
@@ -370,7 +309,7 @@
             background: rgba(37, 99, 235, .22);
         }
 
-        .hero-content {
+        .hero-row {
             position: relative;
             z-index: 1;
             display: flex;
@@ -380,7 +319,7 @@
             flex-wrap: wrap;
         }
 
-        .hero-left {
+        .hero-content {
             display: flex;
             align-items: center;
             gap: 14px;
@@ -406,7 +345,7 @@
 
         .hero h2 {
             margin: 0;
-            font-size: 24px;
+            font-size: 25px;
             font-weight: 800;
             color: #fff;
             letter-spacing: -.015em;
@@ -416,267 +355,244 @@
             margin: 6px 0 0;
             font-size: 13.5px;
             color: rgba(255, 255, 255, .72);
-            max-width: 480px;
+            max-width: 460px;
         }
 
-        .hero-stats {
+        .hero-count {
             display: flex;
-            gap: 22px;
-        }
-
-        .hero-stats .stat {
-            text-align: right;
-        }
-
-        .hero-stats .stat b {
-            display: block;
-            font-family: 'Lexend', sans-serif;
-            font-size: 24px;
-            font-weight: 800;
+            flex-direction: column;
+            align-items: flex-end;
             color: #fff;
-            line-height: 1.1;
         }
 
-        .hero-stats .stat span {
-            font-size: 11.5px;
+        .hero-count b {
+            font-family: 'Lexend', sans-serif;
+            font-size: 30px;
+            font-weight: 800;
+            line-height: 1;
+        }
+
+        .hero-count span {
+            font-size: 12px;
+            color: rgba(255, 255, 255, .65);
             font-weight: 600;
-            color: rgba(255, 255, 255, .6);
+            margin-top: 4px;
         }
 
-        /* ---------- Panel / toolbar ---------- */
-        .panel {
+        /* ---------- Search ---------- */
+        .search-form {
+            display: flex;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            margin-bottom: 22px;
+        }
+
+        .search-form .icon {
+            display: flex;
+            align-items: center;
+            padding: 0 14px;
+            color: var(--slate-light);
+        }
+
+        .search-form .icon svg {
+            width: 17px;
+            height: 17px;
+        }
+
+        .search-form input {
+            flex: 1;
+            border: none;
+            outline: none;
+            font-family: inherit;
+            font-size: 13.5px;
+            padding: 13px 4px;
+            color: var(--ink);
+            background: transparent;
+        }
+
+        .search-form input::placeholder {
+            color: var(--slate-light);
+        }
+
+        .search-form button {
+            border: none;
+            background: var(--accent);
+            color: #fff;
+            font-family: inherit;
+            font-size: 13.5px;
+            font-weight: 600;
+            padding: 0 22px;
+            cursor: pointer;
+            transition: background .15s ease;
+        }
+
+        .search-form button:hover {
+            background: var(--accent-dark);
+        }
+
+        /* ---------- Cards ---------- */
+        .event-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .event-card {
             background: var(--card);
             border: 1px solid var(--border);
             border-radius: 14px;
             box-shadow: var(--shadow);
-            transition: background .25s ease, border-color .25s ease;
             overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transition: transform .18s ease, box-shadow .18s ease, background .25s ease, border-color .25s ease;
         }
 
-        .panel-toolbar {
+        .event-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .event-card::before {
+            content: "";
+            display: block;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent), var(--accent-dark));
+        }
+
+        .event-card-body {
+            padding: 22px 22px 20px;
+            flex: 1;
             display: flex;
-            align-items: center;
+            flex-direction: column;
+        }
+
+        .card-top {
+            display: flex;
+            align-items: flex-start;
             justify-content: space-between;
-            gap: 16px;
-            padding: 18px 22px;
-            border-bottom: 1px solid var(--border);
-            flex-wrap: wrap;
+            margin-bottom: 16px;
         }
 
-        .panel-toolbar h3 {
-            margin: 0;
-            font-size: 15.5px;
-            font-weight: 700;
-            color: var(--ink);
-        }
-
-        .panel-toolbar .sub {
-            margin: 2px 0 0;
-            font-size: 12px;
-            color: var(--slate);
-        }
-
-        .search-wrap {
-            position: relative;
-            min-width: 240px;
-        }
-
-        .search-wrap svg {
-            position: absolute;
-            left: 13px;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 15px;
-            height: 15px;
-            color: var(--slate-light);
-            pointer-events: none;
-        }
-
-        .search-wrap input {
-            width: 100%;
-            font-family: inherit;
-            font-size: 13.5px;
-            color: var(--ink);
-            background: var(--card-2);
-            border: 1px solid var(--border);
+        .card-icon {
+            width: 40px;
+            height: 40px;
             border-radius: 10px;
-            padding: 9px 14px 9px 36px;
-            outline: none;
-            transition: border-color .15s ease, box-shadow .15s ease, background .25s ease;
-        }
-
-        .search-wrap input::placeholder {
-            color: var(--slate-light);
-        }
-
-        .search-wrap input:focus {
-            border-color: var(--accent);
-            box-shadow: 0 0 0 3px var(--accent-soft);
-            background: var(--card);
-        }
-
-        /* ---------- Table ---------- */
-        .table-scroll {
-            overflow-x: auto;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 13.5px;
-            min-width: 720px;
-        }
-
-        thead th {
-            text-align: left;
-            font-size: 11.5px;
-            text-transform: uppercase;
-            letter-spacing: .6px;
-            font-weight: 700;
-            color: var(--slate);
-            background: var(--card-2);
-            padding: 12px 20px;
-            border-bottom: 1px solid var(--border);
-            white-space: nowrap;
-        }
-
-        tbody td {
-            padding: 14px 20px;
-            border-bottom: 1px solid var(--border);
-            color: var(--ink-soft);
-            vertical-align: middle;
-        }
-
-        tbody tr {
-            transition: background .12s ease;
-        }
-
-        tbody tr:hover {
-            background: var(--card-2);
-        }
-
-        tbody tr:last-child td {
-            border-bottom: none;
-        }
-
-        .id-chip {
-            display: inline-flex;
-            align-items: center;
-            font-family: 'Lexend', sans-serif;
-            font-size: 11.5px;
-            font-weight: 700;
-            color: var(--slate);
-            background: var(--card-2);
-            border: 1px solid var(--border);
-            padding: 3px 9px;
-            border-radius: 6px;
-        }
-
-        .student-cell {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .student-cell .initials {
-            width: 32px;
-            height: 32px;
-            min-width: 32px;
-            border-radius: 9px;
             background: var(--accent-soft);
             color: var(--accent-dark);
-            font-size: 12px;
-            font-weight: 700;
             display: flex;
             align-items: center;
             justify-content: center;
         }
 
-        .student-cell .name {
-            font-weight: 600;
-            color: var(--ink);
-            font-size: 13.5px;
+        .card-icon svg {
+            width: 19px;
+            height: 19px;
         }
 
-        .college-badge {
+        .status-pill {
             display: inline-flex;
             align-items: center;
-            gap: 6px;
-            font-size: 12.5px;
-            font-weight: 600;
-            color: var(--ink-soft);
+            gap: 5px;
+            font-size: 11.5px;
+            font-weight: 700;
+            padding: 6px 12px;
+            border-radius: 20px;
+            background: var(--accent-soft);
+            color: var(--accent-dark);
+            white-space: nowrap;
         }
 
-        .college-badge svg {
+        .status-pill svg {
+            width: 12px;
+            height: 12px;
+        }
+
+        .event-name {
+            font-size: 17px;
+            font-weight: 700;
+            color: var(--ink);
+            margin: 0 0 12px;
+        }
+
+        .meta-row {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            font-size: 12.5px;
+            color: var(--slate);
+            margin-bottom: 8px;
+        }
+
+        .meta-row svg {
             width: 14px;
             height: 14px;
             color: var(--slate-light);
+            flex-shrink: 0;
+            margin-top: 1px;
         }
 
-        .event-pill {
+        .participation {
             display: inline-flex;
             align-items: center;
             gap: 6px;
-            font-size: 12.5px;
-            font-weight: 600;
-            color: var(--accent-dark);
-            background: var(--accent-soft);
-            padding: 5px 11px;
-            border-radius: 20px;
-        }
-
-        .event-pill svg {
-            width: 13px;
-            height: 13px;
-        }
-
-        .missing {
             font-size: 12px;
-            color: var(--slate-light);
-            font-style: italic;
+            font-weight: 700;
+            padding: 6px 12px;
+            border-radius: 20px;
+            margin-top: 6px;
+            width: fit-content;
         }
 
-        .row-actions {
+        .participation svg {
+            width: 12px;
+            height: 12px;
+        }
+
+        .participation.yes {
+            background: var(--accent-soft);
+            color: var(--accent-dark);
+        }
+
+        .participation.no {
+            background: var(--danger-soft);
+            color: var(--danger);
+        }
+
+        .card-footer {
+            padding: 0 22px 22px;
+        }
+
+        .view-btn {
             display: flex;
-            gap: 8px;
-        }
-
-        .icon-link {
-            display: inline-flex;
             align-items: center;
-            gap: 6px;
-            font-size: 12.5px;
-            font-weight: 600;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            border: 1px solid var(--border);
+            background: var(--card-2);
+            color: var(--accent-dark);
+            font-family: inherit;
+            font-size: 13px;
+            font-weight: 700;
             text-decoration: none;
-            padding: 7px 12px;
-            border-radius: 8px;
-            border: 1px solid transparent;
+            padding: 11px;
+            border-radius: 10px;
             transition: background .15s ease, border-color .15s ease, transform .15s ease;
         }
 
-        .icon-link svg {
-            width: 14px;
-            height: 14px;
+        .view-btn svg {
+            width: 15px;
+            height: 15px;
         }
 
-        .icon-link.edit {
-            color: var(--warn);
-            background: var(--warn-soft);
-        }
-
-        .icon-link.edit:hover {
+        .view-btn:hover {
+            background: var(--accent-soft);
+            border-color: var(--accent);
             transform: translateY(-1px);
-            border-color: var(--warn);
-        }
-
-        .icon-link.delete {
-            color: var(--danger);
-            background: var(--danger-soft);
-        }
-
-        .icon-link.delete:hover {
-            transform: translateY(-1px);
-            border-color: var(--danger);
         }
 
         /* ---------- Empty state ---------- */
@@ -686,32 +602,34 @@
             align-items: center;
             justify-content: center;
             gap: 10px;
-            padding: 64px 20px;
+            padding: 70px 20px;
             text-align: center;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            box-shadow: var(--shadow);
         }
 
-        .empty-state .icon-wrap {
+        .empty-state .icon-circle {
             width: 56px;
             height: 56px;
-            border-radius: 16px;
+            border-radius: 50%;
             background: var(--card-2);
             border: 1px solid var(--border);
             display: flex;
             align-items: center;
             justify-content: center;
             color: var(--slate-light);
-            margin-bottom: 6px;
         }
 
-        .empty-state .icon-wrap svg {
+        .empty-state .icon-circle svg {
             width: 26px;
             height: 26px;
         }
 
-        .empty-state h4 {
-            margin: 0;
-            font-size: 15px;
-            font-weight: 700;
+        .empty-state h3 {
+            margin: 4px 0 0;
+            font-size: 15.5px;
             color: var(--ink);
         }
 
@@ -719,49 +637,13 @@
             margin: 0;
             font-size: 13px;
             color: var(--slate);
-            max-width: 320px;
+            max-width: 340px;
         }
 
-        /* ---------- Footer bar ---------- */
-        .panel-footer {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 14px 22px;
-            border-top: 1px solid var(--border);
-            font-size: 12.5px;
-            color: var(--slate);
-        }
-
-        .back-home {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 13.5px;
-            font-weight: 600;
-            color: var(--ink-soft);
-            text-decoration: none;
-            padding: 9px 16px;
-            border-radius: 10px;
-            border: 1px solid var(--border);
-            background: var(--card);
-            transition: background .15s ease, color .15s ease;
-        }
-
-        .back-home:hover {
-            background: var(--card-2);
-            color: var(--ink);
-        }
-
-        .back-home svg {
-            width: 15px;
-            height: 15px;
-        }
-
-        .page-actions {
-            display: flex;
-            justify-content: flex-start;
-            margin-top: 22px;
+        @media (max-width: 1080px) {
+            .event-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
         }
 
         @media (max-width: 760px) {
@@ -809,36 +691,25 @@
                 padding: 14px 18px;
             }
 
+            .topbar-left .date {
+                display: none;
+            }
+
             .page {
                 padding: 22px 18px 48px;
             }
 
-            .hero-content {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-
-            .hero-stats {
-                width: 100%;
-                justify-content: space-between;
-            }
-
-            .hero-stats .stat {
-                text-align: left;
-            }
-
-            .panel-toolbar {
-                flex-direction: column;
-                align-items: stretch;
-            }
-
-            .search-wrap {
-                min-width: 0;
+            .event-grid {
+                grid-template-columns: 1fr;
             }
         }
 
         @media (max-width: 480px) {
             .role-badge {
+                display: none;
+            }
+
+            .hero-count {
                 display: none;
             }
         }
@@ -884,7 +755,7 @@
                     </svg>
                     Event Schedule
                 </a>
-                <a href="/completed-events">
+                <a href="/completed-events" class="active">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                         stroke-linejoin="round">
                         <circle cx="12" cy="12" r="9" />
@@ -900,7 +771,7 @@
                     </svg>
                     Manage Students
                 </a>
-                <a href="/registrations-page" class="active">
+                <a href="/registrations-page">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                         stroke-linejoin="round">
                         <path d="M7 3.5h8l4 4V20a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4.5a1 1 0 0 1 1-1Z" />
@@ -945,8 +816,8 @@
 
             <div class="topbar">
                 <div class="topbar-left">
-                    <h1>Registrations</h1>
-                    <p class="date">All student sign-ups across every event</p>
+                    <h1>Completed Events</h1>
+                    <p class="date" id="currentDate"></p>
                 </div>
                 <div class="topbar-right">
                     <span class="role-badge">Administrator</span>
@@ -957,158 +828,117 @@
             <div class="page">
 
                 <div class="hero">
-                    <div class="hero-content">
-                        <div class="hero-left">
+                    <div class="hero-row">
+                        <div class="hero-content">
                             <span class="hero-badge">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                     stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M7 3.5h8l4 4V20a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4.5a1 1 0 0 1 1-1Z" />
-                                    <path d="M9 12h6M9 15.5h6M9 8.5h3" />
+                                    <circle cx="12" cy="12" r="9" />
+                                    <path d="m8.5 12.3 2.4 2.4 4.6-5.4" />
                                 </svg>
                             </span>
                             <div>
-                                <h2>All Registrations</h2>
-                                <p>See who's signed up for what, and keep every entry up to date.</p>
+                                <h2>Completed Events</h2>
+                                <p>A record of every event that has already been conducted on the platform.</p>
                             </div>
                         </div>
-                        <div class="hero-stats">
-                            <div class="stat">
-                                <b th:text="${registrations != null ? #lists.size(registrations) : 0}">0</b>
-                                <span>Total entries</span>
-                            </div>
+                        <div class="hero-count">
+                            <b th:text="${#lists.size(events)}">0</b>
+                            <span>Completed events</span>
                         </div>
                     </div>
                 </div>
 
-                <div class="panel">
-
-                    <div class="panel-toolbar">
-                        <div>
-                            <h3>Registration list</h3>
-                            <p class="sub">Search by student, college, or event name</p>
-                        </div>
-                        <div class="search-wrap">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                stroke-linecap="round" stroke-linejoin="round">
-                                <circle cx="11" cy="11" r="7" />
-                                <path d="m21 21-4.3-4.3" />
-                            </svg>
-                            <input type="text" id="regSearch" placeholder="Search registrations...">
-                        </div>
-                    </div>
-
-                    <div class="table-scroll" th:if="${registrations != null and !#lists.isEmpty(registrations)}">
-                        <table id="regTable">
-                            <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Student</th>
-                                    <th>College</th>
-                                    <th>Event</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-
-                            <tbody>
-
-                                <tr th:each="registration : ${registrations}">
-
-                                    <td><span class="id-chip" th:text="'#' + ${registration.id}">#0</span></td>
-
-                                    <!-- Student Name -->
-                                    <td>
-                                        <div class="student-cell" th:each="student : ${students}"
-                                            th:if="${student.id == registration.studentId}">
-                                            <span class="initials"
-                                                th:text="${#strings.substring(student.name,0,1)}">S</span>
-                                            <span class="name" th:text="${student.name}">Student name</span>
-                                        </div>
-                                    </td>
-
-                                    <!-- Student College -->
-                                    <td>
-                                        <span class="college-badge" th:each="student : ${students}"
-                                            th:if="${student.id == registration.studentId}">
-                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                                stroke-linecap="round" stroke-linejoin="round">
-                                                <path d="M4 21V9l8-5 8 5v12" />
-                                                <path d="M9 21v-6h6v6" />
-                                            </svg>
-                                            <span th:text="${student.college}">College name</span>
-                                        </span>
-                                    </td>
-
-                                    <!-- Event Name -->
-                                    <td>
-                                        <span class="event-pill" th:each="event : ${events}"
-                                            th:if="${event.id == registration.eventId}">
-                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                                stroke-linecap="round" stroke-linejoin="round">
-                                                <rect x="3" y="4.5" width="18" height="16" rx="2.5" />
-                                                <path d="M3 9.5h18M8 3v3M16 3v3" />
-                                            </svg>
-                                            <span th:text="${event.name}">Event name</span>
-                                        </span>
-                                    </td>
-
-                                    <!-- Actions -->
-                                    <td>
-                                        <div class="row-actions">
-                                            <a th:href="@{/edit-registration/{id}(id=${registration.id})}"
-                                                class="icon-link edit">
-                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                                    <path d="M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z" />
-                                                </svg>
-                                                Edit
-                                            </a>
-
-                                            <a th:href="@{/delete-registration/{id}(id=${registration.id})}"
-                                                class="icon-link delete"
-                                                onclick="return confirm('Are you sure you want to delete this registration?');">
-                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                                    <path
-                                                        d="M4 7h16M9 7V5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2m2 0-.7 12.1a2 2 0 0 1-2 1.9H8.7a2 2 0 0 1-2-1.9L6 7" />
-                                                </svg>
-                                                Delete
-                                            </a>
-                                        </div>
-                                    </td>
-
-                                </tr>
-
-                            </tbody>
-
-                        </table>
-                    </div>
-
-                    <div class="empty-state" th:if="${registrations == null or #lists.isEmpty(registrations)}">
-                        <span class="icon-wrap">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-                                <path d="M7 3.5h8l4 4V20a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4.5a1 1 0 0 1 1-1Z" />
-                                <path d="M9 12h6M9 15.5h6M9 8.5h3" />
-                            </svg>
-                        </span>
-                        <h4>No registrations yet</h4>
-                        <p>Once students start signing up for events, their entries will show up here.</p>
-                    </div>
-
-                    <div class="panel-footer">
-                        <span
-                            th:text="${registrations != null ? #lists.size(registrations) : 0} + ' total registrations'">0
-                            total registrations</span>
-                    </div>
-
-                </div>
-
-                <div class="page-actions">
-                    <a href="/" class="back-home">
+                <form action="/search-completed-events" method="get" class="search-form">
+                    <span class="icon">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="11" cy="11" r="7" />
+                            <path d="m20 20-3.5-3.5" />
+                        </svg>
+                    </span>
+                    <input type="text" name="keyword" placeholder="Search completed events by name or location…">
+                    <button type="submit">Search</button>
+                </form>
+
+                <div class="event-grid" th:if="${not #lists.isEmpty(events)}">
+
+                    <div class="event-card" th:each="event : ${events}">
+                        <div class="event-card-body">
+                            <div class="card-top">
+                                <span class="card-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round">
+                                        <circle cx="12" cy="12" r="9" />
+                                        <path d="m8.5 12.3 2.4 2.4 4.6-5.4" />
+                                    </svg>
+                                </span>
+                                <span class="status-pill">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                                        stroke-linecap="round" stroke-linejoin="round">
+                                        <circle cx="12" cy="12" r="9" />
+                                        <path d="m8.5 12.3 2.4 2.4 4.6-5.4" />
+                                    </svg>
+                                    Completed
+                                </span>
+                            </div>
+
+                            <h3 class="event-name" th:text="${event.name}">Event name</h3>
+
+                            <div class="meta-row">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M12 21s-7-6.2-7-11a7 7 0 1 1 14 0c0 4.8-7 11-7 11Z" />
+                                    <circle cx="12" cy="10" r="2.5" />
+                                </svg>
+                                <span th:text="${event.location}">Location</span>
+                            </div>
+
+                            <div class="meta-row">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="3" y="4.5" width="18" height="16" rx="2.5" />
+                                    <path d="M3 9.5h18M8 3v3M16 3v3" />
+                                </svg>
+                                <span th:text="${event.date}">2026-01-01</span>
+                            </div>
+                        </div>
+
+                        <div class="card-footer">
+                            <a th:href="@{/event-details/{id}(id=${event.id})}" class="view-btn">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12Z" />
+                                    <circle cx="12" cy="12" r="3" />
+                                </svg>
+                                View Details
+                            </a>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="empty-state" th:if="${#lists.isEmpty(events)}">
+                    <span class="icon-circle">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="9" />
+                            <path d="M9 12h6" />
+                        </svg>
+                    </span>
+                    <h3>No completed events yet</h3>
+                    <p>Once an event's date has passed and it's marked complete, it'll show up here.</p>
+                </div>
+
+                <div style="margin-top:26px;">
+                    <a href="/admin-dashboard" class="view-btn"
+                        style="display:inline-flex; width:auto; padding:11px 22px;">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
                             stroke-linecap="round" stroke-linejoin="round">
                             <path d="M19 12H5M11 6l-6 6 6 6" />
                         </svg>
-                        Home
+                        Back to Dashboard
                     </a>
                 </div>
 
@@ -1117,6 +947,13 @@
     </div>
 
     <script>
+        (function () {
+            var el = document.getElementById('currentDate');
+            if (!el) return;
+            var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            el.textContent = new Date().toLocaleDateString(undefined, options);
+        })();
+
         // Follows the shared theme set on the dashboard — no toggle on this page.
         (function () {
             var root = document.documentElement;
@@ -1129,21 +966,6 @@
 
             window.addEventListener('storage', function (e) {
                 if (e.key === 'eventPortalTheme') apply(e.newValue);
-            });
-        })();
-
-        (function () {
-            var input = document.getElementById('regSearch');
-            var table = document.getElementById('regTable');
-            if (!input || !table) return;
-            var rows = table.querySelectorAll('tbody tr');
-
-            input.addEventListener('input', function () {
-                var q = input.value.trim().toLowerCase();
-                rows.forEach(function (row) {
-                    var text = row.textContent.toLowerCase();
-                    row.style.display = text.indexOf(q) !== -1 ? '' : 'none';
-                });
             });
         })();
     </script>

@@ -1,1126 +1,3 @@
-<!-- <!DOCTYPE html>
-<html lang="en">
-<head>
-    <!DOCTYPE html>
-
-<html xmlns:th="http://www.thymeleaf.org">
-
-<head>
-    <title>Event Portal</title>
-
-
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-
-<style>
-
-    body{
-        background:#f5f7fb;
-        font-family:'Segoe UI',sans-serif;
-    }
-
-    .hero{
-        background:linear-gradient(135deg,#4f46e5,#7c3aed);
-        color:white;
-        padding:100px 20px;
-        text-align:center;
-        border-radius:0 0 40px 40px;
-    }
-
-    .hero h1{
-        font-size:4rem;
-        font-weight:700;
-    }
-
-    .hero p{
-        font-size:1.2rem;
-        max-width:700px;
-        margin:auto;
-    }
-
-    .hero-buttons{
-        margin-top:30px;
-    }
-
-    .stats-card{
-        border:none;
-        border-radius:20px;
-        box-shadow:0 8px 25px rgba(0,0,0,0.08);
-        transition:0.3s;
-    }
-
-    .stats-card:hover{
-        transform:translateY(-5px);
-    }
-
-    .stats-number{
-        font-size:2.8rem;
-        font-weight:bold;
-        color:#4f46e5;
-    }
-
-    .section-title{
-        text-align:center;
-        margin-bottom:40px;
-        font-weight:700;
-    }
-
-    .event-card{
-        border:none;
-        border-radius:20px;
-        box-shadow:0 8px 20px rgba(0,0,0,0.08);
-        transition:0.3s;
-        height:100%;
-    }
-
-    .event-card:hover{
-        transform:translateY(-6px);
-    }
-
-    .icon{
-        font-size:3rem;
-    }
-
-    .feature-card{
-        border:none;
-        border-radius:20px;
-        box-shadow:0 8px 20px rgba(0,0,0,0.08);
-        text-align:center;
-        padding:25px;
-        height:100%;
-    }
-
-    footer{
-        background:#111827;
-        color:white;
-        text-align:center;
-        padding:30px;
-        margin-top:60px;
-    }
-
-</style>
-
-
-</head>
-
-<body>
-
-<!-- HERO -->
-<!-- 
-<div class="hero">
-
-<h1>🎉 Event Portal</h1>
-
-<p>
-    Discover, register and participate in exciting campus events.
-    From Hackathons to Symposiums, everything is available in one place.
-</p>
-
-<div class="hero-buttons">
-
-    <a href="/signup" class="btn btn-light btn-lg me-3">
-        Sign Up
-    </a>
-
-    <a href="/login" class="btn btn-outline-light btn-lg">
-        Login
-    </a>
-
-</div>
-
-
-</div>
-
-
-
-<div class="container mt-5">
-
-
-<div class="row g-4">
-
-    <div class="col-md-4">
-        <div class="card stats-card text-center">
-            <div class="card-body">
-                <div class="stats-number">50+</div>
-                <h5>Total Events</h5>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-md-4">
-        <div class="card stats-card text-center">
-            <div class="card-body">
-                <div class="stats-number">1000+</div>
-                <h5>Total Students</h5>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-md-4">
-        <div class="card stats-card text-center">
-            <div class="card-body">
-                <div class="stats-number">500+</div>
-                <h5>Registrations</h5>
-            </div>
-        </div>
-    </div>
-
-</div>
-
-
-</div>
-
-
-
-<div class="container mt-5">
-
-<h2 class="section-title">
-    Explore Event Categories
-</h2>
-
-<div class="row g-4">
-
-    <div class="col-md-4">
-        <div class="card event-card">
-            <div class="card-body text-center">
-                <div class="icon">💻</div>
-                <h4>Tech Events</h4>
-                <p>
-                    Coding contests, project expos and technical competitions.
-                </p>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-md-4">
-        <div class="card event-card">
-            <div class="card-body text-center">
-                <div class="icon">🚀</div>
-                <h4>Hackathons</h4>
-                <p>
-                    Build innovative solutions and compete with top students.
-                </p>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-md-4">
-        <div class="card event-card">
-            <div class="card-body text-center">
-                <div class="icon">🎓</div>
-                <h4>Symposiums</h4>
-                <p>
-                    Present papers, share knowledge and network with peers.
-                </p>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-md-4">
-        <div class="card event-card">
-            <div class="card-body text-center">
-                <div class="icon">🤖</div>
-                <h4>AI Workshops</h4>
-                <p>
-                    Learn Machine Learning, AI and modern technologies.
-                </p>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-md-4">
-        <div class="card event-card">
-            <div class="card-body text-center">
-                <div class="icon">🏆</div>
-                <h4>Competitions</h4>
-                <p>
-                    Showcase your skills and win exciting prizes.
-                </p>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-md-4">
-        <div class="card event-card">
-            <div class="card-body text-center">
-                <div class="icon">🎤</div>
-                <h4>Cultural Events</h4>
-                <p>
-                    Music, dance, arts and entertainment activities.
-                </p>
-            </div>
-        </div>
-    </div>
-
-</div>
-
-
-</div>
-
-
-
-<div class="container mt-5">
-
-
-<h2 class="section-title">
-    Why Choose Event Portal?
-</h2>
-
-<div class="row g-4">
-
-    <div class="col-md-3">
-        <div class="feature-card">
-            <h4>📝</h4>
-            <h5>Easy Registration</h5>
-            <p>Register for events in seconds.</p>
-        </div>
-    </div>
-
-    <div class="col-md-3">
-        <div class="feature-card">
-            <h4>📅</h4>
-            <h5>Track Events</h5>
-            <p>Stay updated with upcoming events.</p>
-        </div>
-    </div>
-
-    <div class="col-md-3">
-        <div class="feature-card">
-            <h4>🏆</h4>
-            <h5>Certificates</h5>
-            <p>Download participation certificates.</p>
-        </div>
-    </div>
-
-    <div class="col-md-3">
-        <div class="feature-card">
-            <h4>👤</h4>
-            <h5>Student Dashboard</h5>
-            <p>Manage everything from one place.</p>
-        </div>
-    </div>
-
-</div>
-
-
-</div>
-
-
-<footer>
-
-
-<h5>Event Portal © 2026</h5>
-
-<p>
-    College Event Management System
-</p>
-
-
-</footer>
-
-</body>
-</html> --->
-
-
-
-<!-- <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Event Portal — College Event Management System</title>
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Archivo:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap"
-        rel="stylesheet">
-
-    <style>
-        :root {
-            --ink: #1B0E33;
-            --ink-soft: #2D1856;
-            --paper: #FAF7F2;
-            --paper-dim: #F1ECE3;
-            --white: #FFFFFF;
-            --gold: #D4AF37;
-            --gold-bright: #E8C757;
-            --violet: #7C3AED;
-            --violet-soft: #F1EAFC;
-            --graphite: #6B6478;
-            --line: rgba(27, 14, 51, 0.10);
-            --radius: 16px;
-        }
-
-        * {
-            box-sizing: border-box;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            margin: 0;
-            background: var(--paper);
-            color: var(--ink);
-            font-family: 'Archivo', sans-serif;
-            -webkit-font-smoothing: antialiased;
-            overflow-x: hidden;
-        }
-
-        a {
-            text-decoration: none;
-            color: inherit;
-        }
-
-        button {
-            font-family: inherit;
-        }
-
-        .mono {
-            font-family: 'JetBrains Mono', monospace;
-            letter-spacing: 0.04em;
-        }
-
-        .container {
-            max-width: 1180px;
-            margin: 0 auto;
-            padding: 0 28px;
-        }
-
-        /* ---------- TOP BAR ---------- */
-
-        .topbar-wrap {
-            background: linear-gradient(120deg, var(--ink) 0%, var(--ink-soft) 60%, #3B1F66 100%);
-        }
-
-        .topbar {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 18px 28px;
-            max-width: 1180px;
-            margin: 0 auto;
-        }
-
-        .brand {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-family: 'Archivo Black', sans-serif;
-            font-size: 1.25rem;
-            color: var(--paper);
-        }
-
-        .brand-mark {
-            width: 34px;
-            height: 34px;
-            background: var(--gold);
-            border-radius: 9px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--ink);
-            font-family: 'Archivo Black', sans-serif;
-            font-size: 1.1rem;
-        }
-
-        .topbar-actions {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .btn-admin {
-            font-family: 'Archivo', sans-serif;
-            font-weight: 700;
-            font-size: 0.88rem;
-            color: var(--violet);
-            background: var(--violet-soft);
-            border: 1.5px solid transparent;
-            padding: 9px 18px;
-            border-radius: 9px;
-            transition: 0.2s;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .btn-admin:hover {
-            background: var(--gold);
-            color: var(--ink);
-        }
-
-        .btn-admin svg {
-            width: 14px;
-            height: 14px;
-        }
-
-        /* ---------- HERO ---------- */
-
-        .hero {
-            position: relative;
-            padding: 80px 0 100px;
-            overflow: hidden;
-            background: linear-gradient(160deg, var(--ink) 0%, var(--ink-soft) 45%, #4A2A7A 75%, #6B3FA0 100%);
-        }
-
-        .hero-bg {
-            position: absolute;
-            top: -200px;
-            right: -180px;
-            width: 620px;
-            height: 620px;
-            background: radial-gradient(circle, rgba(212, 175, 55, 0.22) 0%, rgba(212, 175, 55, 0.08) 45%, transparent 72%);
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        .hero-bg-2 {
-            position: absolute;
-            bottom: -220px;
-            left: -160px;
-            width: 520px;
-            height: 520px;
-            background: radial-gradient(circle, rgba(124, 58, 237, 0.35) 0%, transparent 70%);
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        .hero-center {
-            position: relative;
-            z-index: 1;
-            max-width: 680px;
-            margin: 0 auto;
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .eyebrow-pill {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: rgba(255, 255, 255, 0.08);
-            border: 1px solid rgba(255, 255, 255, 0.18);
-            padding: 7px 16px 7px 8px;
-            border-radius: 99px;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.74rem;
-            letter-spacing: 0.04em;
-            color: rgba(250, 247, 242, 0.85);
-            margin-bottom: 26px;
-            backdrop-filter: blur(6px);
-        }
-
-        .eyebrow-dot {
-            width: 7px;
-            height: 7px;
-            border-radius: 50%;
-            background: var(--gold);
-            display: inline-block;
-        }
-
-        .hero-title {
-            font-family: 'Archivo Black', sans-serif;
-            font-size: 3.4rem;
-            line-height: 1.06;
-            margin: 0 0 22px;
-            color: var(--paper);
-            letter-spacing: -0.01em;
-        }
-
-        .hero-title .accent {
-            color: var(--gold);
-        }
-
-        .hero-sub {
-            font-size: 1.08rem;
-            line-height: 1.65;
-            color: rgba(250, 247, 242, 0.78);
-            max-width: 480px;
-            margin: 0 0 36px;
-        }
-
-        .hero-actions {
-            display: flex;
-            gap: 14px;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-
-        .btn {
-            font-family: 'Archivo', sans-serif;
-            font-weight: 700;
-            font-size: 0.97rem;
-            padding: 15px 28px;
-            border-radius: 11px;
-            border: none;
-            cursor: pointer;
-            transition: 0.2s;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .btn-primary {
-            background: var(--gold);
-            color: var(--ink);
-        }
-
-        .btn-primary:hover {
-            background: var(--gold-bright);
-            transform: translateY(-2px);
-            box-shadow: 0 12px 26px -10px rgba(212, 175, 55, 0.5);
-        }
-
-        .btn-secondary {
-            background: rgba(255, 255, 255, 0.08);
-            color: var(--paper);
-            border: 1.5px solid rgba(255, 255, 255, 0.25);
-        }
-
-        .btn-secondary:hover {
-            border-color: var(--paper);
-            background: rgba(255, 255, 255, 0.14);
-        }
-
-        /* ---------- SECTION HEADERS ---------- */
-
-        .section {
-            padding: 70px 0;
-        }
-
-        .section-head {
-            display: flex;
-            align-items: flex-end;
-            justify-content: space-between;
-            margin-bottom: 42px;
-            flex-wrap: wrap;
-            gap: 18px;
-        }
-
-        .section-eyebrow {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.78rem;
-            letter-spacing: 0.1em;
-            color: var(--violet);
-            text-transform: uppercase;
-            margin-bottom: 10px;
-            display: block;
-        }
-
-        .section-title {
-            font-family: 'Archivo Black', sans-serif;
-            font-size: 2.1rem;
-            margin: 0;
-            color: var(--ink);
-        }
-
-        .section-note {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.78rem;
-            color: var(--graphite);
-            max-width: 280px;
-            text-align: right;
-        }
-
-        /* ---------- STATS ---------- */
-
-        .stat-row {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            border: 1px solid var(--line);
-            border-radius: var(--radius);
-            overflow: hidden;
-            background: var(--white);
-        }
-
-        .stat-cell {
-            padding: 32px 30px;
-            border-right: 1px solid var(--line);
-            transition: background 0.2s;
-        }
-
-        .stat-cell:last-child {
-            border-right: none;
-        }
-
-        .stat-cell:hover {
-            background: var(--paper-dim);
-        }
-
-        .stat-tag {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.7rem;
-            color: var(--graphite);
-            letter-spacing: 0.08em;
-        }
-
-        .stat-num {
-            font-family: 'Archivo Black', sans-serif;
-            font-size: 2.5rem;
-            color: var(--ink);
-            margin: 8px 0 4px;
-        }
-
-        .stat-num .plus {
-            color: var(--gold);
-        }
-
-        .stat-label {
-            font-size: 0.92rem;
-            color: var(--graphite);
-            font-weight: 600;
-        }
-
-        /* ---------- EVENT CARDS ---------- */
-
-        .event-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-        }
-
-        .event-card {
-            background: var(--white);
-            border: 1px solid var(--line);
-            border-radius: var(--radius);
-            padding: 28px 26px;
-            transition: transform 0.25s ease-out, box-shadow 0.25s, border-color 0.25s;
-            position: relative;
-        }
-
-        .event-card:hover {
-            transform: translateY(-5px);
-            border-color: transparent;
-            box-shadow: 0 18px 36px -16px rgba(27, 14, 51, 0.18);
-        }
-
-        .event-icon-wrap {
-            width: 48px;
-            height: 48px;
-            border-radius: 12px;
-            background: var(--violet-soft);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            margin-bottom: 18px;
-        }
-
-        .event-card h4 {
-            font-family: 'Archivo', sans-serif;
-            font-weight: 800;
-            font-size: 1.1rem;
-            margin: 0 0 8px;
-            color: var(--ink);
-        }
-
-        .event-card p {
-            font-size: 0.9rem;
-            color: var(--graphite);
-            line-height: 1.55;
-            margin: 0;
-        }
-
-        .event-tag {
-            position: absolute;
-            top: 28px;
-            right: 24px;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.65rem;
-            padding: 4px 10px;
-            border-radius: 99px;
-            background: var(--paper-dim);
-            color: var(--graphite);
-            letter-spacing: 0.04em;
-        }
-
-        /* ---------- FEATURES ---------- */
-
-        .feature-strip {
-            background: linear-gradient(135deg, var(--ink) 0%, var(--ink-soft) 100%);
-            border-radius: 24px;
-            padding: 56px 50px;
-            color: var(--paper);
-        }
-
-        .feature-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 36px;
-            margin-top: 36px;
-        }
-
-        .feature-item {
-            border-left: 2px solid rgba(250, 247, 242, 0.18);
-            padding-left: 20px;
-            transition: border-color 0.2s;
-        }
-
-        .feature-item:hover {
-            border-color: var(--gold);
-        }
-
-        .feature-num {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.75rem;
-            color: var(--gold);
-            margin-bottom: 14px;
-            display: block;
-        }
-
-        .feature-item h5 {
-            font-family: 'Archivo', sans-serif;
-            font-weight: 800;
-            font-size: 1.02rem;
-            margin: 0 0 8px;
-        }
-
-        .feature-item p {
-            font-size: 0.86rem;
-            color: rgba(250, 247, 242, 0.62);
-            line-height: 1.55;
-            margin: 0;
-        }
-
-        .feature-head-title {
-            font-family: 'Archivo Black', sans-serif;
-            font-size: 1.7rem;
-            margin: 0;
-            max-width: 440px;
-            line-height: 1.25;
-        }
-
-        /* ---------- FOOTER ---------- */
-
-        footer {
-            margin-top: 40px;
-            padding: 36px 0 32px;
-            border-top: 1px solid var(--line);
-        }
-
-        .footer-row {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 16px;
-        }
-
-        .footer-brand {
-            font-family: 'Archivo Black', sans-serif;
-            font-size: 1rem;
-        }
-
-        .footer-meta {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.74rem;
-            color: var(--graphite);
-        }
-
-        /* ---------- SCROLL REVEAL ---------- */
-
-        .reveal {
-            opacity: 0;
-            transform: translateY(24px);
-            transition: opacity 0.55s ease-out, transform 0.55s ease-out;
-        }
-
-        .reveal.in-view {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* ---------- RESPONSIVE ---------- */
-
-        @media (max-width:920px) {
-            .hero-title {
-                font-size: 2.6rem;
-            }
-
-            .stat-row {
-                grid-template-columns: 1fr;
-            }
-
-            .stat-cell {
-                border-right: none;
-                border-bottom: 1px solid var(--line);
-            }
-
-            .stat-cell:last-child {
-                border-bottom: none;
-            }
-
-            .event-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .feature-grid {
-                grid-template-columns: 1fr 1fr;
-                gap: 28px;
-            }
-
-            .section-note {
-                text-align: left;
-            }
-        }
-
-        @media (max-width:560px) {
-            .topbar {
-                flex-wrap: wrap;
-                gap: 12px;
-            }
-
-            .topbar-actions {
-                width: 100%;
-                justify-content: flex-start;
-                flex-wrap: wrap;
-            }
-
-            .hero-title {
-                font-size: 2.1rem;
-            }
-
-            .feature-strip {
-                padding: 36px 26px;
-            }
-
-            .feature-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        a:focus-visible,
-        button:focus-visible {
-            outline: 2px solid var(--violet);
-            outline-offset: 3px;
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-            * {
-                transition: none !important;
-            }
-
-            .reveal {
-                opacity: 1 !important;
-                transform: none !important;
-            }
-        }
-    </style>
-</head>
-
-<body>
-
-    
-    <div class="topbar-wrap">
-        <div class="topbar">
-            <a href="/" class="brand">
-                <span class="brand-mark">E</span>
-                Event Portal
-            </a>
-
-            <div class="topbar-actions">
-                <a th:href="@{/admin-login}" href="/admin-login" class="btn-admin">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                        stroke-linejoin="round">
-                        <path d="M12 2l8 4v6c0 5-3.5 8-8 10-4.5-2-8-5-8-10V6l8-4z" />
-                    </svg>
-                    Admin Login
-                </a>
-            </div>
-        </div>
-    </div>
-
-    
-    <div class="hero">
-        <div class="hero-bg"></div>
-        <div class="hero-bg-2"></div>
-
-        <div class="container hero-center">
-
-            <span class="eyebrow-pill"><span class="eyebrow-dot"></span> College Event Management System</span>
-
-            <h1 class="hero-title">Run your campus events,<br>all in <span class="accent">one place.</span></h1>
-
-            <p class="hero-sub">
-                Discover what's happening, register in seconds, and keep every
-                certificate organized — built for hackathons, symposiums, workshops
-                and fests.
-            </p>
-
-            <div class="hero-actions">
-                <a th:href="@{/signup}" href="/signup" class="btn btn-primary">Create your account</a>
-                <a th:href="@{/login}" href="/login" class="btn btn-secondary">Student Login</a>
-            </div>
-
-        </div>
-    </div>
-
-    
-    <div class="container section reveal" style="padding-top:0;">
-        <div class="stat-row">
-            <div class="stat-cell">
-                <span class="stat-tag mono">001 / EVENTS</span>
-                <div class="stat-num">50<span class="plus">+</span></div>
-                <div class="stat-label">Total events hosted</div>
-            </div>
-            <div class="stat-cell">
-                <span class="stat-tag mono">002 / STUDENTS</span>
-                <div class="stat-num">1,000<span class="plus">+</span></div>
-                <div class="stat-label">Students on the platform</div>
-            </div>
-            <div class="stat-cell">
-                <span class="stat-tag mono">003 / SIGN-UPS</span>
-                <div class="stat-num">500<span class="plus">+</span></div>
-                <div class="stat-label">Registrations this term</div>
-            </div>
-        </div>
-    </div>
-
-    
-    <div class="container section">
-        <div class="section-head reveal">
-            <div>
-                <span class="section-eyebrow">Browse by category</span>
-                <h2 class="section-title">Explore event categories</h2>
-            </div>
-            <p class="section-note">Six categories, updated every semester as new events get added.</p>
-        </div>
-
-        <div class="event-grid">
-
-            <div class="event-card reveal">
-                <span class="event-tag">Tech</span>
-                <div class="event-icon-wrap">💻</div>
-                <h4>Tech Events</h4>
-                <p>Coding contests, project expos and technical competitions.</p>
-            </div>
-
-            <div class="event-card reveal">
-                <span class="event-tag">Build</span>
-                <div class="event-icon-wrap">🚀</div>
-                <h4>Hackathons</h4>
-                <p>Build innovative solutions and compete with top students.</p>
-            </div>
-
-            <div class="event-card reveal">
-                <span class="event-tag">Academic</span>
-                <div class="event-icon-wrap">🎓</div>
-                <h4>Symposiums</h4>
-                <p>Present papers, share knowledge and network with peers.</p>
-            </div>
-
-            <div class="event-card reveal">
-                <span class="event-tag">Learn</span>
-                <div class="event-icon-wrap">🤖</div>
-                <h4>AI Workshops</h4>
-                <p>Learn Machine Learning, AI and modern technologies.</p>
-            </div>
-
-            <div class="event-card reveal">
-                <span class="event-tag">Compete</span>
-                <div class="event-icon-wrap">🏆</div>
-                <h4>Competitions</h4>
-                <p>Showcase your skills and win exciting prizes.</p>
-            </div>
-
-            <div class="event-card reveal">
-                <span class="event-tag">Culture</span>
-                <div class="event-icon-wrap">🎤</div>
-                <h4>Cultural Events</h4>
-                <p>Music, dance, arts and entertainment activities.</p>
-            </div>
-
-        </div>
-    </div>
-
-    
-    <div class="container section">
-        <div class="feature-strip reveal">
-
-            <h3 class="feature-head-title">Everything a student needs to run their event life from one dashboard.</h3>
-
-            <div class="feature-grid">
-
-                <div class="feature-item">
-                    <span class="feature-num mono">01</span>
-                    <h5>Easy registration</h5>
-                    <p>Register for events in seconds, no paperwork involved.</p>
-                </div>
-
-                <div class="feature-item">
-                    <span class="feature-num mono">02</span>
-                    <h5>Track events</h5>
-                    <p>Stay updated with upcoming events and deadlines.</p>
-                </div>
-
-                <div class="feature-item">
-                    <span class="feature-num mono">03</span>
-                    <h5>Certificates</h5>
-                    <p>Download participation certificates the moment events close.</p>
-                </div>
-
-                <div class="feature-item">
-                    <span class="feature-num mono">04</span>
-                    <h5>Student dashboard</h5>
-                    <p>Manage registrations, certificates and history in one place.</p>
-                </div>
-
-            </div>
-        </div>
-    </div>
-
-    
-    <div class="container">
-        <footer>
-            <div class="footer-row">
-                <span class="footer-brand">Event Portal</span>
-                <span class="footer-meta">College Event Management System · © 2026</span>
-            </div>
-        </footer>
-    </div>
-
-    <script>
-        (function () {
-            var revealEls = document.querySelectorAll('.reveal');
-            if ('IntersectionObserver' in window) {
-                var io = new IntersectionObserver(function (entries) {
-                    entries.forEach(function (entry) {
-                        if (entry.isIntersecting) {
-                            var el = entry.target;
-                            var siblings = Array.prototype.slice.call(el.parentElement.querySelectorAll('.reveal'));
-                            var delay = el.classList.contains('event-card') ? siblings.indexOf(el) * 80 : 0;
-                            setTimeout(function () { el.classList.add('in-view'); }, delay);
-                            io.unobserve(el);
-                        }
-                    });
-                }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
-                revealEls.forEach(function (el) { io.observe(el); });
-            } else {
-                revealEls.forEach(function (el) { el.classList.add('in-view'); });
-            }
-        })();
-    </script>
-
-</body>
-
-</html> -->
-
-
-
-
-
-
-
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 
@@ -1132,30 +9,27 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Archivo:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Instrument+Serif&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;600&display=swap"
         rel="stylesheet">
 
     <style>
         :root {
-            --ink: #0F0823;
-            --ink-soft: #1E1145;
-            --ink-deep: #08041A;
-            --paper: #F8F5EF;
-            --paper-dim: #EFEAE0;
-            --white: #FFFFFF;
-            --gold: #E8B73C;
-            --gold-bright: #F5D061;
-            --gold-deep: #B8881F;
-            --violet: #8B5CF6;
-            --violet-deep: #6D28D9;
-            --violet-soft: #EDE4FD;
-            --pink: #EC4899;
-            --cyan: #22D3EE;
-            --graphite: #645B78;
-            --line: rgba(15, 8, 35, 0.09);
-            --radius: 18px;
-            --shadow-soft: 0 1px 2px rgba(15, 8, 35, 0.04), 0 8px 24px -12px rgba(15, 8, 35, 0.12);
-            --shadow-lift: 0 24px 50px -22px rgba(15, 8, 35, 0.32);
+            --ink: #101828;
+            --slate: #475467;
+            --slate-soft: #667085;
+            --line: #E4E7EC;
+            --line-soft: #EEF1F5;
+            --surface: #FFFFFF;
+            --surface-alt: #F8F9FB;
+            --primary: #2451D6;
+            --primary-dark: #1B3AA8;
+            --primary-tint: #EEF2FE;
+            --success: #16A34A;
+            --success-tint: #EAF7EE;
+            --radius: 16px;
+            --shadow-sm: 0 1px 2px rgba(16, 24, 40, 0.05);
+            --shadow-md: 0 4px 12px -4px rgba(16, 24, 40, 0.08), 0 2px 4px -2px rgba(16, 24, 40, 0.05);
+            --shadow-lg: 0 20px 40px -12px rgba(16, 24, 40, 0.16);
         }
 
         * {
@@ -1168,14 +42,11 @@
 
         body {
             margin: 0;
-            background: var(--paper);
+            background: var(--surface);
             color: var(--ink);
-            font-family: 'Archivo', sans-serif;
+            font-family: 'Inter', sans-serif;
             -webkit-font-smoothing: antialiased;
             overflow-x: hidden;
-            background-image:
-                radial-gradient(circle at 15% 8%, rgba(139, 92, 246, 0.06) 0%, transparent 35%),
-                radial-gradient(circle at 90% 60%, rgba(232, 183, 60, 0.05) 0%, transparent 40%);
         }
 
         a {
@@ -1189,67 +60,65 @@
 
         .mono {
             font-family: 'JetBrains Mono', monospace;
-            letter-spacing: 0.04em;
+            letter-spacing: 0.03em;
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1160px;
             margin: 0 auto;
             padding: 0 28px;
         }
 
-        /* ---------- TOP BAR ---------- */
-        .topbar-wrap {
-            background: linear-gradient(120deg, var(--ink-deep) 0%, var(--ink) 50%, var(--ink-soft) 100%);
-            position: relative;
-            overflow: hidden;
+        h1,
+        h2,
+        h3,
+        h4,
+        h5 {
+            font-family: 'Manrope', sans-serif;
         }
 
-        .topbar-wrap::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background-image:
-                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-            background-size: 32px 32px;
-            mask-image: linear-gradient(90deg, transparent, black 30%, black 70%, transparent);
+        /* ---------- TOP BAR ---------- */
+        .topbar-wrap {
+            border-bottom: 1px solid var(--line);
+            position: sticky;
+            top: 0;
+            z-index: 20;
+            backdrop-filter: blur(8px);
+            background: rgba(255, 255, 255, 0.92);
         }
 
         .topbar {
-            position: relative;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 20px 28px;
-            max-width: 1200px;
+            padding: 16px 28px;
+            max-width: 1160px;
             margin: 0 auto;
         }
 
         .brand {
             display: flex;
             align-items: center;
-            gap: 12px;
-            font-family: 'Archivo Black', sans-serif;
-            font-size: 1.28rem;
-            color: var(--paper);
+            gap: 10px;
+            font-family: 'Manrope', sans-serif;
+            font-weight: 800;
+            font-size: 1.18rem;
+            color: var(--ink);
             letter-spacing: -0.01em;
         }
 
         .brand-mark {
-            width: 38px;
-            height: 38px;
-            background: linear-gradient(135deg, var(--gold-bright), var(--gold-deep));
-            border-radius: 11px;
+            width: 32px;
+            height: 32px;
+            background: var(--primary);
+            border-radius: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: var(--ink);
-            font-family: 'Archivo Black', sans-serif;
-            font-size: 1.15rem;
-            box-shadow: 0 4px 14px -2px rgba(232, 183, 60, 0.5),
-                inset 0 1px 0 rgba(255, 255, 255, 0.4);
-            transform: rotate(-3deg);
+            color: #fff;
+            font-family: 'Manrope', sans-serif;
+            font-weight: 800;
+            font-size: 0.95rem;
         }
 
         .topbar-actions {
@@ -1259,305 +128,258 @@
         }
 
         .btn-admin {
-            font-weight: 700;
+            font-weight: 600;
             font-size: 0.88rem;
-            color: var(--paper);
-            background: rgba(255, 255, 255, 0.06);
-            border: 1.5px solid rgba(255, 255, 255, 0.14);
-            padding: 10px 18px;
-            border-radius: 10px;
-            transition: 0.25s ease;
+            color: var(--slate);
+            background: transparent;
+            border: none;
+            padding: 9px 14px;
+            border-radius: 8px;
+            transition: 0.2s ease;
             display: inline-flex;
             align-items: center;
             gap: 7px;
-            backdrop-filter: blur(8px);
         }
 
         .btn-admin:hover {
-            background: var(--gold);
+            background: var(--surface-alt);
             color: var(--ink);
-            border-color: var(--gold);
-            transform: translateY(-1px);
         }
 
         .btn-admin svg {
-            width: 14px;
-            height: 14px;
+            width: 15px;
+            height: 15px;
         }
 
         /* ---------- HERO ---------- */
         .hero {
-            position: relative;
-            padding: 100px 0 130px;
-            overflow: hidden;
-            background:
-                radial-gradient(ellipse at 50% 120%, rgba(139, 92, 246, 0.45) 0%, transparent 55%),
-                linear-gradient(165deg, var(--ink-deep) 0%, var(--ink) 40%, #2A1758 80%, #4B2A8A 100%);
+            padding: 76px 0 90px;
+            background: var(--surface);
         }
 
-        .hero::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background-image:
-                linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
-            background-size: 48px 48px;
-            mask-image: radial-gradient(ellipse at center, black 30%, transparent 75%);
-            pointer-events: none;
-        }
-
-        .hero-bg {
-            position: absolute;
-            top: -240px;
-            right: -180px;
-            width: 680px;
-            height: 680px;
-            background: radial-gradient(circle, rgba(232, 183, 60, 0.28) 0%, rgba(232, 183, 60, 0.06) 45%, transparent 72%);
-            border-radius: 50%;
-            pointer-events: none;
-            filter: blur(8px);
-            animation: float1 14s ease-in-out infinite;
-        }
-
-        .hero-bg-2 {
-            position: absolute;
-            bottom: -260px;
-            left: -180px;
-            width: 580px;
-            height: 580px;
-            background: radial-gradient(circle, rgba(236, 72, 153, 0.28) 0%, rgba(139, 92, 246, 0.18) 45%, transparent 70%);
-            border-radius: 50%;
-            pointer-events: none;
-            filter: blur(8px);
-            animation: float2 16s ease-in-out infinite;
-        }
-
-        .hero-orb {
-            position: absolute;
-            top: 30%;
-            left: 8%;
-            width: 220px;
-            height: 220px;
-            background: radial-gradient(circle, rgba(34, 211, 238, 0.22) 0%, transparent 70%);
-            border-radius: 50%;
-            filter: blur(20px);
-            animation: float1 18s ease-in-out infinite reverse;
-        }
-
-        @keyframes float1 {
-
-            0%,
-            100% {
-                transform: translate(0, 0);
-            }
-
-            50% {
-                transform: translate(-30px, 30px);
-            }
-        }
-
-        @keyframes float2 {
-
-            0%,
-            100% {
-                transform: translate(0, 0);
-            }
-
-            50% {
-                transform: translate(40px, -25px);
-            }
-        }
-
-        .hero-center {
-            position: relative;
-            z-index: 1;
-            max-width: 760px;
-            margin: 0 auto;
-            text-align: center;
-            display: flex;
-            flex-direction: column;
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 56px;
             align-items: center;
         }
 
         .eyebrow-pill {
             display: inline-flex;
             align-items: center;
-            gap: 9px;
-            background: rgba(255, 255, 255, 0.06);
-            border: 1px solid rgba(255, 255, 255, 0.16);
-            padding: 8px 18px 8px 10px;
+            gap: 8px;
+            background: var(--primary-tint);
+            padding: 7px 14px;
             border-radius: 99px;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.74rem;
-            letter-spacing: 0.06em;
-            color: rgba(248, 245, 239, 0.9);
-            margin-bottom: 28px;
-            backdrop-filter: blur(10px);
-            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--primary-dark);
+            margin-bottom: 22px;
         }
 
-        .eyebrow-dot {
-            width: 8px;
-            height: 8px;
+        .eyebrow-pill .dot {
+            width: 6px;
+            height: 6px;
             border-radius: 50%;
-            background: var(--gold);
-            box-shadow: 0 0 0 0 rgba(232, 183, 60, 0.7);
-            animation: pulse 2s ease-out infinite;
-        }
-
-        @keyframes pulse {
-            0% {
-                box-shadow: 0 0 0 0 rgba(232, 183, 60, 0.7);
-            }
-
-            70% {
-                box-shadow: 0 0 0 10px rgba(232, 183, 60, 0);
-            }
-
-            100% {
-                box-shadow: 0 0 0 0 rgba(232, 183, 60, 0);
-            }
+            background: var(--primary);
         }
 
         .hero-title {
-            font-family: 'Archivo Black', sans-serif;
-            font-size: clamp(2.4rem, 5.5vw, 3.9rem);
-            line-height: 1.04;
-            margin: 0 0 24px;
-            color: var(--paper);
+            font-weight: 800;
+            font-size: clamp(2.1rem, 4vw, 3.1rem);
+            line-height: 1.12;
+            margin: 0 0 20px;
             letter-spacing: -0.02em;
+            color: var(--ink);
         }
 
         .hero-title .accent {
-            background: linear-gradient(120deg, var(--gold-bright) 0%, var(--gold) 40%, #FFE89A 70%, var(--gold-bright) 100%);
-            background-size: 200% auto;
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: shine 5s linear infinite;
-            font-style: italic;
-            font-family: 'Instrument Serif', serif;
-            font-weight: 400;
-            letter-spacing: 0;
-        }
-
-        @keyframes shine {
-            to {
-                background-position: 200% center;
-            }
+            color: var(--primary);
         }
 
         .hero-sub {
-            font-size: 1.1rem;
+            font-size: 1.05rem;
             line-height: 1.65;
-            color: rgba(248, 245, 239, 0.78);
-            max-width: 520px;
-            margin: 0 0 40px;
+            color: var(--slate);
+            max-width: 460px;
+            margin: 0 0 32px;
         }
 
         .hero-actions {
             display: flex;
-            gap: 14px;
+            gap: 12px;
             flex-wrap: wrap;
-            justify-content: center;
+            margin-bottom: 30px;
         }
 
         .btn {
             font-weight: 700;
-            font-size: 0.98rem;
-            padding: 16px 30px;
-            border-radius: 12px;
+            font-size: 0.95rem;
+            padding: 13px 24px;
+            border-radius: 10px;
             border: none;
             cursor: pointer;
-            transition: 0.25s ease;
+            transition: 0.2s ease;
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            position: relative;
-            overflow: hidden;
         }
 
         .btn-primary {
-            background: linear-gradient(135deg, var(--gold-bright) 0%, var(--gold) 100%);
-            color: var(--ink);
-            box-shadow: 0 8px 24px -8px rgba(232, 183, 60, 0.55),
-                inset 0 1px 0 rgba(255, 255, 255, 0.4);
+            background: var(--primary);
+            color: #fff;
+            box-shadow: 0 2px 8px -2px rgba(36, 81, 214, 0.45);
         }
 
         .btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 16px 36px -10px rgba(232, 183, 60, 0.65),
-                inset 0 1px 0 rgba(255, 255, 255, 0.4);
-        }
-
-        .btn-primary::after {
-            content: '→';
-            transition: transform 0.25s;
-        }
-
-        .btn-primary:hover::after {
-            transform: translateX(4px);
+            background: var(--primary-dark);
+            transform: translateY(-1px);
         }
 
         .btn-secondary {
-            background: rgba(255, 255, 255, 0.06);
-            color: var(--paper);
-            border: 1.5px solid rgba(255, 255, 255, 0.22);
-            backdrop-filter: blur(10px);
+            background: var(--surface);
+            color: var(--ink);
+            border: 1.5px solid var(--line);
         }
 
         .btn-secondary:hover {
-            border-color: var(--paper);
-            background: rgba(255, 255, 255, 0.12);
-            transform: translateY(-3px);
+            border-color: var(--slate-soft);
+            background: var(--surface-alt);
+        }
+
+        .hero-trust {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            font-size: 0.84rem;
+            color: var(--slate-soft);
+            font-weight: 500;
+        }
+
+        .hero-trust span {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .hero-trust svg {
+            width: 15px;
+            height: 15px;
+            color: var(--success);
+        }
+
+        /* ---------- HERO TYPING PANEL ---------- */
+        .type-wrap {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .type-card {
+            width: 100%;
+            max-width: 420px;
+            min-height: 300px;
+            background: var(--surface);
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-lg);
+            padding: 36px 32px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .type-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
+            background: var(--primary-tint);
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .type-icon svg {
+            width: 22px;
+            height: 22px;
+        }
+
+        .type-text {
+            font-size: 1.02rem;
+            line-height: 1.7;
+            color: var(--ink);
+            font-weight: 500;
+            margin: 0;
+        }
+
+        .type-cursor {
+            display: inline-block;
+            width: 2px;
+            margin-left: 2px;
+            background: var(--primary);
+            animation: caretBlink 0.9s step-end infinite;
+        }
+
+        @keyframes caretBlink {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .type-cursor {
+                animation: none;
+            }
         }
 
         /* ---------- SECTIONS ---------- */
         .section {
-            padding: 90px 0;
+            padding: 76px 0;
+        }
+
+        .section.alt {
+            background: var(--surface-alt);
         }
 
         .section-head {
             display: flex;
             align-items: flex-end;
             justify-content: space-between;
-            margin-bottom: 48px;
+            margin-bottom: 40px;
             flex-wrap: wrap;
-            gap: 20px;
+            gap: 18px;
         }
 
         .section-eyebrow {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.76rem;
-            letter-spacing: 0.14em;
-            color: var(--violet-deep);
+            font-size: 0.82rem;
+            font-weight: 700;
+            color: var(--primary);
             text-transform: uppercase;
-            margin-bottom: 12px;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .section-eyebrow::before {
-            content: '';
-            width: 24px;
-            height: 1.5px;
-            background: var(--violet-deep);
+            letter-spacing: 0.06em;
+            margin-bottom: 10px;
+            display: inline-block;
         }
 
         .section-title {
-            font-family: 'Archivo Black', sans-serif;
-            font-size: clamp(1.7rem, 3.5vw, 2.3rem);
+            font-weight: 800;
+            font-size: clamp(1.5rem, 2.8vw, 1.95rem);
             margin: 0;
             color: var(--ink);
-            letter-spacing: -0.015em;
+            letter-spacing: -0.01em;
         }
 
         .section-note {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.78rem;
-            color: var(--graphite);
+            font-size: 0.9rem;
+            color: var(--slate);
             max-width: 300px;
             text-align: right;
             line-height: 1.5;
@@ -1568,264 +390,239 @@
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             border: 1px solid var(--line);
-            border-radius: 20px;
+            border-radius: var(--radius);
             overflow: hidden;
-            background: var(--white);
-            box-shadow: var(--shadow-soft);
+            background: var(--surface);
         }
 
         .stat-cell {
-            padding: 36px 32px;
-            border-right: 1px solid var(--line);
-            transition: 0.3s ease;
-            position: relative;
-            overflow: hidden;
+            padding: 30px 32px;
         }
 
-        .stat-cell::after {
-            content: '';
-            position: absolute;
-            inset: auto 0 0 0;
-            height: 3px;
-            background: linear-gradient(90deg, var(--violet), var(--gold));
-            transform: scaleX(0);
-            transform-origin: left;
-            transition: transform 0.4s ease;
-        }
-
-        .stat-cell:last-child {
-            border-right: none;
-        }
-
-        .stat-cell:hover {
-            background: var(--paper-dim);
-        }
-
-        .stat-cell:hover::after {
-            transform: scaleX(1);
-        }
-
-        .stat-tag {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.7rem;
-            color: var(--graphite);
-            letter-spacing: 0.1em;
+        .stat-cell+.stat-cell {
+            border-left: 1px solid var(--line);
         }
 
         .stat-num {
-            font-family: 'Archivo Black', sans-serif;
-            font-size: 2.8rem;
+            font-family: 'Manrope', sans-serif;
+            font-weight: 800;
+            font-size: 2.4rem;
             color: var(--ink);
-            margin: 10px 0 4px;
             letter-spacing: -0.02em;
         }
 
         .stat-num .plus {
-            background: linear-gradient(135deg, var(--gold) 0%, var(--gold-bright) 100%);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: var(--primary);
         }
 
         .stat-label {
-            font-size: 0.92rem;
-            color: var(--graphite);
-            font-weight: 600;
+            font-size: 0.9rem;
+            color: var(--slate);
+            font-weight: 500;
+            margin-top: 4px;
         }
 
-        /* ---------- EVENT CARDS ---------- */
-        .event-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 22px;
+        /* ---------- EVENT CATEGORY CARDS — OPPOSING MARQUEE ROWS ---------- */
+        .marquee-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .marquee-row {
+            overflow: hidden;
+            -webkit-mask-image: linear-gradient(90deg, transparent, black 6%, black 94%, transparent);
+            mask-image: linear-gradient(90deg, transparent, black 6%, black 94%, transparent);
+        }
+
+        .marquee-track {
+            display: flex;
+            gap: 20px;
+            width: max-content;
+        }
+
+        .track-ltr {
+            animation: marqueeLTR 26s linear infinite;
+        }
+
+        .track-rtl {
+            animation: marqueeRTL 26s linear infinite;
+        }
+
+        .marquee-row:hover .marquee-track {
+            animation-play-state: paused;
+        }
+
+        @keyframes marqueeLTR {
+            from {
+                transform: translateX(-50%);
+            }
+
+            to {
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes marqueeRTL {
+            from {
+                transform: translateX(0);
+            }
+
+            to {
+                transform: translateX(-50%);
+            }
         }
 
         .event-card {
-            background: var(--white);
+            background: var(--surface);
             border: 1px solid var(--line);
             border-radius: var(--radius);
-            padding: 30px 28px;
-            transition: all 0.35s cubic-bezier(.2, .7, .2, 1);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .event-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 0;
-            background: linear-gradient(135deg, var(--violet-soft), transparent);
-            transition: height 0.35s ease;
-            z-index: 0;
+            padding: 26px 24px;
+            transition: 0.2s ease;
+            width: 320px;
+            flex: 0 0 auto;
         }
 
         .event-card:hover {
-            transform: translateY(-6px);
-            border-color: transparent;
-            box-shadow: var(--shadow-lift);
-        }
-
-        .event-card:hover::before {
-            height: 100%;
-        }
-
-        .event-card>* {
-            position: relative;
-            z-index: 1;
+            border-color: var(--primary);
+            box-shadow: var(--shadow-md);
+            transform: translateY(-3px);
         }
 
         .event-icon-wrap {
-            width: 54px;
-            height: 54px;
-            border-radius: 14px;
-            background: linear-gradient(135deg, var(--violet-soft), #F8F1FF);
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
+            background: var(--primary-tint);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.6rem;
-            margin-bottom: 20px;
-            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8),
-                0 4px 14px -6px rgba(139, 92, 246, 0.3);
-            transition: transform 0.35s ease;
-        }
-
-        .event-card:hover .event-icon-wrap {
-            transform: rotate(-6deg) scale(1.08);
+            font-size: 1.35rem;
+            margin-bottom: 18px;
         }
 
         .event-card h4 {
-            font-weight: 800;
-            font-size: 1.12rem;
+            font-weight: 700;
+            font-size: 1.05rem;
             margin: 0 0 8px;
             color: var(--ink);
-            letter-spacing: -0.01em;
         }
 
         .event-card p {
-            font-size: 0.92rem;
-            color: var(--graphite);
+            font-size: 0.89rem;
+            color: var(--slate);
             line-height: 1.6;
             margin: 0;
-        }
-
-        .event-tag {
-            position: absolute;
-            top: 28px;
-            right: 24px;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.65rem;
-            padding: 5px 11px;
-            border-radius: 99px;
-            background: var(--paper-dim);
-            color: var(--graphite);
-            letter-spacing: 0.06em;
-            font-weight: 600;
-            z-index: 2;
         }
 
         /* ---------- FEATURES ---------- */
-        .feature-strip {
-            background: linear-gradient(135deg, var(--ink-deep) 0%, var(--ink) 50%, #2A1758 100%);
-            border-radius: 28px;
-            padding: 64px 56px;
-            color: var(--paper);
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 40px 80px -30px rgba(15, 8, 35, 0.4);
-        }
-
-        .feature-strip::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background-image:
-                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-            background-size: 40px 40px;
-            mask-image: radial-gradient(ellipse at top right, black, transparent 70%);
-        }
-
-        .feature-strip::after {
-            content: '';
-            position: absolute;
-            top: -100px;
-            right: -100px;
-            width: 400px;
-            height: 400px;
-            background: radial-gradient(circle, rgba(232, 183, 60, 0.18) 0%, transparent 70%);
-            border-radius: 50%;
-            pointer-events: none;
-        }
-
-        .feature-strip>* {
-            position: relative;
-            z-index: 1;
-        }
-
-        .feature-grid {
+        .feature-layout {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 40px;
-            margin-top: 44px;
+            grid-template-columns: 0.85fr 1.15fr;
+            gap: 60px;
+            align-items: start;
         }
 
-        .feature-item {
-            border-left: 2px solid rgba(248, 245, 239, 0.16);
-            padding-left: 22px;
-            transition: border-color 0.25s, padding-left 0.25s;
-        }
-
-        .feature-item:hover {
-            border-color: var(--gold);
-            padding-left: 26px;
-        }
-
-        .feature-num {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.75rem;
-            color: var(--gold);
-            margin-bottom: 16px;
-            display: block;
-            letter-spacing: 0.1em;
-        }
-
-        .feature-item h5 {
+        .feature-heading {
             font-weight: 800;
-            font-size: 1.05rem;
-            margin: 0 0 10px;
-            letter-spacing: -0.01em;
-        }
-
-        .feature-item p {
-            font-size: 0.88rem;
-            color: rgba(248, 245, 239, 0.65);
-            line-height: 1.6;
-            margin: 0;
-        }
-
-        .feature-head-title {
-            font-family: 'Archivo Black', sans-serif;
-            font-size: clamp(1.5rem, 3vw, 1.95rem);
-            margin: 0;
-            max-width: 500px;
-            line-height: 1.25;
+            font-size: clamp(1.5rem, 3vw, 2rem);
+            line-height: 1.3;
+            margin: 0 0 16px;
             letter-spacing: -0.015em;
         }
 
-        .feature-head-title em {
-            font-family: 'Instrument Serif', serif;
-            font-style: italic;
-            font-weight: 400;
-            color: var(--gold-bright);
+        .feature-heading .accent {
+            color: var(--primary);
+        }
+
+        .feature-desc {
+            font-size: 0.96rem;
+            color: var(--slate);
+            line-height: 1.65;
+            max-width: 380px;
+        }
+
+        .feature-list {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        .feature-item {
+            display: flex;
+            gap: 14px;
+        }
+
+        .feature-check {
+            width: 32px;
+            height: 32px;
+            border-radius: 9px;
+            background: var(--success-tint);
+            color: var(--success);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .feature-check svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        .feature-item h5 {
+            font-weight: 700;
+            font-size: 0.97rem;
+            margin: 0 0 5px;
+            color: var(--ink);
+        }
+
+        .feature-item p {
+            font-size: 0.87rem;
+            color: var(--slate);
+            line-height: 1.55;
+            margin: 0;
+        }
+
+        /* ---------- CTA BAND ---------- */
+        .cta-band {
+            background: var(--ink);
+            border-radius: 20px;
+            padding: 50px 48px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 24px;
+            flex-wrap: wrap;
+        }
+
+        .cta-band h3 {
+            color: #fff;
+            font-weight: 800;
+            font-size: clamp(1.25rem, 2.4vw, 1.6rem);
+            margin: 0 0 6px;
+            letter-spacing: -0.01em;
+        }
+
+        .cta-band p {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.92rem;
+            margin: 0;
+        }
+
+        .cta-band .btn-primary {
+            background: var(--surface);
+            color: var(--ink);
+            box-shadow: none;
+        }
+
+        .cta-band .btn-primary:hover {
+            background: var(--surface-alt);
         }
 
         /* ---------- FOOTER ---------- */
         footer {
-            margin-top: 60px;
-            padding: 40px 0 36px;
+            padding: 32px 0;
             border-top: 1px solid var(--line);
         }
 
@@ -1834,36 +631,25 @@
             align-items: center;
             justify-content: space-between;
             flex-wrap: wrap;
-            gap: 16px;
+            gap: 14px;
         }
 
         .footer-brand {
-            font-family: 'Archivo Black', sans-serif;
-            font-size: 1.05rem;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .footer-brand::before {
-            content: '';
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--gold), var(--violet));
+            font-family: 'Manrope', sans-serif;
+            font-weight: 700;
+            font-size: 0.98rem;
         }
 
         .footer-meta {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.76rem;
-            color: var(--graphite);
+            font-size: 0.82rem;
+            color: var(--slate-soft);
         }
 
-        /* ---------- SCROLL REVEAL ---------- */
+        /* ---------- SCROLL REVEAL — subtle, single pass ---------- */
         .reveal {
             opacity: 0;
-            transform: translateY(28px);
-            transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+            transform: translateY(14px);
+            transition: opacity 0.5s ease-out, transform 0.5s ease-out;
         }
 
         .reveal.in-view {
@@ -1872,72 +658,62 @@
         }
 
         /* ---------- RESPONSIVE ---------- */
-        @media (max-width: 920px) {
+        @media (max-width: 940px) {
+            .hero-grid {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
             .stat-row {
                 grid-template-columns: 1fr;
             }
 
-            .stat-cell {
-                border-right: none;
-                border-bottom: 1px solid var(--line);
+            .stat-cell+.stat-cell {
+                border-left: none;
+                border-top: 1px solid var(--line);
             }
 
-            .stat-cell:last-child {
-                border-bottom: none;
+            .event-card {
+                width: 270px;
             }
 
-            .event-grid {
+            .feature-layout {
                 grid-template-columns: 1fr;
+                gap: 32px;
             }
 
-            .feature-grid {
-                grid-template-columns: 1fr 1fr;
-                gap: 30px;
+            .feature-list {
+                grid-template-columns: 1fr;
             }
 
             .section-note {
                 text-align: left;
             }
 
-            .feature-strip {
-                padding: 48px 36px;
+            .cta-band {
+                padding: 40px 32px;
             }
         }
 
-        @media (max-width: 560px) {
-            .topbar {
-                flex-wrap: wrap;
-                gap: 12px;
-            }
-
-            .topbar-actions {
-                width: 100%;
-                justify-content: flex-start;
-                flex-wrap: wrap;
+        @media (max-width: 600px) {
+            .event-card {
+                width: 230px;
+                padding: 22px 20px;
             }
 
             .section {
-                padding: 64px 0;
+                padding: 56px 0;
             }
 
-            .feature-strip {
-                padding: 40px 26px;
-                border-radius: 20px;
-            }
-
-            .feature-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .btn {
-                padding: 14px 24px;
-                font-size: 0.94rem;
+            .cta-band {
+                flex-direction: column;
+                align-items: flex-start;
             }
         }
 
         a:focus-visible,
         button:focus-visible {
-            outline: 2px solid var(--violet);
+            outline: 2px solid var(--primary);
             outline-offset: 3px;
         }
 
@@ -1966,66 +742,88 @@
             </a>
             <div class="topbar-actions">
                 <a th:href="@{/admin-login}" href="/admin-login" class="btn-admin">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"
                         stroke-linejoin="round">
-                        <path d="M12 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
-                        <path d="M4 20a8 8 0 0 1 16 0" />
+                        <path d="M12 3l7 3.2v5.3c0 4.6-3 8.9-7 10-4-1.1-7-5.4-7-10V6.2L12 3z" />
+                        <path d="M9.2 12.1l2 2 3.6-3.8" />
                     </svg>
                     Admin Login
                 </a>
+                <a th:href="@{/login}" href="/login" class="btn btn-secondary"
+                    style="padding: 9px 16px; font-size: 0.88rem;">Log in</a>
+                <a th:href="@{/signup}" href="/signup" class="btn btn-primary"
+                    style="padding: 9px 16px; font-size: 0.88rem;">Sign up</a>
             </div>
         </div>
     </div>
 
     <!-- HERO -->
     <section class="hero">
-        <div class="hero-bg"></div>
-        <div class="hero-bg-2"></div>
-        <div class="hero-orb"></div>
-
         <div class="container">
-            <div class="hero-center">
-                <span class="eyebrow-pill">
-                    <span class="eyebrow-dot"></span>
-                    College Event Management System
-                </span>
+            <div class="hero-grid">
+                <div class="reveal">
+                    <span class="eyebrow-pill"><span class="dot"></span>College Event Management System</span>
+                    <h1 class="hero-title">Run your campus events,<br><span class="accent">all in one place.</span></h1>
+                    <p class="hero-sub">
+                        Discover what's happening, register in seconds, and keep every
+                        certificate organized — built for hackathons, symposiums,
+                        workshops and fests.
+                    </p>
+                    <div class="hero-actions">
+                        <a th:href="@{/signup}" href="/signup" class="btn btn-primary">Create your account</a>
+                        <a th:href="@{/login}" href="/login" class="btn btn-secondary">Student login</a>
+                    </div>
+                    <div class="hero-trust">
+                        <span>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M20 6L9 17l-5-5" />
+                            </svg>
+                            Free for all students
+                        </span>
+                        <span>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M20 6L9 17l-5-5" />
+                            </svg>
+                            Instant certificates
+                        </span>
+                    </div>
+                </div>
 
-                <h1 class="hero-title">
-                    Run your campus events,<br>
-                    <span class="accent">all in one place.</span>
-                </h1>
-
-                <p class="hero-sub">
-                    Discover what's happening, register in seconds, and keep every
-                    certificate organized — built for hackathons, symposiums, workshops
-                    and fests.
-                </p>
-
-                <div class="hero-actions">
-                    <a th:href="@{/signup}" href="/signup" class="btn btn-primary">Create your account</a>
-                    <a th:href="@{/login}" href="/login" class="btn btn-secondary">Student Login</a>
+                <div class="type-wrap reveal">
+                    <div class="type-card">
+                        <div class="type-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M12 3l7 3.2v5.3c0 4.6-3 8.9-7 10-4-1.1-7-5.4-7-10V6.2L12 3z" />
+                                <path d="M9.2 12.1l2 2 3.6-3.8" />
+                            </svg>
+                        </div>
+                        <p class="type-text"><span id="heroTypeTarget"></span><span class="type-cursor">&nbsp;</span>
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- STATS -->
-    <section class="section" style="padding-top: 70px;">
+    <section class="section" style="padding-top: 0;">
         <div class="container">
             <div class="stat-row reveal">
                 <div class="stat-cell">
-                    <span class="stat-tag">001 / EVENTS</span>
-                    <div class="stat-num">50<span class="plus">+</span></div>
+                    <div class="stat-num"><span class="count" data-target="50">0</span><span class="plus">+</span></div>
                     <div class="stat-label">Total events hosted</div>
                 </div>
                 <div class="stat-cell">
-                    <span class="stat-tag">002 / STUDENTS</span>
-                    <div class="stat-num">1,000<span class="plus">+</span></div>
+                    <div class="stat-num"><span class="count" data-target="1000">0</span><span class="plus">+</span>
+                    </div>
                     <div class="stat-label">Students on the platform</div>
                 </div>
                 <div class="stat-cell">
-                    <span class="stat-tag">003 / SIGN-UPS</span>
-                    <div class="stat-num">500<span class="plus">+</span></div>
+                    <div class="stat-num"><span class="count" data-target="500">0</span><span class="plus">+</span>
+                    </div>
                     <div class="stat-label">Registrations this term</div>
                 </div>
             </div>
@@ -2033,7 +831,7 @@
     </section>
 
     <!-- CATEGORIES -->
-    <section class="section">
+    <section class="section alt">
         <div class="container">
             <div class="section-head reveal">
                 <div>
@@ -2043,42 +841,74 @@
                 <p class="section-note">Six categories, updated every semester as new events get added.</p>
             </div>
 
-            <div class="event-grid">
-                <div class="event-card reveal">
-                    <span class="event-tag">Tech</span>
-                    <div class="event-icon-wrap">💻</div>
-                    <h4>Tech Events</h4>
-                    <p>Coding contests, project expos and technical competitions.</p>
+            <div class="marquee-stack reveal">
+                <div class="marquee-row">
+                    <div class="marquee-track track-ltr">
+                        <div class="event-card">
+                            <div class="event-icon-wrap">💻</div>
+                            <h4>Tech Events</h4>
+                            <p>Coding contests, project expos and technical competitions.</p>
+                        </div>
+                        <div class="event-card">
+                            <div class="event-icon-wrap">🚀</div>
+                            <h4>Hackathons</h4>
+                            <p>Build innovative solutions and compete with top students.</p>
+                        </div>
+                        <div class="event-card">
+                            <div class="event-icon-wrap">🎓</div>
+                            <h4>Symposiums</h4>
+                            <p>Present papers, share knowledge and network with peers.</p>
+                        </div>
+                        <div class="event-card" aria-hidden="true">
+                            <div class="event-icon-wrap">💻</div>
+                            <h4>Tech Events</h4>
+                            <p>Coding contests, project expos and technical competitions.</p>
+                        </div>
+                        <div class="event-card" aria-hidden="true">
+                            <div class="event-icon-wrap">🚀</div>
+                            <h4>Hackathons</h4>
+                            <p>Build innovative solutions and compete with top students.</p>
+                        </div>
+                        <div class="event-card" aria-hidden="true">
+                            <div class="event-icon-wrap">🎓</div>
+                            <h4>Symposiums</h4>
+                            <p>Present papers, share knowledge and network with peers.</p>
+                        </div>
+                    </div>
                 </div>
-                <div class="event-card reveal">
-                    <span class="event-tag">Build</span>
-                    <div class="event-icon-wrap">🚀</div>
-                    <h4>Hackathons</h4>
-                    <p>Build innovative solutions and compete with top students.</p>
-                </div>
-                <div class="event-card reveal">
-                    <span class="event-tag">Academic</span>
-                    <div class="event-icon-wrap">🎓</div>
-                    <h4>Symposiums</h4>
-                    <p>Present papers, share knowledge and network with peers.</p>
-                </div>
-                <div class="event-card reveal">
-                    <span class="event-tag">Learn</span>
-                    <div class="event-icon-wrap">🤖</div>
-                    <h4>AI Workshops</h4>
-                    <p>Learn Machine Learning, AI and modern technologies.</p>
-                </div>
-                <div class="event-card reveal">
-                    <span class="event-tag">Compete</span>
-                    <div class="event-icon-wrap">🏆</div>
-                    <h4>Competitions</h4>
-                    <p>Showcase your skills and win exciting prizes.</p>
-                </div>
-                <div class="event-card reveal">
-                    <span class="event-tag">Culture</span>
-                    <div class="event-icon-wrap">🎤</div>
-                    <h4>Cultural Events</h4>
-                    <p>Music, dance, arts and entertainment activities.</p>
+                <div class="marquee-row">
+                    <div class="marquee-track track-rtl">
+                        <div class="event-card">
+                            <div class="event-icon-wrap">🤖</div>
+                            <h4>AI Workshops</h4>
+                            <p>Learn Machine Learning, AI and modern technologies.</p>
+                        </div>
+                        <div class="event-card">
+                            <div class="event-icon-wrap">🏆</div>
+                            <h4>Competitions</h4>
+                            <p>Showcase your skills and win exciting prizes.</p>
+                        </div>
+                        <div class="event-card">
+                            <div class="event-icon-wrap">🎤</div>
+                            <h4>Cultural Events</h4>
+                            <p>Music, dance, arts and entertainment activities.</p>
+                        </div>
+                        <div class="event-card" aria-hidden="true">
+                            <div class="event-icon-wrap">🤖</div>
+                            <h4>AI Workshops</h4>
+                            <p>Learn Machine Learning, AI and modern technologies.</p>
+                        </div>
+                        <div class="event-card" aria-hidden="true">
+                            <div class="event-icon-wrap">🏆</div>
+                            <h4>Competitions</h4>
+                            <p>Showcase your skills and win exciting prizes.</p>
+                        </div>
+                        <div class="event-card" aria-hidden="true">
+                            <div class="event-icon-wrap">🎤</div>
+                            <h4>Cultural Events</h4>
+                            <p>Music, dance, arts and entertainment activities.</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -2087,33 +917,78 @@
     <!-- FEATURES -->
     <section class="section">
         <div class="container">
-            <div class="feature-strip reveal">
-                <h3 class="feature-head-title">
-                    Everything a student needs to run their <em>event life</em> from one dashboard.
-                </h3>
+            <div class="feature-layout reveal">
+                <div>
+                    <span class="section-eyebrow">Why students use it</span>
+                    <h3 class="feature-heading">Everything you need to run your <span class="accent">event life.</span>
+                    </h3>
+                    <p class="feature-desc">One dashboard for every registration, deadline and certificate — no more
+                        chasing down forms or emails.</p>
+                </div>
 
-                <div class="feature-grid">
+                <div class="feature-list">
                     <div class="feature-item">
-                        <span class="feature-num">01</span>
-                        <h5>Easy registration</h5>
-                        <p>Register for events in seconds, no paperwork involved.</p>
+                        <div class="feature-check">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M20 6L9 17l-5-5" />
+                            </svg>
+                        </div>
+                        <div>
+                            <h5>Easy registration</h5>
+                            <p>Register for events in seconds, no paperwork involved.</p>
+                        </div>
                     </div>
                     <div class="feature-item">
-                        <span class="feature-num">02</span>
-                        <h5>Track events</h5>
-                        <p>Stay updated with upcoming events and deadlines.</p>
+                        <div class="feature-check">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M20 6L9 17l-5-5" />
+                            </svg>
+                        </div>
+                        <div>
+                            <h5>Track events</h5>
+                            <p>Stay updated with upcoming events and deadlines.</p>
+                        </div>
                     </div>
                     <div class="feature-item">
-                        <span class="feature-num">03</span>
-                        <h5>Certificates</h5>
-                        <p>Download participation certificates the moment events close.</p>
+                        <div class="feature-check">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M20 6L9 17l-5-5" />
+                            </svg>
+                        </div>
+                        <div>
+                            <h5>Certificates</h5>
+                            <p>Download participation certificates the moment events close.</p>
+                        </div>
                     </div>
                     <div class="feature-item">
-                        <span class="feature-num">04</span>
-                        <h5>Student dashboard</h5>
-                        <p>Manage registrations, certificates and history in one place.</p>
+                        <div class="feature-check">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M20 6L9 17l-5-5" />
+                            </svg>
+                        </div>
+                        <div>
+                            <h5>Student dashboard</h5>
+                            <p>Manage registrations, certificates and history in one place.</p>
+                        </div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="section" style="padding-top: 0;">
+        <div class="container">
+            <div class="cta-band reveal">
+                <div>
+                    <h3>Ready to explore what's on campus?</h3>
+                    <p>Create your free student account and register for your first event today.</p>
+                </div>
+                <a th:href="@{/signup}" href="/signup" class="btn btn-primary">Create your account</a>
             </div>
         </div>
     </section>
@@ -2129,7 +1004,7 @@
     </footer>
 
     <script>
-        // Scroll reveal
+        // One simple, single-pass scroll reveal — fade + slight rise, no looping motion
         const io = new IntersectionObserver((entries) => {
             entries.forEach((e, i) => {
                 if (e.isIntersecting) {
@@ -2139,6 +1014,67 @@
             });
         }, { threshold: 0.12 });
         document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+        // Count-up animation for stat numbers, triggered once when scrolled into view
+        const countEls = document.querySelectorAll('.count');
+        const countIo = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (!entry.isIntersecting) return;
+                const el = entry.target;
+                const target = parseInt(el.dataset.target, 10);
+                const duration = 1200;
+                const start = performance.now();
+
+                function tick(now) {
+                    const progress = Math.min((now - start) / duration, 1);
+                    const eased = 1 - Math.pow(1 - progress, 3);
+                    const value = Math.round(target * eased);
+                    el.textContent = value.toLocaleString('en-US');
+                    if (progress < 1) requestAnimationFrame(tick);
+                }
+                requestAnimationFrame(tick);
+                countIo.unobserve(el);
+            });
+        }, { threshold: 0.4 });
+        countEls.forEach(el => countIo.observe(el));
+
+        // Continuous typewriter animation for the hero panel.
+        // Types the sentence out, pauses, erases it, and starts again — on a loop for as long as the page is open.
+        (function typewriter() {
+            const target = document.getElementById('heroTypeTarget');
+            if (!target) return;
+
+            const message = "EventPortal is your all-in-one campus event platform — simplifying registrations, streamlining organization and turning every hackathon, workshop and fest into an experience worth remembering.";
+
+            const typeSpeed = 32;
+            const eraseSpeed = 16;
+            const holdAfterType = 1800;
+            const holdAfterErase = 500;
+
+            let i = 0;
+
+            function type() {
+                if (i <= message.length) {
+                    target.textContent = message.slice(0, i);
+                    i++;
+                    setTimeout(type, typeSpeed);
+                } else {
+                    setTimeout(erase, holdAfterType);
+                }
+            }
+
+            function erase() {
+                if (i > 0) {
+                    i--;
+                    target.textContent = message.slice(0, i);
+                    setTimeout(erase, eraseSpeed);
+                } else {
+                    setTimeout(type, holdAfterErase);
+                }
+            }
+
+            type();
+        })();
     </script>
 </body>
 

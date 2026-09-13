@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Successful · EventSphere</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Lexend:wght@600;700;800&family=Roboto+Mono:wght@500;600&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --indigo: #4f46e5;
+            --indigo-strong: #3730a3;
+            --violet: #7c3aed;
+            --indigo-bg: #eef2ff;
+            --green: #16a34a;
+            --green-dark: #0d9448;
+            --green-bg: #f0fdf4;
+            --muted: #5b6b82;
+            --ink: #10152b;
+            --border: rgba(148, 163, 200, .28);
+            --surface: rgba(255, 255, 255, .74);
+            --shadow-hover: 0 8px 20px rgba(30, 27, 90, .1), 0 24px 48px rgba(30, 27, 90, .14);
+            --glass-blur: 18px;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            color-scheme: light;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background:
+                radial-gradient(1200px 600px at 10% -10%, #dcfce7 0%, transparent 55%),
+                radial-gradient(1000px 700px at 110% 10%, #ede4ff 0%, transparent 55%),
+                linear-gradient(160deg, #eef2ff 0%, #f5f3ff 45%, #eef7ff 100%);
+            background-attachment: fixed;
+            color: var(--ink);
+            -webkit-font-smoothing: antialiased;
+        }
+
+        h2,
+        h3,
+        h4 {
+            font-family: 'Lexend', 'Inter', sans-serif;
+        }
+
+        svg {
+            display: block;
+        }
+
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(255, 255, 255, .65);
+            backdrop-filter: blur(var(--glass-blur));
+            -webkit-backdrop-filter: blur(var(--glass-blur));
+            border-bottom: 1px solid var(--border);
+            padding: 0 32px;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .brand-badge {
+            width: 34px;
+            height: 34px;
+            background: linear-gradient(135deg, var(--indigo) 0%, var(--violet) 100%);
+            color: #fff;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Lexend', sans-serif;
+            font-weight: 800;
+            font-size: 16px;
+            box-shadow: 0 4px 14px rgba(79, 70, 229, .32);
+        }
+
+        .brand-name {
+            color: var(--ink);
+            font-size: 17px;
+            font-weight: 800;
+            letter-spacing: -.01em;
+        }
+
+        .nav-steps {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12.5px;
+            font-weight: 700;
+            color: var(--muted);
+        }
+
+        .nav-steps .step {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .nav-steps .dot {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10.5px;
+            background: rgba(247, 249, 252, .8);
+            border: 1px solid var(--border);
+            color: var(--muted);
+        }
+
+        .nav-steps .step.done .dot {
+            background: var(--green);
+            border-color: var(--green);
+            color: #fff;
+        }
+
+        .nav-steps .sep {
+            width: 20px;
+            height: 1px;
+            background: var(--border);
+        }
+
+        @media (max-width: 720px) {
+            .nav-steps {
+                display: none;
+            }
+        }
+
+        .page-content {
+            max-width: 640px;
+            margin: 0 auto;
+            padding: 56px 24px 90px;
+        }
+
+        .success-hero {
+            text-align: center;
+            margin-bottom: 26px;
+        }
+
+        .check-wrap {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 22px;
+        }
+
+        .check-circle {
+            width: 92px;
+            height: 92px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--green) 0%, var(--green-dark) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 30px rgba(22, 163, 74, .35);
+            animation: popIn .5s cubic-bezier(.34, 1.56, .64, 1) both;
+            position: relative;
+        }
+
+        .check-circle::before {
+            content: "";
+            position: absolute;
+            inset: -10px;
+            border-radius: 50%;
+            border: 2px solid rgba(22, 163, 74, .35);
+            animation: ripple 1.6s ease-out .3s infinite;
+        }
+
+        .check-circle svg {
+            width: 46px;
+            height: 46px;
+            stroke: #fff;
+            fill: none;
+            stroke-width: 3;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            stroke-dasharray: 48;
+            stroke-dashoffset: 48;
+            animation: draw .5s ease .35s forwards;
+        }
+
+        @keyframes popIn {
+            0% {
+                transform: scale(0);
+                opacity: 0;
+            }
+
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        @keyframes draw {
+            to {
+                stroke-dashoffset: 0;
+            }
+        }
+
+        @keyframes ripple {
+            0% {
+                transform: scale(1);
+                opacity: .6;
+            }
+
+            100% {
+                transform: scale(1.35);
+                opacity: 0;
+            }
+        }
+
+        .success-hero h2 {
+            font-size: 26px;
+            font-weight: 800;
+            margin: 0 0 8px;
+            letter-spacing: -.01em;
+        }
+
+        .success-hero p {
+            font-size: 14px;
+            color: var(--muted);
+            margin: 0;
+        }
+
+        .receipt-card {
+            background: var(--surface);
+            backdrop-filter: blur(var(--glass-blur));
+            -webkit-backdrop-filter: blur(var(--glass-blur));
+            border: 1px solid var(--border);
+            border-radius: 22px;
+            box-shadow: var(--shadow-hover);
+            overflow: hidden;
+            margin-top: 30px;
+        }
+
+        .receipt-header {
+            background: linear-gradient(120deg, var(--indigo) 0%, var(--indigo-strong) 55%, #241a6b 100%);
+            padding: 22px 26px;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .receipt-header::before {
+            content: "";
+            position: absolute;
+            top: -50px;
+            right: -30px;
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, .12);
+        }
+
+        .receipt-header-left {
+            position: relative;
+        }
+
+        .receipt-eyebrow {
+            color: rgba(255, 255, 255, .75);
+            font-size: 10.5px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: .6px;
+            margin-bottom: 6px;
+        }
+
+        .receipt-header h4 {
+            color: #fff;
+            font-size: 17px;
+            font-weight: 800;
+            margin: 0;
+        }
+
+        .status-chip {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(255, 255, 255, .16);
+            color: #fff;
+            font-size: 11.5px;
+            font-weight: 800;
+            letter-spacing: .4px;
+            padding: 6px 12px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, .25);
+        }
+
+        .status-chip .dot-pulse {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: #4ade80;
+            box-shadow: 0 0 0 3px rgba(74, 222, 128, .3);
+        }
+
+        .receipt-body {
+            padding: 24px 26px 10px;
+        }
+
+        .receipt-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px dashed var(--border);
+            font-size: 13.5px;
+        }
+
+        .receipt-row:last-child {
+            border-bottom: none;
+        }
+
+        .receipt-row .r-label {
+            color: var(--muted);
+            font-weight: 600;
+        }
+
+        .receipt-row .r-value {
+            color: var(--ink);
+            font-weight: 700;
+            text-align: right;
+        }
+
+        .receipt-row .r-value.mono {
+            font-family: 'Roboto Mono', monospace;
+            font-size: 12.5px;
+            letter-spacing: .2px;
+        }
+
+        .amount-block {
+            margin: 6px 26px 22px;
+            padding: 18px 20px;
+            border-radius: 16px;
+            background: linear-gradient(135deg, var(--green-bg) 0%, #eafff2 100%);
+            border: 1px solid rgba(22, 163, 74, .18);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .amount-block .label {
+            font-size: 12.5px;
+            font-weight: 700;
+            color: #15803d;
+        }
+
+        .amount-block .amount {
+            font-family: 'Lexend', sans-serif;
+            font-size: 28px;
+            font-weight: 800;
+            color: #15803d;
+        }
+
+        .amount-block .amount .currency {
+            font-size: 17px;
+            margin-right: 2px;
+        }
+
+        .thankyou-note {
+            margin: 0 26px 24px;
+            padding: 16px 18px;
+            border-radius: 14px;
+            background: rgba(247, 249, 252, .7);
+            border: 1px solid var(--border);
+            font-size: 13px;
+            color: var(--muted);
+            line-height: 1.55;
+            text-align: center;
+        }
+
+        .thankyou-note strong {
+            color: var(--ink);
+        }
+
+        .receipt-actions {
+            display: flex;
+            gap: 12px;
+            padding: 0 26px 26px;
+        }
+
+        .btn {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 14px 18px;
+            border-radius: 13px;
+            font-size: 14px;
+            font-weight: 700;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            transition: box-shadow .15s ease, transform .1s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-1px);
+        }
+
+        .btn svg {
+            width: 16px;
+            height: 16px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .btn-primary {
+            color: #fff;
+            background: linear-gradient(135deg, var(--indigo) 0%, var(--violet) 100%);
+            box-shadow: 0 8px 20px rgba(79, 70, 229, .32);
+        }
+
+        .btn-primary:hover {
+            box-shadow: 0 10px 24px rgba(79, 70, 229, .4);
+        }
+
+        .btn-secondary {
+            color: var(--indigo-strong);
+            background: var(--indigo-bg);
+            border: 1.5px solid rgba(79, 70, 229, .2);
+        }
+
+        .trust-footer {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 14px;
+            margin-top: 26px;
+        }
+
+        .trust-footer .badge-mini {
+            font-size: 9.5px;
+            font-weight: 800;
+            letter-spacing: .3px;
+            color: var(--muted);
+            background: rgba(247, 249, 252, .8);
+            border: 1px solid var(--border);
+            padding: 4px 8px;
+            border-radius: 6px;
+        }
+
+        @media (max-width: 560px) {
+            .receipt-actions {
+                flex-direction: column;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation: none !important;
+                transition: none !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav>
+        <a href="/dashboard" class="brand">
+            <span class="brand-badge">E</span>
+            <span class="brand-name">EventSphere</span>
+        </a>
+        <div class="nav-steps">
+            <div class="step done"><span class="dot">✓</span><span class="label">Register</span></div>
+            <div class="sep"></div>
+            <div class="step done"><span class="dot">✓</span><span class="label">Payment</span></div>
+            <div class="sep"></div>
+            <div class="step done"><span class="dot">✓</span><span class="label">Confirmed</span></div>
+        </div>
+    </nav>
+
+    <div class="page-content">
+
+        <div class="success-hero">
+            <div class="check-wrap">
+                <div class="check-circle">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M4 12l5 5L20 6" />
+                    </svg>
+                </div>
+            </div>
+            <h2>Payment Successful!</h2>
+            <p>Your registration is confirmed. A copy of this receipt has been saved to your account.</p>
+        </div>
+
+        <div class="receipt-card" id="receiptCard">
+
+            <div class="receipt-header">
+                <div class="receipt-header-left">
+                    <div class="receipt-eyebrow">Payment Receipt</div>
+                    <h4 th:text="${event.name}">Event Name</h4>
+                </div>
+                <span class="status-chip"><span class="dot-pulse"></span>SUCCESS</span>
+            </div>
+
+            <div class="receipt-body">
+                <div class="receipt-row">
+                    <span class="r-label">Registration ID</span>
+                    <span class="r-value mono" th:text="'#' + ${registration.id}">#00123</span>
+                </div>
+                <div class="receipt-row">
+                    <span class="r-label">Payment ID</span>
+                    <span class="r-value mono" th:text="${paymentId}">PAY1234567890</span>
+                </div>
+                <div class="receipt-row">
+                    <span class="r-label">Transaction ID</span>
+                    <span class="r-value mono" th:text="${transactionId}">TXN123456789012</span>
+                </div>
+                <div class="receipt-row">
+                    <span class="r-label">Reference Number</span>
+                    <span class="r-value mono" th:text="${referenceNumber}">EVS-2026-000123</span>
+                </div>
+                <div class="receipt-row">
+                    <span class="r-label">Payment Method</span>
+                    <span class="r-value" th:text="${methodLabel}">Credit / Debit Card</span>
+                </div>
+                <div class="receipt-row">
+                    <span class="r-label">Payment Detail</span>
+                    <span class="r-value mono" th:text="${methodDetail}">•••• •••• •••• 4242</span>
+                </div>
+                <div class="receipt-row">
+                    <span class="r-label">Date &amp; Time</span>
+                    <span class="r-value" th:text="${#temporals.format(paymentDateTime, 'dd MMM yyyy, hh:mm a')}">24 Jul
+                        2026, 04:30 PM</span>
+                </div>
+            </div>
+
+            <div class="amount-block">
+                <span class="label">Amount Paid</span>
+                <span class="amount"><span class="currency">₹</span><span th:text="${event.fee}">200</span></span>
+            </div>
+
+            <div class="thankyou-note">
+                <strong>Thank you for registering with EventSphere.</strong><br>
+                Your spot is confirmed for <span th:text="${event.name}">this event</span>. We look forward to seeing
+                you there!
+            </div>
+
+            <div class="receipt-actions">
+                <a href="/my-registrations" class="btn btn-primary">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M5 12h14M13 6l6 6-6 6" />
+                    </svg>
+                    Continue to My Registrations
+                </a>
+                <button type="button" class="btn btn-secondary" id="downloadBtn">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M12 3v12m0 0l-4-4m4 4l4-4M4 21h16" />
+                    </svg>
+                    Download Receipt
+                </button>
+            </div>
+
+        </div>
+
+        <div class="trust-footer">
+            <span class="badge-mini">256-BIT SSL</span>
+            <span class="badge-mini">PCI DSS</span>
+            <span class="badge-mini">RBI COMPLIANT</span>
+        </div>
+
+    </div>
+
+    <script>
+        (function () {
+            var downloadBtn = document.getElementById('downloadBtn');
+            if (!downloadBtn) return;
+
+            downloadBtn.addEventListener('click', function () {
+                // Simple client-side "download" of the receipt as a printable window.
+                // No server round-trip or external library needed.
+                var receiptHtml = document.getElementById('receiptCard').outerHTML;
+                var win = window.open('', '_blank');
+                win.document.write(
+                    '<html><head><title>EventSphere Receipt</title>' +
+                    '<style>body{font-family:Inter,Arial,sans-serif;padding:30px;background:#fff;}' +
+                    '.receipt-card{max-width:600px;margin:0 auto;border:1px solid #e2e8f0;border-radius:16px;overflow:hidden;}' +
+                    '</style></head><body>' + receiptHtml + '</body></html>'
+                );
+                win.document.close();
+                setTimeout(function () { win.print(); }, 300);
+            });
+        })();
+    </script>
+
+</body>
+
+</html>

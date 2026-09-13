@@ -19,6 +19,8 @@ public class Student {
     private String department;
     private int year;
 
+    private boolean emailVerified = false;
+
     public Student() {
     }
 
@@ -76,5 +78,13 @@ public class Student {
 
     public void setYear(int year) {
         this.year = year;
+    }
+
+    public boolean isEmailVerified() {
+        return emailVerified;
+    }
+
+    public void setEmailVerified(boolean emailVerified) {
+        this.emailVerified = emailVerified;
     }
 }

@@ -1,5 +1,6 @@
 package com.eventsphere.entity;
 
+import java.time.LocalDateTime;
 import jakarta.persistence.*;
 
 @Entity
@@ -10,12 +11,12 @@ public class Certificate {
     private Long id;
 
     private Long studentId;
-
     private Long eventId;
-
     private Long registrationId;
-
     private String certificateCode;
+
+    // NEW FIELD
+    private LocalDateTime certificateDate;
 
     public Certificate() {
     }
@@ -58,5 +59,13 @@ public class Certificate {
 
     public void setCertificateCode(String certificateCode) {
         this.certificateCode = certificateCode;
+    }
+
+    public LocalDateTime getCertificateDate() {
+        return certificateDate;
+    }
+
+    public void setCertificateDate(LocalDateTime certificateDate) {
+        this.certificateDate = certificateDate;
     }
 }

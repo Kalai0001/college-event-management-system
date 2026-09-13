@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
@@ -47,6 +47,357 @@
     </form>
 
 </div>
+
+</body>
+</html> -->
+
+
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Add Registration · EventPortal</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0a0e1a;
+            --panel: #10162a;
+            --panel-border: #1e2740;
+            --field: #0d1226;
+            --blue: #3b82f6;
+            --blue-light: #60a5fa;
+            --teal: #14b8a6;
+            --text: #e8ecf7;
+            --text-dim: #8b93ab;
+            --hero-grad: linear-gradient(135deg, #1a2a52, #16324f 60%, #0f2a3e);
+            --hero-text: #c3d0ea;
+            --shadow: none;
+        }
+
+        [data-theme="light"] {
+            --bg: #f4f6fb;
+            --panel: #ffffff;
+            --panel-border: #e2e6f0;
+            --field: #f8f9fc;
+            --blue: #2563eb;
+            --blue-light: #3b82f6;
+            --teal: #0d9488;
+            --text: #1a2235;
+            --text-dim: #6b7590;
+            --hero-grad: linear-gradient(135deg, #dbe6ff, #cfe9f0 60%, #dff2e9);
+            --hero-text: #3a4a68;
+            --shadow: 0 2px 10px rgba(30, 41, 80, 0.06);
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            transition: background 0.2s, color 0.2s;
+        }
+
+        .topbar {
+            background: var(--panel);
+            border-bottom: 1px solid var(--panel-border);
+            padding: 18px 0;
+            transition: background 0.2s, border-color 0.2s;
+        }
+
+        .topbar .inner {
+            justify-content: space-between;
+        }
+
+        .topbar .left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .topbar .inner {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 24px;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo-badge {
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, var(--blue), #6366f1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 15px;
+            color: white;
+        }
+
+        .topbar .brand {
+            font-weight: 700;
+            font-size: 18px;
+            letter-spacing: -0.2px;
+        }
+
+        .page {
+            max-width: 640px;
+            margin: 0 auto;
+            padding: 48px 24px 80px;
+        }
+
+        .breadcrumb {
+            color: var(--text-dim);
+            font-size: 13px;
+            margin-bottom: 18px;
+        }
+
+        .breadcrumb a {
+            color: var(--text-dim);
+            text-decoration: none;
+        }
+
+        .breadcrumb a:hover { color: var(--blue-light); }
+
+        .hero {
+            background: var(--hero-grad);
+            border: 1px solid var(--panel-border);
+            border-radius: 18px;
+            padding: 28px 30px;
+            margin-bottom: 28px;
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            transition: background 0.2s, border-color 0.2s;
+        }
+
+        .hero-icon {
+            width: 52px;
+            height: 52px;
+            flex-shrink: 0;
+            border-radius: 14px;
+            background: linear-gradient(135deg, var(--blue), #6366f1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+
+        .hero h1 {
+            margin: 0 0 4px;
+            font-size: 24px;
+            font-weight: 800;
+            letter-spacing: -0.3px;
+        }
+
+        .hero p {
+            margin: 0;
+            color: var(--hero-text);
+            font-size: 14px;
+        }
+
+        .card {
+            background: var(--panel);
+            border: 1px solid var(--panel-border);
+            border-radius: 16px;
+            padding: 32px;
+            box-shadow: var(--shadow);
+            transition: background 0.2s, border-color 0.2s;
+        }
+
+        .field {
+            margin-bottom: 24px;
+        }
+
+        .field label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 10px;
+        }
+
+        .select-wrap {
+            position: relative;
+        }
+
+        select {
+            width: 100%;
+            appearance: none;
+            -webkit-appearance: none;
+            background: var(--field);
+            border: 1px solid var(--panel-border);
+            color: var(--text);
+            padding: 13px 42px 13px 16px;
+            border-radius: 10px;
+            font-size: 15px;
+            font-family: 'Inter', sans-serif;
+            transition: border-color 0.15s, box-shadow 0.15s;
+            cursor: pointer;
+        }
+
+        select:hover {
+            border-color: #2c3a5e;
+        }
+
+        select:focus {
+            outline: none;
+            border-color: var(--blue);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25);
+        }
+
+        select option {
+            background: var(--field);
+            color: var(--text);
+        }
+
+        .select-wrap::after {
+            content: "";
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            width: 9px;
+            height: 9px;
+            border-right: 2px solid var(--text-dim);
+            border-bottom: 2px solid var(--text-dim);
+            transform: translateY(-70%) rotate(45deg);
+            pointer-events: none;
+        }
+
+        .actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 32px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 13px 20px;
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: 600;
+            text-align: center;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            transition: transform 0.1s, filter 0.15s;
+        }
+
+        .btn:hover { filter: brightness(1.1); }
+        .btn:active { transform: scale(0.98); }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--teal), #0d9488);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-dim);
+            border: 1px solid var(--panel-border);
+            flex: 0 0 auto;
+            padding: 13px 24px;
+        }
+
+        .btn-secondary:hover {
+            color: var(--text);
+            border-color: #2c3a5e;
+        }
+
+        @media (max-width: 480px) {
+            .hero { flex-direction: column; text-align: center; }
+            .card { padding: 24px; }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="topbar">
+    <div class="inner">
+        <div class="left">
+            <div class="logo-badge">EH</div>
+            <span class="brand">EventPortal</span>
+        </div>
+    </div>
+</div>
+
+<div class="page">
+
+    <div class="breadcrumb"><a href="/">Dashboard</a> &nbsp;/&nbsp; Registrations &nbsp;/&nbsp; Add Registration</div>
+
+    <div class="hero">
+        <div class="hero-icon">📝</div>
+        <div>
+            <h1>Add Registration</h1>
+            <p>Link a student to an event to create a new registration record.</p>
+        </div>
+    </div>
+
+    <div class="card">
+        <form action="/save-registration" method="post">
+
+            <div class="field">
+                <label for="studentId">Student</label>
+                <div class="select-wrap">
+                    <select name="studentId" id="studentId" required>
+                        <option value="">Choose a student</option>
+                        <option th:each="student : ${students}"
+                                th:value="${student.id}"
+                                th:text="${student.name}">
+                        </option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="field">
+                <label for="eventId">Event</label>
+                <div class="select-wrap">
+                    <select name="eventId" id="eventId" required>
+                        <option value="">Choose an event</option>
+                        <option th:each="event : ${events}"
+                                th:value="${event.id}"
+                                th:text="${event.name}">
+                        </option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="actions">
+                <a href="/" class="btn btn-secondary">Cancel</a>
+                <button type="submit" class="btn btn-primary">Register</button>
+            </div>
+
+        </form>
+    </div>
+
+</div>
+
+<script>
+    (function () {
+        var root = document.documentElement;
+        var saved = null;
+        try { saved = localStorage.getItem('eventPortalTheme'); } catch (e) { }
+        var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        var theme = saved || (prefersDark ? 'dark' : 'light');
+
+        if (theme === 'light') {
+            root.setAttribute('data-theme', 'light');
+        } else {
+            root.removeAttribute('data-theme');
+        }
+    })();
+</script>
 
 </body>
 </html>

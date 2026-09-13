@@ -1,35 +1,2179 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<!-- <!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
-    <title>Payment</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-          rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment · Event Portal</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Lexend:wght@600;700;800&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --indigo: #2563eb;
+            --indigo-strong: #1d4ed8;
+            --indigo-bg: #eff6ff;
+            --green: #16a34a;
+            --green-bg: #f0fdf4;
+            --amber: #d97706;
+            --amber-bg: #fffbeb;
+            --error: #dc2626;
+            --error-bg: #fef2f2;
+
+            --bg: #eef2f9;
+            --bg-grad-1: #e8f0fe;
+            --bg-grad-2: #f3f7fd;
+            --surface: #ffffff;
+            --surface-2: #f7f9fc;
+            --ink: #0f1b2d;
+            --muted: #5b6b82;
+            --border: #dfe6f0;
+            --shadow: 0 1px 3px rgba(15, 40, 90, .06), 0 10px 28px rgba(15, 40, 90, .07);
+            --shadow-hover: 0 6px 14px rgba(15, 40, 90, .09), 0 20px 40px rgba(15, 40, 90, .12);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            color-scheme: light;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background: linear-gradient(160deg, var(--bg-grad-1) 0%, var(--bg) 45%, var(--bg-grad-2) 100%);
+            background-attachment: fixed;
+            color: var(--ink);
+        }
+
+        h2,
+        h3,
+        h4 {
+            font-family: 'Lexend', 'Inter', sans-serif;
+        }
+
+        svg {
+            display: block;
+        }
+
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: var(--surface);
+            border-bottom: 1px solid var(--border);
+            padding: 0 32px;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .brand-badge {
+            width: 34px;
+            height: 34px;
+            background: linear-gradient(135deg, var(--indigo) 0%, var(--indigo-strong) 100%);
+            color: #fff;
+            border-radius: 9px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Lexend', sans-serif;
+            font-weight: 800;
+            font-size: 16px;
+            box-shadow: 0 4px 10px rgba(79, 70, 229, .28);
+        }
+
+        .brand-name {
+            color: var(--ink);
+            font-size: 17px;
+            font-weight: 800;
+            letter-spacing: -.01em;
+        }
+
+        .nav-steps {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12.5px;
+            font-weight: 700;
+            color: var(--muted);
+        }
+
+        .nav-steps .step {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .nav-steps .dot {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10.5px;
+            background: var(--surface-2);
+            border: 1px solid var(--border);
+            color: var(--muted);
+        }
+
+        .nav-steps .step.done .dot {
+            background: var(--green);
+            border-color: var(--green);
+            color: #fff;
+        }
+
+        .nav-steps .step.active .dot {
+            background: var(--indigo);
+            border-color: var(--indigo);
+            color: #fff;
+        }
+
+        .nav-steps .step.active span.label {
+            color: var(--ink);
+        }
+
+        .nav-steps .sep {
+            width: 20px;
+            height: 1px;
+            background: var(--border);
+        }
+
+        @media (max-width: 720px) {
+            .nav-steps {
+                display: none;
+            }
+        }
+
+        /* ---------- Page ---------- */
+        .page-content {
+            max-width: 920px;
+            margin: 0 auto;
+            padding: 48px 24px 90px;
+        }
+
+        .page-title {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .page-title .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 11.5px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: .6px;
+            color: var(--indigo-strong);
+            background: var(--indigo-bg);
+            padding: 5px 12px;
+            border-radius: 20px;
+            margin-bottom: 12px;
+        }
+
+        .page-title h2 {
+            font-size: 24px;
+            font-weight: 800;
+            margin: 0 0 6px;
+            color: var(--ink);
+            letter-spacing: -.01em;
+        }
+
+        .page-title p {
+            font-size: 13.5px;
+            color: var(--muted);
+            margin: 0;
+        }
+
+        /* ---------- Layout ---------- */
+        .pay-grid {
+            display: grid;
+            grid-template-columns: 1.35fr 1fr;
+            gap: 22px;
+            align-items: start;
+        }
+
+        @media (max-width: 800px) {
+            .pay-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            box-shadow: var(--shadow-hover);
+            overflow: hidden;
+        }
+
+        /* ---------- Method tabs ---------- */
+        .method-tabs {
+            display: flex;
+            gap: 8px;
+            padding: 18px 22px 0;
+        }
+
+        .method-tab {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px 10px;
+            border-radius: 12px;
+            border: 1.5px solid var(--border);
+            background: var(--surface-2);
+            color: var(--muted);
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: border-color .15s ease, color .15s ease, background .15s ease;
+        }
+
+        .method-tab svg {
+            width: 16px;
+            height: 16px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .method-tab.active {
+            border-color: var(--indigo);
+            background: var(--indigo-bg);
+            color: var(--indigo-strong);
+        }
+
+        .pay-form {
+            padding: 22px;
+        }
+
+        .method-panel {
+            display: none;
+        }
+
+        .method-panel.active {
+            display: block;
+        }
+
+        .field {
+            margin-bottom: 16px;
+        }
+
+        .field label {
+            display: block;
+            font-size: 12.5px;
+            font-weight: 700;
+            color: var(--ink);
+            margin-bottom: 6px;
+        }
+
+        .field .hint {
+            font-weight: 500;
+            color: var(--muted);
+            font-size: 11.5px;
+            margin-left: 4px;
+        }
+
+        .input-wrap {
+            position: relative;
+        }
+
+        .input-wrap svg {
+            position: absolute;
+            left: 13px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 16px;
+            height: 16px;
+            stroke: var(--muted);
+            fill: none;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"] {
+            width: 100%;
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--ink);
+            background: var(--surface-2);
+            border: 1.5px solid var(--border);
+            border-radius: 11px;
+            padding: 12px 14px 12px 38px;
+            outline: none;
+            transition: border-color .15s ease, background .15s ease;
+        }
+
+        input::placeholder {
+            font-weight: 500;
+            color: #a3aec2;
+        }
+
+        input:focus {
+            border-color: var(--indigo);
+            background: var(--surface);
+        }
+
+        .field-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+        }
+
+        .card-brands {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            gap: 5px;
+        }
+
+        .card-brands span {
+            font-size: 9px;
+            font-weight: 800;
+            padding: 2px 5px;
+            border-radius: 4px;
+            background: var(--surface-2);
+            border: 1px solid var(--border);
+            color: var(--muted);
+            letter-spacing: .2px;
+        }
+
+        .save-card {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            font-size: 12.5px;
+            font-weight: 600;
+            color: var(--muted);
+            margin-bottom: 4px;
+        }
+
+        .save-card input {
+            width: 15px;
+            height: 15px;
+            accent-color: var(--indigo);
+            cursor: pointer;
+        }
+
+        .upi-suggestions {
+            display: flex;
+            gap: 8px;
+            margin-top: 10px;
+            flex-wrap: wrap;
+        }
+
+        .upi-chip {
+            font-size: 11.5px;
+            font-weight: 700;
+            padding: 6px 11px;
+            border-radius: 20px;
+            background: var(--surface-2);
+            border: 1px solid var(--border);
+            color: var(--muted);
+        }
+
+        .field-error {
+            display: none;
+            align-items: center;
+            gap: 5px;
+            font-size: 11.5px;
+            font-weight: 600;
+            color: var(--error);
+            margin-top: 6px;
+        }
+
+        .field.invalid input {
+            border-color: var(--error);
+            background: var(--error-bg);
+        }
+
+        .field.invalid .field-error {
+            display: flex;
+        }
+
+        /* ---------- Summary sidebar ---------- */
+        .summary-header {
+            background: linear-gradient(120deg, var(--indigo) 0%, var(--indigo-strong) 55%, #0f2f8f 100%);
+            padding: 24px 24px 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .summary-header::before {
+            content: "";
+            position: absolute;
+            top: -50px;
+            right: -30px;
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, .12);
+        }
+
+        .summary-eyebrow {
+            position: relative;
+            color: rgba(255, 255, 255, .78);
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: .6px;
+            margin-bottom: 8px;
+        }
+
+        .summary-header h4 {
+            position: relative;
+            color: #fff;
+            font-size: 18px;
+            font-weight: 800;
+            margin: 0;
+            letter-spacing: -.01em;
+            line-height: 1.3;
+        }
+
+        .summary-body {
+            padding: 22px;
+        }
+
+        .summary-line {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 13px;
+            color: var(--muted);
+            font-weight: 600;
+            padding: 9px 0;
+        }
+
+        .summary-line span:last-child {
+            color: var(--ink);
+            font-weight: 700;
+        }
+
+        .summary-divider {
+            border: none;
+            border-top: 1px dashed var(--border);
+            margin: 10px 0;
+        }
+
+        .summary-total {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 16px;
+            background: var(--surface-2);
+            border: 1px solid var(--border);
+            border-radius: 13px;
+            margin: 14px 0 18px;
+        }
+
+        .summary-total .label {
+            font-size: 12.5px;
+            font-weight: 700;
+            color: var(--muted);
+        }
+
+        .summary-total .amount {
+            font-family: 'Lexend', sans-serif;
+            font-size: 26px;
+            font-weight: 800;
+            color: var(--ink);
+        }
+
+        .summary-total .amount .currency {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--muted);
+            margin-right: 2px;
+        }
+
+        .secure-note {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+            color: var(--muted);
+            margin-bottom: 18px;
+            line-height: 1.4;
+        }
+
+        .secure-note svg {
+            width: 16px;
+            height: 16px;
+            flex-shrink: 0;
+            fill: none;
+            stroke: var(--green);
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .btn-pay {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 9px;
+            padding: 15px 20px;
+            border-radius: 13px;
+            font-size: 15px;
+            font-weight: 700;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            color: #fff;
+            background: linear-gradient(135deg, var(--green) 0%, #0d9448 100%);
+            box-shadow: 0 6px 16px rgba(22, 163, 74, .32);
+            transition: box-shadow .15s ease, transform .1s ease, opacity .15s ease;
+        }
+
+        .btn-pay:hover {
+            box-shadow: 0 8px 20px rgba(22, 163, 74, .42);
+        }
+
+        .btn-pay:active {
+            transform: scale(.98);
+        }
+
+        .btn-pay:disabled {
+            opacity: .7;
+            cursor: progress;
+            box-shadow: none;
+        }
+
+        .btn-pay svg {
+            width: 17px;
+            height: 17px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .btn-pay .spinner {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            border: 2.5px solid rgba(255, 255, 255, .4);
+            border-top-color: #fff;
+            animation: spin .7s linear infinite;
+            display: none;
+        }
+
+        .btn-pay.loading .spinner {
+            display: block;
+        }
+
+        .btn-pay.loading .btn-pay-label,
+        .btn-pay.loading svg:not(.spinner) {
+            display: none;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .trust-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 14px;
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid var(--border);
+        }
+
+        .trust-row .badge-mini {
+            font-size: 9.5px;
+            font-weight: 800;
+            letter-spacing: .3px;
+            color: var(--muted);
+            background: var(--surface-2);
+            border: 1px solid var(--border);
+            padding: 4px 8px;
+            border-radius: 6px;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                transition: none !important;
+                animation: none !important;
+            }
+        }
+    </style>
 </head>
+
 <body>
 
-<div class="container mt-5">
-
-    <h2>Event Payment</h2>
-
-    <div class="card p-4">
-
-        <h4 th:text="${event.name}">Event Name</h4>
-
-        <p>
-            Fee:
-            <strong>
-                ₹<span th:text="${event.fee}">200</span>
-            </strong>
-        </p>
-
-        <a th:href="@{/confirm-payment/{id}(id=${registration.id})}"
-           class="btn btn-success">
-            Pay Now
+    <nav>
+        <a href="/dashboard" class="brand">
+            <span class="brand-badge">E</span>
+            <span class="brand-name">Event Portal</span>
         </a>
+
+        <div class="nav-steps">
+            <div class="step done">
+                <span class="dot">✓</span>
+                <span class="label">Register</span>
+            </div>
+            <div class="sep"></div>
+            <div class="step active">
+                <span class="dot">2</span>
+                <span class="label">Payment</span>
+            </div>
+            <div class="sep"></div>
+            <div class="step">
+                <span class="dot">3</span>
+                <span class="label">Confirmed</span>
+            </div>
+        </div>
+    </nav>
+
+    <div class="page-content">
+
+        <div class="page-title">
+            <span class="eyebrow">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6l8-4z" />
+                </svg>
+                Secure checkout
+            </span>
+            <h2>Complete Your Payment</h2>
+            <p>You're one step away from securing your spot</p>
+        </div>
+
+        <form id="paymentForm" class="pay-grid" th:action="@{/confirm-payment/{id}(id=${registration.id})}"
+            method="get">
+
+            
+            <div class="card">
+
+                <div class="method-tabs">
+                    <button type="button" class="method-tab active" data-target="panel-card">
+                        <svg viewBox="0 0 24 24">
+                            <rect x="2" y="5" width="20" height="14" rx="2" />
+                            <line x1="2" y1="10" x2="22" y2="10" />
+                        </svg>
+                        Card
+                    </button>
+                    <button type="button" class="method-tab" data-target="panel-upi">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M12 2v20M17 5l-5-3-5 3M17 19l-5 3-5-3" />
+                        </svg>
+                        UPI
+                    </button>
+                    <button type="button" class="method-tab" data-target="panel-netbanking">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M3 21h18M4 21V9l8-6 8 6v12M9 21v-6h6v6" />
+                        </svg>
+                        Net Banking
+                    </button>
+                </div>
+
+                <div class="pay-form">
+
+                    
+                    <div class="method-panel active" id="panel-card">
+
+                        <div class="field">
+                            <label for="cardName">Name on card</label>
+                            <div class="input-wrap">
+                                <svg viewBox="0 0 24 24">
+                                    <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" />
+                                    <circle cx="12" cy="7" r="4" />
+                                </svg>
+                                <input type="text" id="cardName" name="cardName" placeholder="As printed on the card"
+                                    autocomplete="cc-name">
+                            </div>
+                            <div class="field-error">Enter the name exactly as printed on the card</div>
+                        </div>
+
+                        <div class="field">
+                            <label for="cardNumber">Card number</label>
+                            <div class="input-wrap">
+                                <svg viewBox="0 0 24 24">
+                                    <rect x="2" y="5" width="20" height="14" rx="2" />
+                                    <line x1="2" y1="10" x2="22" y2="10" />
+                                </svg>
+                                <input type="text" id="cardNumber" name="cardNumber"
+                                    placeholder="1234  5678  9012  3456" inputmode="numeric" maxlength="19"
+                                    autocomplete="cc-number" style="padding-right:120px">
+                                <div class="card-brands">
+                                    <span>VISA</span><span>MC</span><span>RUPAY</span>
+                                </div>
+                            </div>
+                            <div class="field-error">Enter a valid 16-digit card number</div>
+                        </div>
+
+                        <div class="field-row">
+                            <div class="field">
+                                <label for="cardExpiry">Expiry date</label>
+                                <div class="input-wrap">
+                                    <svg viewBox="0 0 24 24">
+                                        <rect x="3" y="4" width="18" height="18" rx="2" />
+                                        <line x1="16" y1="2" x2="16" y2="6" />
+                                        <line x1="8" y1="2" x2="8" y2="6" />
+                                        <line x1="3" y1="10" x2="21" y2="10" />
+                                    </svg>
+                                    <input type="text" id="cardExpiry" name="cardExpiry" placeholder="MM / YY"
+                                        inputmode="numeric" maxlength="7" autocomplete="cc-exp">
+                                </div>
+                                <div class="field-error">Enter a valid future date</div>
+                            </div>
+                            <div class="field">
+                                <label for="cardCvv">CVV <span class="hint">3 digits</span></label>
+                                <div class="input-wrap">
+                                    <svg viewBox="0 0 24 24">
+                                        <rect x="3" y="11" width="18" height="10" rx="2" />
+                                        <path d="M7 11V7a5 5 0 0110 0v4" />
+                                    </svg>
+                                    <input type="text" id="cardCvv" name="cardCvv" placeholder="•••" inputmode="numeric"
+                                        maxlength="3" autocomplete="cc-csc">
+                                </div>
+                                <div class="field-error">Enter a valid CVV</div>
+                            </div>
+                        </div>
+
+                        <label class="save-card">
+                            <input type="checkbox" name="saveCard">
+                            Save this card securely for faster checkout next time
+                        </label>
+                    </div>
+
+                    
+                    <div class="method-panel" id="panel-upi">
+                        <div class="field">
+                            <label for="upiId">UPI ID</label>
+                            <div class="input-wrap">
+                                <svg viewBox="0 0 24 24">
+                                    <path d="M12 2v20M17 5l-5-3-5 3M17 19l-5 3-5-3" />
+                                </svg>
+                                <input type="text" id="upiId" name="upiId" placeholder="yourname@bank">
+                            </div>
+                            <div class="field-error">Enter a valid UPI ID, e.g. name@okbank</div>
+                        </div>
+                        <div class="upi-suggestions">
+                            <span class="upi-chip">Google Pay</span>
+                            <span class="upi-chip">PhonePe</span>
+                            <span class="upi-chip">Paytm</span>
+                            <span class="upi-chip">BHIM</span>
+                        </div>
+                    </div>
+
+                   
+                    <div class="method-panel" id="panel-netbanking">
+                        <div class="field">
+                            <label for="bankSelect">Select your bank</label>
+                            <div class="input-wrap">
+                                <svg viewBox="0 0 24 24">
+                                    <path d="M3 21h18M4 21V9l8-6 8 6v12M9 21v-6h6v6" />
+                                </svg>
+                                <input type="text" id="bankSelect" name="bankName"
+                                    placeholder="e.g. State Bank of India">
+                            </div>
+                            <div class="field-error">Select a bank to continue</div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+           
+            <div class="card">
+                <div class="summary-header">
+                    <div class="summary-eyebrow">Registering for</div>
+                    <h4 th:text="${event.name}">Event Name</h4>
+                </div>
+
+                <div class="summary-body">
+
+                    <div class="summary-line">
+                        <span>Registration fee</span>
+                        <span th:text="'₹' + ${event.fee}">₹200</span>
+                    </div>
+                    <div class="summary-line">
+                        <span>Convenience fee</span>
+                        <span>₹0</span>
+                    </div>
+                    <hr class="summary-divider">
+                    <div class="summary-line">
+                        <span>Registration ID</span>
+                        <span th:text="'#' + ${registration.id}">#00123</span>
+                    </div>
+
+                    <div class="summary-total">
+                        <span class="label">Total payable</span>
+                        <span class="amount"><span class="currency">₹</span><span
+                                th:text="${event.fee}">200</span></span>
+                    </div>
+
+                    <div class="secure-note">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6l8-4z" />
+                            <path d="M9 12l2 2 4-4" />
+                        </svg>
+                        Your payment details are encrypted and processed securely
+                    </div>
+
+                    <button type="submit" class="btn-pay" id="payBtn">
+                        <svg viewBox="0 0 24 24">
+                            <rect x="2" y="5" width="20" height="14" rx="2" />
+                            <line x1="2" y1="10" x2="22" y2="10" />
+                        </svg>
+                        <span class="btn-pay-label">Pay <span th:text="'₹' + ${event.fee}">₹200</span></span>
+                        <span class="spinner"></span>
+                    </button>
+
+                    <div class="trust-row">
+                        <span class="badge-mini">256-BIT SSL</span>
+                        <span class="badge-mini">PCI DSS</span>
+                        <span class="badge-mini">RBI COMPLIANT</span>
+                    </div>
+
+                </div>
+            </div>
+
+        </form>
 
     </div>
 
-</div>
+    <script>
+        (function () {
+            var tabs = document.querySelectorAll('.method-tab');
+            var panels = document.querySelectorAll('.method-panel');
+
+            tabs.forEach(function (tab) {
+                tab.addEventListener('click', function () {
+                    tabs.forEach(function (t) { t.classList.remove('active'); });
+                    panels.forEach(function (p) { p.classList.remove('active'); });
+                    tab.classList.add('active');
+                    document.getElementById(tab.dataset.target).classList.add('active');
+                });
+            });
+
+            // Format card number in groups of 4
+            var cardNumber = document.getElementById('cardNumber');
+            cardNumber.addEventListener('input', function () {
+                var digits = cardNumber.value.replace(/\D/g, '').slice(0, 16);
+                cardNumber.value = digits.replace(/(.{4})/g, '$1  ').trim();
+            });
+
+            // Auto-insert slash in expiry MM / YY
+            var cardExpiry = document.getElementById('cardExpiry');
+            cardExpiry.addEventListener('input', function () {
+                var digits = cardExpiry.value.replace(/\D/g, '').slice(0, 4);
+                if (digits.length >= 3) {
+                    cardExpiry.value = digits.slice(0, 2) + ' / ' + digits.slice(2);
+                } else {
+                    cardExpiry.value = digits;
+                }
+            });
+
+            // Digits only for CVV
+            var cardCvv = document.getElementById('cardCvv');
+            cardCvv.addEventListener('input', function () {
+                cardCvv.value = cardCvv.value.replace(/\D/g, '').slice(0, 3);
+            });
+
+            function markInvalid(fieldEl, invalid) {
+                fieldEl.classList.toggle('invalid', invalid);
+            }
+
+            function validateCardPanel() {
+                var ok = true;
+                var name = document.getElementById('cardName');
+                if (name.value.trim().length < 2) { markInvalid(name.closest('.field'), true); ok = false; }
+                else { markInvalid(name.closest('.field'), false); }
+
+                var num = cardNumber.value.replace(/\D/g, '');
+                if (num.length !== 16) { markInvalid(cardNumber.closest('.field'), true); ok = false; }
+                else { markInvalid(cardNumber.closest('.field'), false); }
+
+                var expDigits = cardExpiry.value.replace(/\D/g, '');
+                var expValid = false;
+                if (expDigits.length === 4) {
+                    var mm = parseInt(expDigits.slice(0, 2), 10);
+                    var yy = parseInt(expDigits.slice(2), 10);
+                    var now = new Date();
+                    var curYY = now.getFullYear() % 100;
+                    var curMM = now.getMonth() + 1;
+                    if (mm >= 1 && mm <= 12 && (yy > curYY || (yy === curYY && mm >= curMM))) {
+                        expValid = true;
+                    }
+                }
+                markInvalid(cardExpiry.closest('.field'), !expValid);
+                if (!expValid) ok = false;
+
+                if (cardCvv.value.length !== 3) { markInvalid(cardCvv.closest('.field'), true); ok = false; }
+                else { markInvalid(cardCvv.closest('.field'), false); }
+
+                return ok;
+            }
+
+            function validateUpiPanel() {
+                var upi = document.getElementById('upiId');
+                var valid = /^[\w.\-]{2,}@[a-zA-Z]{2,}$/.test(upi.value.trim());
+                markInvalid(upi.closest('.field'), !valid);
+                return valid;
+            }
+
+            function validateNetbankingPanel() {
+                var bank = document.getElementById('bankSelect');
+                var valid = bank.value.trim().length > 1;
+                markInvalid(bank.closest('.field'), !valid);
+                return valid;
+            }
+
+            var form = document.getElementById('paymentForm');
+            var payBtn = document.getElementById('payBtn');
+
+            form.addEventListener('submit', function (e) {
+                var activeTab = document.querySelector('.method-tab.active').dataset.target;
+                var valid = true;
+
+                if (activeTab === 'panel-card') valid = validateCardPanel();
+                else if (activeTab === 'panel-upi') valid = validateUpiPanel();
+                else valid = validateNetbankingPanel();
+
+                if (!valid) {
+                    e.preventDefault();
+                    return;
+                }
+
+                // Show a brief processing state before the redirect fires
+                e.preventDefault();
+                payBtn.classList.add('loading');
+                payBtn.disabled = true;
+                setTimeout(function () {
+                    form.submit();
+                }, 900);
+            });
+        })();
+    </script>
 
 </body>
+
+</html> -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment · EventSphere</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Lexend:wght@600;700;800&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --indigo: #4f46e5;
+            --indigo-strong: #3730a3;
+            --violet: #7c3aed;
+            --indigo-bg: #eef2ff;
+            --green: #16a34a;
+            --green-bg: #f0fdf4;
+            --amber: #d97706;
+            --error: #dc2626;
+            --error-bg: #fef2f2;
+
+            --bg-grad-1: #eef2ff;
+            --bg-grad-2: #f5f3ff;
+            --bg-grad-3: #eef7ff;
+            --surface: rgba(255, 255, 255, .72);
+            --surface-solid: #ffffff;
+            --surface-2: rgba(247, 249, 252, .8);
+            --ink: #10152b;
+            --muted: #5b6b82;
+            --border: rgba(148, 163, 200, .28);
+            --shadow: 0 1px 3px rgba(30, 27, 90, .06), 0 10px 28px rgba(30, 27, 90, .08);
+            --shadow-hover: 0 8px 20px rgba(30, 27, 90, .1), 0 24px 48px rgba(30, 27, 90, .14);
+            --glass-blur: 18px;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            color-scheme: light;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background:
+                radial-gradient(1200px 600px at 10% -10%, #dfe6ff 0%, transparent 60%),
+                radial-gradient(1000px 700px at 110% 10%, #ede4ff 0%, transparent 55%),
+                linear-gradient(160deg, var(--bg-grad-1) 0%, var(--bg-grad-3) 45%, var(--bg-grad-2) 100%);
+            background-attachment: fixed;
+            color: var(--ink);
+            -webkit-font-smoothing: antialiased;
+        }
+
+        h2,
+        h3,
+        h4 {
+            font-family: 'Lexend', 'Inter', sans-serif;
+        }
+
+        svg {
+            display: block;
+        }
+
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(255, 255, 255, .65);
+            backdrop-filter: blur(var(--glass-blur));
+            -webkit-backdrop-filter: blur(var(--glass-blur));
+            border-bottom: 1px solid var(--border);
+            padding: 0 32px;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .brand-badge {
+            width: 34px;
+            height: 34px;
+            background: linear-gradient(135deg, var(--indigo) 0%, var(--violet) 100%);
+            color: #fff;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Lexend', sans-serif;
+            font-weight: 800;
+            font-size: 16px;
+            box-shadow: 0 4px 14px rgba(79, 70, 229, .32);
+        }
+
+        .brand-name {
+            color: var(--ink);
+            font-size: 17px;
+            font-weight: 800;
+            letter-spacing: -.01em;
+        }
+
+        .nav-steps {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12.5px;
+            font-weight: 700;
+            color: var(--muted);
+        }
+
+        .nav-steps .step {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .nav-steps .dot {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10.5px;
+            background: var(--surface-2);
+            border: 1px solid var(--border);
+            color: var(--muted);
+        }
+
+        .nav-steps .step.done .dot {
+            background: var(--green);
+            border-color: var(--green);
+            color: #fff;
+        }
+
+        .nav-steps .step.active .dot {
+            background: linear-gradient(135deg, var(--indigo), var(--violet));
+            border-color: var(--indigo);
+            color: #fff;
+            box-shadow: 0 0 0 4px rgba(79, 70, 229, .15);
+        }
+
+        .nav-steps .step.active span.label {
+            color: var(--ink);
+        }
+
+        .nav-steps .sep {
+            width: 20px;
+            height: 1px;
+            background: var(--border);
+        }
+
+        @media (max-width: 720px) {
+            .nav-steps {
+                display: none;
+            }
+        }
+
+        .page-content {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 48px 24px 90px;
+        }
+
+        .page-title {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .page-title .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 11.5px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: .6px;
+            color: var(--indigo-strong);
+            background: var(--indigo-bg);
+            padding: 5px 12px;
+            border-radius: 20px;
+            margin-bottom: 12px;
+        }
+
+        .page-title h2 {
+            font-size: 25px;
+            font-weight: 800;
+            margin: 0 0 6px;
+            letter-spacing: -.01em;
+        }
+
+        .page-title p {
+            font-size: 13.5px;
+            color: var(--muted);
+            margin: 0;
+        }
+
+        .pay-grid {
+            display: grid;
+            grid-template-columns: 1.35fr 1fr;
+            gap: 22px;
+            align-items: start;
+        }
+
+        @media (max-width: 800px) {
+            .pay-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .card {
+            background: var(--surface);
+            backdrop-filter: blur(var(--glass-blur));
+            -webkit-backdrop-filter: blur(var(--glass-blur));
+            border: 1px solid var(--border);
+            border-radius: 22px;
+            box-shadow: var(--shadow-hover);
+            overflow: hidden;
+        }
+
+        .method-tabs {
+            display: flex;
+            gap: 8px;
+            padding: 20px 22px 0;
+        }
+
+        .method-tab {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 13px 10px;
+            border-radius: 13px;
+            border: 1.5px solid var(--border);
+            background: rgba(247, 249, 252, .6);
+            color: var(--muted);
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: border-color .15s ease, color .15s ease, background .15s ease, transform .1s ease;
+        }
+
+        .method-tab:hover {
+            transform: translateY(-1px);
+        }
+
+        .method-tab svg {
+            width: 16px;
+            height: 16px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .method-tab.active {
+            border-color: transparent;
+            background: linear-gradient(135deg, var(--indigo), var(--violet));
+            color: #fff;
+            box-shadow: 0 6px 16px rgba(79, 70, 229, .3);
+        }
+
+        .pay-form {
+            padding: 22px;
+        }
+
+        .method-panel {
+            display: none;
+            animation: fadeIn .25s ease;
+        }
+
+        .method-panel.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(4px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .field {
+            margin-bottom: 16px;
+        }
+
+        .field label {
+            display: block;
+            font-size: 12.5px;
+            font-weight: 700;
+            color: var(--ink);
+            margin-bottom: 6px;
+        }
+
+        .field .hint {
+            font-weight: 500;
+            color: var(--muted);
+            font-size: 11.5px;
+            margin-left: 4px;
+        }
+
+        .input-wrap {
+            position: relative;
+        }
+
+        .input-wrap svg {
+            position: absolute;
+            left: 13px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 16px;
+            height: 16px;
+            stroke: var(--muted);
+            fill: none;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"] {
+            width: 100%;
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--ink);
+            background: rgba(247, 249, 252, .75);
+            border: 1.5px solid var(--border);
+            border-radius: 12px;
+            padding: 12px 14px 12px 38px;
+            outline: none;
+            transition: border-color .15s ease, background .15s ease, box-shadow .15s ease;
+        }
+
+        input::placeholder {
+            font-weight: 500;
+            color: #a3aec2;
+        }
+
+        input:focus {
+            border-color: var(--indigo);
+            background: #fff;
+            box-shadow: 0 0 0 4px rgba(79, 70, 229, .12);
+        }
+
+        .field-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+        }
+
+        .card-brands {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            gap: 5px;
+        }
+
+        .card-brands span {
+            font-size: 9px;
+            font-weight: 800;
+            padding: 2px 5px;
+            border-radius: 4px;
+            background: #fff;
+            border: 1px solid var(--border);
+            color: var(--muted);
+            letter-spacing: .2px;
+        }
+
+        .save-card {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            font-size: 12.5px;
+            font-weight: 600;
+            color: var(--muted);
+            margin-bottom: 4px;
+        }
+
+        .save-card input {
+            width: 15px;
+            height: 15px;
+            accent-color: var(--indigo);
+            cursor: pointer;
+        }
+
+        .upi-suggestions {
+            display: flex;
+            gap: 8px;
+            margin-top: 10px;
+            flex-wrap: wrap;
+        }
+
+        .upi-chip {
+            font-size: 11.5px;
+            font-weight: 700;
+            padding: 6px 11px;
+            border-radius: 20px;
+            background: rgba(247, 249, 252, .8);
+            border: 1px solid var(--border);
+            color: var(--muted);
+            cursor: pointer;
+            transition: all .15s ease;
+        }
+
+        .upi-chip:hover {
+            border-color: var(--indigo);
+            color: var(--indigo-strong);
+            background: var(--indigo-bg);
+        }
+
+        .field-error {
+            display: none;
+            align-items: center;
+            gap: 5px;
+            font-size: 11.5px;
+            font-weight: 600;
+            color: var(--error);
+            margin-top: 6px;
+        }
+
+        .field.invalid input {
+            border-color: var(--error);
+            background: var(--error-bg);
+        }
+
+        .field.invalid .field-error {
+            display: flex;
+        }
+
+        .summary-header {
+            background: linear-gradient(120deg, var(--indigo) 0%, var(--indigo-strong) 55%, #241a6b 100%);
+            padding: 26px 24px 22px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .summary-header::before {
+            content: "";
+            position: absolute;
+            top: -50px;
+            right: -30px;
+            width: 170px;
+            height: 170px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, .12);
+        }
+
+        .summary-header::after {
+            content: "";
+            position: absolute;
+            bottom: -60px;
+            left: -40px;
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, .08);
+        }
+
+        .summary-eyebrow {
+            position: relative;
+            color: rgba(255, 255, 255, .78);
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: .6px;
+            margin-bottom: 8px;
+        }
+
+        .summary-header h4 {
+            position: relative;
+            color: #fff;
+            font-size: 19px;
+            font-weight: 800;
+            margin: 0;
+            letter-spacing: -.01em;
+            line-height: 1.3;
+        }
+
+        .summary-body {
+            padding: 22px;
+        }
+
+        .summary-line {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 13px;
+            color: var(--muted);
+            font-weight: 600;
+            padding: 9px 0;
+        }
+
+        .summary-line span:last-child {
+            color: var(--ink);
+            font-weight: 700;
+        }
+
+        .summary-divider {
+            border: none;
+            border-top: 1px dashed var(--border);
+            margin: 10px 0;
+        }
+
+        .summary-total {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 16px;
+            background: rgba(247, 249, 252, .8);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            margin: 14px 0 18px;
+        }
+
+        .summary-total .label {
+            font-size: 12.5px;
+            font-weight: 700;
+            color: var(--muted);
+        }
+
+        .summary-total .amount {
+            font-family: 'Lexend', sans-serif;
+            font-size: 27px;
+            font-weight: 800;
+            color: var(--ink);
+        }
+
+        .summary-total .amount .currency {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--muted);
+            margin-right: 2px;
+        }
+
+        .secure-note {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+            color: var(--muted);
+            margin-bottom: 18px;
+            line-height: 1.4;
+        }
+
+        .secure-note svg {
+            width: 16px;
+            height: 16px;
+            flex-shrink: 0;
+            fill: none;
+            stroke: var(--green);
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .btn-pay {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 9px;
+            padding: 16px 20px;
+            border-radius: 14px;
+            font-size: 15px;
+            font-weight: 700;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            color: #fff;
+            background: linear-gradient(135deg, var(--green) 0%, #0d9448 100%);
+            box-shadow: 0 8px 20px rgba(22, 163, 74, .32);
+            transition: box-shadow .15s ease, transform .1s ease, opacity .15s ease;
+        }
+
+        .btn-pay:hover {
+            box-shadow: 0 10px 24px rgba(22, 163, 74, .42);
+            transform: translateY(-1px);
+        }
+
+        .btn-pay:active {
+            transform: scale(.98);
+        }
+
+        .btn-pay:disabled {
+            opacity: .85;
+            cursor: progress;
+        }
+
+        .btn-pay svg {
+            width: 17px;
+            height: 17px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .trust-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 14px;
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid var(--border);
+        }
+
+        .trust-row .badge-mini {
+            font-size: 9.5px;
+            font-weight: 800;
+            letter-spacing: .3px;
+            color: var(--muted);
+            background: rgba(247, 249, 252, .8);
+            border: 1px solid var(--border);
+            padding: 4px 8px;
+            border-radius: 6px;
+        }
+
+        /* ================= PROCESSING OVERLAY ================= */
+        .processing-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 999;
+            background: linear-gradient(160deg, #121635 0%, #1c1450 55%, #241a6b 100%);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            text-align: center;
+            opacity: 0;
+            transition: opacity .35s ease;
+        }
+
+        .processing-overlay.show {
+            display: flex;
+            opacity: 1;
+        }
+
+        .lock-ring {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, .08);
+            border: 1.5px solid rgba(255, 255, 255, .18);
+            margin-bottom: 26px;
+            position: relative;
+        }
+
+        .lock-ring::before {
+            content: "";
+            position: absolute;
+            inset: -8px;
+            border-radius: 50%;
+            border: 3px solid rgba(124, 58, 237, .35);
+            border-top-color: #a78bfa;
+            animation: spin 1s linear infinite;
+        }
+
+        .lock-ring svg {
+            width: 34px;
+            height: 34px;
+            stroke: #fff;
+            fill: none;
+            stroke-width: 1.8;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .processing-overlay h3 {
+            color: #fff;
+            font-size: 21px;
+            font-weight: 800;
+            margin: 0 0 8px;
+            letter-spacing: -.01em;
+        }
+
+        .processing-status {
+            color: rgba(255, 255, 255, .68);
+            font-size: 13.5px;
+            font-weight: 600;
+            min-height: 20px;
+            margin-bottom: 26px;
+            transition: opacity .2s ease;
+        }
+
+        .progress-track {
+            width: 280px;
+            height: 6px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, .14);
+            overflow: hidden;
+            margin-bottom: 22px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            width: 0%;
+            border-radius: 10px;
+            background: linear-gradient(90deg, #818cf8, #a78bfa, #34d399);
+            transition: width .3s ease;
+        }
+
+        .processing-warn {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            color: rgba(255, 255, 255, .5);
+            font-size: 11.5px;
+            font-weight: 600;
+            background: rgba(255, 255, 255, .06);
+            padding: 8px 14px;
+            border-radius: 20px;
+        }
+
+        .processing-warn svg {
+            width: 13px;
+            height: 13px;
+            stroke: rgba(255, 255, 255, .55);
+            fill: none;
+            stroke-width: 2;
+        }
+
+        .processing-steps {
+            display: flex;
+            gap: 8px;
+            margin-top: 24px;
+        }
+
+        .processing-steps .pstep {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, .2);
+            transition: background .2s ease;
+        }
+
+        .processing-steps .pstep.on {
+            background: #a78bfa;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                transition: none !important;
+                animation: none !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav>
+        <a href="/dashboard" class="brand">
+            <span class="brand-badge">E</span>
+            <span class="brand-name">EventSphere</span>
+        </a>
+
+        <div class="nav-steps">
+            <div class="step done"><span class="dot">✓</span><span class="label">Register</span></div>
+            <div class="sep"></div>
+            <div class="step active"><span class="dot">2</span><span class="label">Payment</span></div>
+            <div class="sep"></div>
+            <div class="step"><span class="dot">3</span><span class="label">Confirmed</span></div>
+        </div>
+    </nav>
+
+    <div class="page-content">
+
+        <div class="page-title">
+            <span class="eyebrow">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6l8-4z" />
+                </svg>
+                Secure checkout
+            </span>
+            <h2>Complete Your Payment</h2>
+            <p>You're one step away from securing your spot</p>
+        </div>
+
+        <form id="paymentForm" class="pay-grid" th:action="@{/confirm-payment/{id}(id=${registration.id})}"
+            method="get">
+
+            <input type="hidden" name="paymentMethod" id="paymentMethodInput" value="CARD">
+
+            <div class="card">
+
+                <div class="method-tabs">
+                    <button type="button" class="method-tab active" data-target="panel-card" data-method="CARD">
+                        <svg viewBox="0 0 24 24">
+                            <rect x="2" y="5" width="20" height="14" rx="2" />
+                            <line x1="2" y1="10" x2="22" y2="10" />
+                        </svg>
+                        Card
+                    </button>
+                    <button type="button" class="method-tab" data-target="panel-upi" data-method="UPI">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M12 2v20M17 5l-5-3-5 3M17 19l-5 3-5-3" />
+                        </svg>
+                        UPI
+                    </button>
+                    <button type="button" class="method-tab" data-target="panel-netbanking" data-method="NETBANKING">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M3 21h18M4 21V9l8-6 8 6v12M9 21v-6h6v6" />
+                        </svg>
+                        Net Banking
+                    </button>
+                </div>
+
+                <div class="pay-form">
+
+                    <div class="method-panel active" id="panel-card">
+
+                        <div class="field">
+                            <label for="cardName">Name on card</label>
+                            <div class="input-wrap">
+                                <svg viewBox="0 0 24 24">
+                                    <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" />
+                                    <circle cx="12" cy="7" r="4" />
+                                </svg>
+                                <input type="text" id="cardName" name="cardName" placeholder="As printed on the card"
+                                    autocomplete="cc-name">
+                            </div>
+                            <div class="field-error">Enter the name exactly as printed on the card</div>
+                        </div>
+
+                        <div class="field">
+                            <label for="cardNumber">Card number</label>
+                            <div class="input-wrap">
+                                <svg viewBox="0 0 24 24">
+                                    <rect x="2" y="5" width="20" height="14" rx="2" />
+                                    <line x1="2" y1="10" x2="22" y2="10" />
+                                </svg>
+                                <input type="text" id="cardNumber" name="cardNumber"
+                                    placeholder="1234  5678  9012  3456" inputmode="numeric" maxlength="19"
+                                    autocomplete="cc-number" style="padding-right:120px">
+                                <div class="card-brands"><span>VISA</span><span>MC</span><span>RUPAY</span></div>
+                            </div>
+                            <div class="field-error">Enter a valid 16-digit card number</div>
+                        </div>
+
+                        <div class="field-row">
+                            <div class="field">
+                                <label for="cardExpiry">Expiry date</label>
+                                <div class="input-wrap">
+                                    <svg viewBox="0 0 24 24">
+                                        <rect x="3" y="4" width="18" height="18" rx="2" />
+                                        <line x1="16" y1="2" x2="16" y2="6" />
+                                        <line x1="8" y1="2" x2="8" y2="6" />
+                                        <line x1="3" y1="10" x2="21" y2="10" />
+                                    </svg>
+                                    <input type="text" id="cardExpiry" name="cardExpiry" placeholder="MM / YY"
+                                        inputmode="numeric" maxlength="7" autocomplete="cc-exp">
+                                </div>
+                                <div class="field-error">Enter a valid future date</div>
+                            </div>
+                            <div class="field">
+                                <label for="cardCvv">CVV <span class="hint">3 digits</span></label>
+                                <div class="input-wrap">
+                                    <svg viewBox="0 0 24 24">
+                                        <rect x="3" y="11" width="18" height="10" rx="2" />
+                                        <path d="M7 11V7a5 5 0 0110 0v4" />
+                                    </svg>
+                                    <input type="text" id="cardCvv" name="cardCvv" placeholder="•••" inputmode="numeric"
+                                        maxlength="3" autocomplete="cc-csc">
+                                </div>
+                                <div class="field-error">Enter a valid CVV</div>
+                            </div>
+                        </div>
+
+                        <label class="save-card">
+                            <input type="checkbox" name="saveCard">
+                            Save this card securely for faster checkout next time
+                        </label>
+                    </div>
+
+                    <div class="method-panel" id="panel-upi">
+                        <div class="field">
+                            <label for="upiId">UPI ID</label>
+                            <div class="input-wrap">
+                                <svg viewBox="0 0 24 24">
+                                    <path d="M12 2v20M17 5l-5-3-5 3M17 19l-5 3-5-3" />
+                                </svg>
+                                <input type="text" id="upiId" name="upiId" placeholder="yourname@bank">
+                            </div>
+                            <div class="field-error">Enter a valid UPI ID, e.g. name@okbank</div>
+                        </div>
+                        <div class="upi-suggestions">
+                            <span class="upi-chip" data-suffix="@okhdfcbank">Google Pay</span>
+                            <span class="upi-chip" data-suffix="@ybl">PhonePe</span>
+                            <span class="upi-chip" data-suffix="@paytm">Paytm</span>
+                            <span class="upi-chip" data-suffix="@upi">BHIM</span>
+                        </div>
+                    </div>
+
+                    <div class="method-panel" id="panel-netbanking">
+                        <div class="field">
+                            <label for="bankSelect">Select your bank</label>
+                            <div class="input-wrap">
+                                <svg viewBox="0 0 24 24">
+                                    <path d="M3 21h18M4 21V9l8-6 8 6v12M9 21v-6h6v6" />
+                                </svg>
+                                <input type="text" id="bankSelect" name="bankName"
+                                    placeholder="e.g. State Bank of India">
+                            </div>
+                            <div class="field-error">Select a bank to continue</div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="summary-header">
+                    <div class="summary-eyebrow">Registering for</div>
+                    <h4 th:text="${event.name}">Event Name</h4>
+                </div>
+
+                <div class="summary-body">
+
+                    <div class="summary-line">
+                        <span>Registration fee</span>
+                        <span th:text="'₹' + ${event.fee}">₹200</span>
+                    </div>
+                    <div class="summary-line">
+                        <span>Convenience fee</span>
+                        <span>₹0</span>
+                    </div>
+                    <hr class="summary-divider">
+                    <div class="summary-line">
+                        <span>Registration ID</span>
+                        <span th:text="'#' + ${registration.id}">#00123</span>
+                    </div>
+
+                    <div class="summary-total">
+                        <span class="label">Total payable</span>
+                        <span class="amount"><span class="currency">₹</span><span
+                                th:text="${event.fee}">200</span></span>
+                    </div>
+
+                    <div class="secure-note">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6l8-4z" />
+                            <path d="M9 12l2 2 4-4" />
+                        </svg>
+                        Your payment details are encrypted and processed securely
+                    </div>
+
+                    <button type="submit" class="btn-pay" id="payBtn">
+                        <svg viewBox="0 0 24 24">
+                            <rect x="2" y="5" width="20" height="14" rx="2" />
+                            <line x1="2" y1="10" x2="22" y2="10" />
+                        </svg>
+                        <span class="btn-pay-label">Pay <span th:text="'₹' + ${event.fee}">₹200</span></span>
+                    </button>
+
+                    <div class="trust-row">
+                        <span class="badge-mini">256-BIT SSL</span>
+                        <span class="badge-mini">PCI DSS</span>
+                        <span class="badge-mini">RBI COMPLIANT</span>
+                    </div>
+
+                </div>
+            </div>
+
+        </form>
+
+    </div>
+
+    <!-- Full screen mock processing overlay -->
+    <div class="processing-overlay" id="processingOverlay">
+        <div class="lock-ring">
+            <svg viewBox="0 0 24 24">
+                <rect x="3" y="11" width="18" height="10" rx="2" />
+                <path d="M7 11V7a5 5 0 0110 0v4" />
+            </svg>
+        </div>
+        <h3>Processing Secure Payment...</h3>
+        <div class="processing-status" id="processingStatus">Connecting to your bank...</div>
+        <div class="progress-track">
+            <div class="progress-fill" id="progressFill"></div>
+        </div>
+        <div class="processing-warn">
+            <svg viewBox="0 0 24 24">
+                <path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6l8-4z" />
+            </svg>
+            Please do not close this window
+        </div>
+        <div class="processing-steps">
+            <span class="pstep" id="pstep0"></span>
+            <span class="pstep" id="pstep1"></span>
+            <span class="pstep" id="pstep2"></span>
+        </div>
+    </div>
+
+    <script>
+        (function () {
+            var tabs = document.querySelectorAll('.method-tab');
+            var panels = document.querySelectorAll('.method-panel');
+            var methodInput = document.getElementById('paymentMethodInput');
+
+            tabs.forEach(function (tab) {
+                tab.addEventListener('click', function () {
+                    tabs.forEach(function (t) { t.classList.remove('active'); });
+                    panels.forEach(function (p) { p.classList.remove('active'); });
+                    tab.classList.add('active');
+                    document.getElementById(tab.dataset.target).classList.add('active');
+                    methodInput.value = tab.dataset.method;
+                });
+            });
+
+            // UPI quick-fill chips
+            document.querySelectorAll('.upi-chip').forEach(function (chip) {
+                chip.addEventListener('click', function () {
+                    var upiField = document.getElementById('upiId');
+                    var base = upiField.value.split('@')[0] || 'yourname';
+                    upiField.value = base + chip.dataset.suffix;
+                });
+            });
+
+            var cardNumber = document.getElementById('cardNumber');
+            cardNumber.addEventListener('input', function () {
+                var digits = cardNumber.value.replace(/\D/g, '').slice(0, 16);
+                cardNumber.value = digits.replace(/(.{4})/g, '$1  ').trim();
+            });
+
+            var cardExpiry = document.getElementById('cardExpiry');
+            cardExpiry.addEventListener('input', function () {
+                var digits = cardExpiry.value.replace(/\D/g, '').slice(0, 4);
+                if (digits.length >= 3) {
+                    cardExpiry.value = digits.slice(0, 2) + ' / ' + digits.slice(2);
+                } else {
+                    cardExpiry.value = digits;
+                }
+            });
+
+            var cardCvv = document.getElementById('cardCvv');
+            cardCvv.addEventListener('input', function () {
+                cardCvv.value = cardCvv.value.replace(/\D/g, '').slice(0, 3);
+            });
+
+            function markInvalid(fieldEl, invalid) { fieldEl.classList.toggle('invalid', invalid); }
+
+            function validateCardPanel() {
+                var ok = true;
+                var name = document.getElementById('cardName');
+                if (name.value.trim().length < 2) { markInvalid(name.closest('.field'), true); ok = false; }
+                else { markInvalid(name.closest('.field'), false); }
+
+                var num = cardNumber.value.replace(/\D/g, '');
+                if (num.length !== 16) { markInvalid(cardNumber.closest('.field'), true); ok = false; }
+                else { markInvalid(cardNumber.closest('.field'), false); }
+
+                var expDigits = cardExpiry.value.replace(/\D/g, '');
+                var expValid = false;
+                if (expDigits.length === 4) {
+                    var mm = parseInt(expDigits.slice(0, 2), 10);
+                    var yy = parseInt(expDigits.slice(2), 10);
+                    var now = new Date();
+                    var curYY = now.getFullYear() % 100;
+                    var curMM = now.getMonth() + 1;
+                    if (mm >= 1 && mm <= 12 && (yy > curYY || (yy === curYY && mm >= curMM))) { expValid = true; }
+                }
+                markInvalid(cardExpiry.closest('.field'), !expValid);
+                if (!expValid) ok = false;
+
+                if (cardCvv.value.length !== 3) { markInvalid(cardCvv.closest('.field'), true); ok = false; }
+                else { markInvalid(cardCvv.closest('.field'), false); }
+
+                return ok;
+            }
+
+            function validateUpiPanel() {
+                var upi = document.getElementById('upiId');
+                var valid = /^[\w.\-]{2,}@[a-zA-Z]{2,}$/.test(upi.value.trim());
+                markInvalid(upi.closest('.field'), !valid);
+                return valid;
+            }
+
+            function validateNetbankingPanel() {
+                var bank = document.getElementById('bankSelect');
+                var valid = bank.value.trim().length > 1;
+                markInvalid(bank.closest('.field'), !valid);
+                return valid;
+            }
+
+            var form = document.getElementById('paymentForm');
+            var payBtn = document.getElementById('payBtn');
+            var overlay = document.getElementById('processingOverlay');
+            var statusEl = document.getElementById('processingStatus');
+            var progressFill = document.getElementById('progressFill');
+            var steps = [
+                document.getElementById('pstep0'),
+                document.getElementById('pstep1'),
+                document.getElementById('pstep2')
+            ];
+
+            var messages = [
+                { text: 'Connecting to your bank...', progress: 30, step: 0 },
+                { text: 'Verifying transaction...', progress: 70, step: 1 },
+                { text: 'Finalizing your payment...', progress: 100, step: 2 }
+            ];
+
+            function runProcessingSequence(onDone) {
+                overlay.classList.add('show');
+                var i = 0;
+
+                function tick() {
+                    var m = messages[i];
+                    statusEl.style.opacity = 0;
+                    setTimeout(function () {
+                        statusEl.textContent = m.text;
+                        statusEl.style.opacity = 1;
+                        progressFill.style.width = m.progress + '%';
+                        steps.forEach(function (s, idx) { s.classList.toggle('on', idx <= m.step); });
+                    }, 120);
+
+                    i++;
+                    if (i < messages.length) {
+                        setTimeout(tick, 1000);
+                    } else {
+                        setTimeout(onDone, 1000);
+                    }
+                }
+                tick();
+            }
+
+            form.addEventListener('submit', function (e) {
+                var activeTab = document.querySelector('.method-tab.active').dataset.target;
+                var valid = true;
+
+                if (activeTab === 'panel-card') valid = validateCardPanel();
+                else if (activeTab === 'panel-upi') valid = validateUpiPanel();
+                else valid = validateNetbankingPanel();
+
+                if (!valid) { e.preventDefault(); return; }
+
+                e.preventDefault();
+                payBtn.disabled = true;
+
+                runProcessingSequence(function () {
+                    form.submit();
+                });
+            });
+        })();
+    </script>
+
+</body>
+
 </html>

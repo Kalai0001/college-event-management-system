@@ -1,69 +1,339 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Event Portal - Login</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Event Portal - Student Login</title>
+<style>
+  :root{
+    --indigo:#4338ca;
+    --indigo-light:#4f46e5;
+    --indigo-bg:#eef2ff;
+    --ink:#0f172a;
+    --muted:#64748b;
+    --border:#e5e7eb;
+    --green:#16a34a;
+    --bg:#fafafa;
+  }
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  *{box-sizing:border-box;}
+
+  body{
+    margin:0;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    background:var(--bg);
+    color:var(--ink);
+  }
+
+  /* ---------- Header ---------- */
+  header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:18px 48px;
+    border-bottom:1px solid var(--border);
+    background:#fff;
+  }
+  .brand{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-weight:800;
+    font-size:19px;
+    text-decoration:none;
+    color:var(--ink);
+  }
+  .brand-badge{
+    width:34px;height:34px;
+    background:var(--indigo-light);
+    color:#fff;
+    border-radius:9px;
+    display:flex;align-items:center;justify-content:center;
+    font-weight:800;
+    font-size:16px;
+  }
+  .nav-right{display:flex;align-items:center;gap:22px;}
+  .nav-link{
+    color:var(--muted);
+    text-decoration:none;
+    font-size:14.5px;
+    font-weight:600;
+    display:flex;align-items:center;gap:6px;
+  }
+  .btn-outline{
+    padding:9px 18px;
+    border:1px solid var(--border);
+    border-radius:9px;
+    font-weight:700;
+    font-size:14.5px;
+    color:var(--ink);
+    text-decoration:none;
+    background:#fff;
+  }
+  .btn-solid{
+    padding:9px 20px;
+    border-radius:9px;
+    font-weight:700;
+    font-size:14.5px;
+    background:var(--indigo-light);
+    color:#fff;
+    text-decoration:none;
+    border:none;
+  }
+
+  /* ---------- Page layout ---------- */
+  main{
+    max-width:1080px;
+    margin:0 auto;
+    padding:72px 24px 90px;
+    display:grid;
+    grid-template-columns:1.05fr 1fr;
+    gap:64px;
+    align-items:center;
+  }
+
+  .pill{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    background:var(--indigo-bg);
+    color:var(--indigo);
+    font-weight:700;
+    font-size:13px;
+    padding:7px 14px;
+    border-radius:999px;
+    margin-bottom:22px;
+  }
+  .pill-dot{width:6px;height:6px;border-radius:50%;background:var(--indigo);}
+
+  .side h1{
+    font-size:42px;
+    font-weight:800;
+    line-height:1.15;
+    margin:0 0 18px;
+    letter-spacing:-0.5px;
+  }
+  .side h1 span{color:var(--indigo-light);}
+
+  .side p{
+    color:var(--muted);
+    font-size:16px;
+    line-height:1.65;
+    max-width:420px;
+    margin:0 0 30px;
+  }
+
+  .perks{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:14px;}
+  .perks li{display:flex;gap:10px;align-items:flex-start;font-size:14.5px;color:var(--ink);font-weight:600;}
+  .perks svg{flex-shrink:0;margin-top:2px;}
+  .perks small{display:block;color:var(--muted);font-weight:400;margin-top:2px;}
+
+  /* ---------- Card ---------- */
+  .card{
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:20px;
+    box-shadow:0 20px 45px -20px rgba(15,23,42,0.18);
+    padding:40px 38px 34px;
+  }
+
+  .card-icon{
+    width:46px;height:46px;
+    background:var(--indigo-bg);
+    border-radius:12px;
+    display:flex;align-items:center;justify-content:center;
+    margin-bottom:20px;
+  }
+
+  .card h2{
+    font-size:24px;
+    font-weight:800;
+    margin:0 0 6px;
+  }
+  .card .sub{
+    color:var(--muted);
+    font-size:14.5px;
+    margin:0 0 28px;
+  }
+
+  .field{margin-bottom:18px;}
+  .field label{
+    display:block;
+    font-size:13px;
+    font-weight:700;
+    color:var(--ink);
+    margin-bottom:7px;
+  }
+  .input-wrap{position:relative;}
+  .input-wrap svg{
+    position:absolute;
+    left:14px;top:50%;
+    transform:translateY(-50%);
+    color:var(--muted);
+  }
+  input[type=email], input[type=password]{
+    width:100%;
+    padding:12px 14px 12px 40px;
+    border:1px solid var(--border);
+    border-radius:10px;
+    font-size:14.5px;
+    color:var(--ink);
+    background:#fff;
+    outline:none;
+    transition:border-color .15s ease, box-shadow .15s ease;
+  }
+  input::placeholder{color:#a1a8b3;}
+  input:focus{
+    border-color:var(--indigo-light);
+    box-shadow:0 0 0 3px rgba(79,70,229,0.15);
+  }
+
+  .row-between{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin:2px 0 22px;
+    font-size:13.5px;
+  }
+  .remember{display:flex;align-items:center;gap:7px;color:var(--muted);font-weight:600;}
+  .row-between a{color:var(--indigo-light);text-decoration:none;font-weight:700;}
+
+  .submit-btn{
+    width:100%;
+    padding:13px;
+    background:var(--indigo-light);
+    color:#fff;
+    border:none;
+    border-radius:10px;
+    font-size:15px;
+    font-weight:700;
+    cursor:pointer;
+    transition:background .15s ease, transform .1s ease;
+  }
+  .submit-btn:hover{background:var(--indigo);}
+  .submit-btn:active{transform:translateY(1px);}
+
+  .divider{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin:24px 0;
+    color:var(--muted);
+    font-size:12.5px;
+    font-weight:600;
+  }
+  .divider::before, .divider::after{
+    content:"";
+    flex:1;
+    height:1px;
+    background:var(--border);
+  }
+
+  .footer-link{
+    text-align:center;
+    font-size:14px;
+    color:var(--muted);
+  }
+  .footer-link a{color:var(--indigo-light);font-weight:700;text-decoration:none;}
+
+  @media (max-width:880px){
+    main{grid-template-columns:1fr;padding-top:44px;}
+    .side{order:2;text-align:left;}
+    .side h1{font-size:32px;}
+    header{padding:16px 20px;}
+    .nav-link span{display:none;}
+  }
+</style>
 </head>
+<body>
 
-<body class="bg-light">
+<header>
+  <a href="/" class="brand">
+    <span class="brand-badge">E</span>
+    Event Portal
+  </a>
+  <div class="nav-right">
+    <span class="nav-link" style="color:var(--muted);font-weight:600;">New here?</span>
+    <a href="/signup" class="btn-solid">Sign up</a>
+  </div>
+</header>
 
-    <div class="container">
+<main>
+  <!-- Left: branding -->
+  <section class="side">
+    <span class="pill"><span class="pill-dot"></span>College Event Management System</span>
+    <h1>Welcome back,<br><span>student.</span></h1>
+    <p>Log in to register for events, track your applications and download certificates the moment an event wraps up.</p>
 
-        <div class="text-center mt-5 mb-4">
-            <h1 class="fw-bold text-dark">Event Portal</h1>
-            <p class="text-muted">
-                Login to continue
-            </p>
+    <ul class="perks">
+      <li>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        <div>Quick registration
+          <small>Sign up for any event in under a minute, free or paid</small>
+        </div>
+      </li>
+      <li>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        <div>Instant certificates
+          <small>Download proof of participation right after the event</small>
+        </div>
+      </li>
+      <li>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        <div>One place for everything
+          <small>Hackathons, symposiums, workshops and fests, all in one feed</small>
+        </div>
+      </li>
+    </ul>
+  </section>
+
+  <!-- Right: login card -->
+  <section>
+    <div class="card">
+      <div class="card-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#4338ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 5v6c0 5 3.4 9.4 8 11 4.6-1.6 8-6 8-11V5z"/><path d="m9 12 2 2 4-4"/></svg>
+      </div>
+      <h2>Student login</h2>
+      <p class="sub">Enter your credentials to access your dashboard.</p>
+
+      <form action="/login" method="post">
+
+        <div class="field">
+          <label for="email">Email</label>
+          <div class="input-wrap">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4z" opacity="0"/><path d="M22 6 12 13 2 6"/><path d="M2 6h20v12H2z"/></svg>
+            <input type="email" id="email" name="email" placeholder="you@college.edu" required>
+          </div>
         </div>
 
-        <div class="card shadow mx-auto" style="max-width: 450px;">
-
-            <div class="card-header bg-dark text-white text-center">
-                <h4>Login</h4>
-            </div>
-
-            <div class="card-body">
-
-                <form action="/login" method="post">
-
-                    <div class="mb-3">
-                        <input type="email"
-                               name="email"
-                               class="form-control"
-                               placeholder="Email">
-                    </div>
-
-                    <div class="mb-3">
-                        <input type="password"
-                               name="password"
-                               class="form-control"
-                               placeholder="Password">
-                    </div>
-
-                    <div class="d-grid">
-                        <button type="submit"
-                                class="btn btn-dark">
-                            Login
-                        </button>
-                    </div>
-
-                </form>
-
-                <div class="text-center mt-3">
-                    <small>
-                        Don't have an account?
-                        <a href="/signup">Create Account</a>
-                    </small>
-                </div>
-
-            </div>
-
+        <div class="field">
+          <label for="password">Password</label>
+          <div class="input-wrap">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            <input type="password" id="password" name="password" placeholder="Enter your password" required>
+          </div>
         </div>
 
+        <div class="row-between">
+          <label class="remember">
+            <input type="checkbox" name="remember" style="width:14px;height:14px;">
+            Remember me
+          </label>
+          <a href="/forgot-password">Forgot password?</a>
+        </div>
+
+        <button type="submit" class="submit-btn">Log in</button>
+
+      </form>
+
+      <div class="divider">or</div>
+
+      <p class="footer-link">
+        Don't have an account? <a href="/signup">Create one</a>
+      </p>
     </div>
+  </section>
+</main>
 
 </body>
-
 </html>

@@ -1,0 +1,520 @@
+<!-- <!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Verify Email | EventSphere</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            background: #f5f7fb;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .card {
+            width: 420px;
+            background: white;
+            padding: 35px;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, .12);
+            text-align: center;
+        }
+
+        h2 {
+            color: #4f46e5;
+            margin-bottom: 10px;
+        }
+
+        p {
+            color: #555;
+            margin-bottom: 15px;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 16px;
+            margin-bottom: 15px;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        #verifyBtn {
+            background: #4f46e5;
+            color: white;
+        }
+
+        #verifyBtn:hover {
+            background: #4338ca;
+        }
+
+        #resendBtn {
+            margin-top: 12px;
+            background: #16a34a;
+            color: white;
+        }
+
+        #resendBtn:hover {
+            background: #15803d;
+        }
+
+        #resendBtn:disabled {
+            background: #bdbdbd;
+            cursor: not-allowed;
+        }
+
+        .error {
+            color: red;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .success {
+            color: green;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .timer {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #dc2626;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div class="card">
+
+        <h2>Email Verification</h2>
+
+        <p>Enter the OTP sent to your email.</p>
+
+        <p class="error" th:text="${error}"></p>
+
+        <p class="success" th:text="${success}"></p>
+
+        <form action="/verify-otp" method="post">
+
+            <input type="text" name="otp" placeholder="Enter 6-digit OTP" required>
+
+            <button id="verifyBtn" type="submit">
+                Verify OTP
+            </button>
+
+        </form>
+
+        <form action="/resend-otp" method="post">
+
+            <button id="resendBtn" type="submit" disabled>
+                Resend OTP
+            </button>
+
+        </form>
+
+        <div class="timer">
+            OTP expires in <span id="countdown">60</span> seconds
+        </div>
+
+    </div>
+
+    <script>
+
+        let time = 60;
+
+        const countdown = document.getElementById("countdown");
+        const verifyBtn = document.getElementById("verifyBtn");
+        const resendBtn = document.getElementById("resendBtn");
+
+        const timer = setInterval(function () {
+
+            time--;
+
+            countdown.innerText = time;
+
+            if (time <= 0) {
+
+                clearInterval(timer);
+
+                countdown.innerText = "Expired";
+
+                verifyBtn.disabled = true;
+                verifyBtn.innerText = "OTP Expired";
+                verifyBtn.style.background = "gray";
+
+                resendBtn.disabled = false;
+            }
+
+        }, 1000);
+
+    </script>
+
+</body>
+
+</html> -->
+
+
+
+
+
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Verify Email | EventSphere</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600&display=swap"
+        rel="stylesheet">
+
+    <style>
+        :root {
+            --indigo: #4f46e5;
+            --indigo-dark: #4338ca;
+            --indigo-light: #eef0fe;
+            --green: #16a34a;
+            --green-dark: #15803d;
+            --red: #dc2626;
+            --ink: #1e2233;
+            --muted: #6b7280;
+            --border: #e2e5f1;
+            --bg-top: #eef1fb;
+            --bg-bottom: #e2e7f7;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: radial-gradient(circle at top, var(--bg-top), var(--bg-bottom));
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 24px;
+        }
+
+        .card {
+            width: 420px;
+            max-width: 100%;
+            background: #ffffff;
+            padding: 40px 36px 32px;
+            border-radius: 20px;
+            box-shadow: 0 20px 50px rgba(30, 34, 51, 0.10), 0 2px 6px rgba(30, 34, 51, 0.06);
+            text-align: center;
+        }
+
+        .icon {
+            width: 56px;
+            height: 56px;
+            margin: 0 auto 20px;
+            border-radius: 14px;
+            background: var(--indigo-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .icon svg {
+            width: 26px;
+            height: 26px;
+        }
+
+        h2 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 700;
+            font-size: 22px;
+            color: var(--ink);
+            margin-bottom: 8px;
+            letter-spacing: -0.01em;
+        }
+
+        p.subtitle {
+            color: var(--muted);
+            font-size: 14.5px;
+            line-height: 1.5;
+            margin-bottom: 26px;
+        }
+
+        p.subtitle span {
+            color: var(--ink);
+            font-weight: 600;
+        }
+
+        .error,
+        .success {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 14px;
+            border-radius: 10px;
+            padding: 10px 12px;
+        }
+
+        .error:not(:empty) {
+            color: #b91c1c;
+            background: #fef2f2;
+        }
+
+        .success:not(:empty) {
+            color: #166534;
+            background: #f0fdf4;
+        }
+
+        .otp-row {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 26px;
+        }
+
+        .otp-box {
+            width: 48px;
+            height: 56px;
+            border: 1.5px solid var(--border);
+            border-radius: 12px;
+            text-align: center;
+            font-size: 22px;
+            font-weight: 700;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            color: var(--ink);
+            background: #fafbff;
+            transition: border-color 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+        }
+
+        .otp-box:focus {
+            outline: none;
+            border-color: var(--indigo);
+            background: #ffffff;
+            box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.12);
+        }
+
+        .otp-box.filled {
+            border-color: var(--indigo);
+            background: #ffffff;
+        }
+
+        button {
+            width: 100%;
+            padding: 13px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: 700;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            transition: background 0.15s ease, transform 0.05s ease;
+        }
+
+        button:active {
+            transform: scale(0.99);
+        }
+
+        #verifyBtn {
+            background: var(--indigo);
+            color: white;
+        }
+
+        #verifyBtn:hover:not(:disabled) {
+            background: var(--indigo-dark);
+        }
+
+        #verifyBtn:disabled {
+            background: #c7cbe0;
+            cursor: not-allowed;
+        }
+
+        .resend-form {
+            margin-top: 14px;
+        }
+
+        #resendBtn {
+            background: none;
+            color: var(--green);
+            border: 1.5px solid #d6ecdd;
+        }
+
+        #resendBtn:hover:not(:disabled) {
+            background: #f0fdf4;
+            border-color: var(--green);
+        }
+
+        #resendBtn:disabled {
+            color: #9ca3af;
+            border-color: var(--border);
+            cursor: not-allowed;
+        }
+
+        .timer-row {
+            margin-top: 22px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-size: 13.5px;
+            color: var(--muted);
+        }
+
+        #countdown {
+            font-weight: 700;
+            color: var(--red);
+            font-variant-numeric: tabular-nums;
+        }
+
+        @media (max-width: 420px) {
+            .otp-box {
+                width: 42px;
+                height: 50px;
+                font-size: 20px;
+            }
+
+            .card {
+                padding: 32px 20px 26px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="card">
+
+        <div class="icon">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M3 7L11.03 12.7C11.6204 13.11 12.3796 13.11 12.97 12.7L21 7" stroke="#4f46e5"
+                    stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+                <rect x="3" y="5" width="18" height="14" rx="2.5" stroke="#4f46e5" stroke-width="1.8" />
+            </svg>
+        </div>
+
+        <h2>Verify your email</h2>
+        <p class="subtitle">We've sent a 6-digit code to <span th:text="${email}">your email</span>. Enter it below to
+            continue.</p>
+
+        <p class="error" th:text="${error}"></p>
+        <p class="success" th:text="${success}"></p>
+
+        <form id="otpForm" action="/verify-otp" method="post">
+
+            <div class="otp-row">
+                <input class="otp-box" type="text" inputmode="numeric" maxlength="1" autocomplete="one-time-code">
+                <input class="otp-box" type="text" inputmode="numeric" maxlength="1">
+                <input class="otp-box" type="text" inputmode="numeric" maxlength="1">
+                <input class="otp-box" type="text" inputmode="numeric" maxlength="1">
+                <input class="otp-box" type="text" inputmode="numeric" maxlength="1">
+                <input class="otp-box" type="text" inputmode="numeric" maxlength="1">
+            </div>
+
+            <input type="hidden" name="otp" id="otpValue" required>
+
+            <button id="verifyBtn" type="submit">Verify code</button>
+
+        </form>
+
+        <form class="resend-form" action="/resend-otp" method="post">
+            <button id="resendBtn" type="submit" disabled>Resend code</button>
+        </form>
+
+        <div class="timer-row">
+            <span>Code expires in <span id="countdown">60</span>s</span>
+        </div>
+
+    </div>
+
+    <script>
+        // --- OTP box behavior ---
+        const boxes = Array.from(document.querySelectorAll(".otp-box"));
+        const otpValue = document.getElementById("otpValue");
+        const otpForm = document.getElementById("otpForm");
+
+        function syncValue() {
+            otpValue.value = boxes.map(b => b.value).join("");
+        }
+
+        boxes.forEach((box, i) => {
+            box.addEventListener("input", () => {
+                box.value = box.value.replace(/[^0-9]/g, "").slice(0, 1);
+                box.classList.toggle("filled", box.value !== "");
+                if (box.value && i < boxes.length - 1) {
+                    boxes[i + 1].focus();
+                }
+                syncValue();
+            });
+
+            box.addEventListener("keydown", (e) => {
+                if (e.key === "Backspace" && !box.value && i > 0) {
+                    boxes[i - 1].focus();
+                }
+            });
+
+            box.addEventListener("paste", (e) => {
+                e.preventDefault();
+                const digits = (e.clipboardData.getData("text") || "").replace(/[^0-9]/g, "").split("");
+                boxes.forEach((b, idx) => {
+                    b.value = digits[idx] || "";
+                    b.classList.toggle("filled", b.value !== "");
+                });
+                syncValue();
+                const nextEmpty = boxes.find(b => !b.value);
+                (nextEmpty || boxes[boxes.length - 1]).focus();
+            });
+        });
+
+        otpForm.addEventListener("submit", syncValue);
+        boxes[0].focus();
+
+        // --- Countdown behavior ---
+        let time = 60;
+
+        const countdown = document.getElementById("countdown");
+        const verifyBtn = document.getElementById("verifyBtn");
+        const resendBtn = document.getElementById("resendBtn");
+
+        const timer = setInterval(function () {
+            time--;
+            countdown.innerText = time;
+
+            if (time <= 0) {
+                clearInterval(timer);
+                countdown.innerText = "0";
+
+                verifyBtn.disabled = true;
+                verifyBtn.innerText = "Code expired";
+
+                resendBtn.disabled = false;
+                boxes.forEach(b => b.disabled = true);
+            }
+        }, 1000);
+    </script>
+
+</body>
+
+</html>

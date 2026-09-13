@@ -5,6 +5,7 @@ import com.eventsphere.entity.Event;
 import com.eventsphere.entity.Registration;
 
 import com.eventsphere.repository.StudentRepository;
+import com.eventsphere.service.EmailService;
 import com.eventsphere.repository.RegistrationRepository;
 import com.eventsphere.repository.EventRepository;
 
@@ -13,6 +14,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 import com.eventsphere.repository.CertificateRepository;
 import com.eventsphere.entity.Certificate;
 
@@ -28,17 +31,20 @@ public class StudentPageController {
         private final RegistrationRepository registrationRepository;
         private final EventRepository eventRepository;
         private final CertificateRepository certificateRepository;
+        private final EmailService emailService;
 
         public StudentPageController(
                         StudentRepository studentRepository,
                         EventRepository eventRepository,
                         RegistrationRepository registrationRepository,
-                        CertificateRepository certificateRepository) {
+                        CertificateRepository certificateRepository,
+                        EmailService emailService) {
 
                 this.studentRepository = studentRepository;
                 this.eventRepository = eventRepository;
                 this.registrationRepository = registrationRepository;
                 this.certificateRepository = certificateRepository;
+                this.emailService = emailService;
         }
 
         @GetMapping("/students-page")
@@ -55,12 +61,136 @@ public class StudentPageController {
                 return "signup";
         }
 
+
         @PostMapping("/signup")
-        public String signup(Student student) {
+        public String signup(Student student, Model model, HttpSession session) {
+
+                Student existingStudent = studentRepository.findByEmail(student.getEmail());
+
+                if (existingStudent != null) {
+                        model.addAttribute("signupError", "Email is already registered. Please login.");
+                        return "signup";
+                }
+
+                // Generate 6-digit OTP
+                int otp = 100000 + (int) (Math.random() * 900000);
+
+                // Store student details and OTP in session
+                session.setAttribute("pendingStudent", student);
+                session.setAttribute("otp", String.valueOf(otp));
+                session.setAttribute("otpTime", System.currentTimeMillis());
+
+                try {
+
+                        System.out.println("=====================================");
+                        System.out.println("Sending OTP to: " + student.getEmail());
+                        System.out.println("Generated OTP: " + otp);
+
+                        emailService.sendEmail(
+                                        student.getEmail(),
+                                        "EventSphere Email Verification",
+                                        "Your OTP for EventSphere registration is: " + otp);
+
+                        System.out.println("OTP email sent successfully.");
+                        System.out.println("=====================================");
+
+                } catch (Exception e) {
+
+                        e.printStackTrace();
+
+                        model.addAttribute("signupError", "Failed to send OTP. Please try again.");
+                        return "signup";
+                }
+
+                return "redirect:/verify-otp";
+        }
+
+
+        @GetMapping("/verify-otp")
+        public String verifyOtpPage(Model model) {
+
+                model.addAttribute("otpDuration", 60);
+
+                return "verify-otp";
+        }
+
+        @PostMapping("/verify-otp")
+        public String verifyOtp(
+                        @RequestParam String otp,
+                        HttpSession session,
+                        Model model) {
+
+                String sessionOtp = (String) session.getAttribute("otp");
+                Student student = (Student) session.getAttribute("pendingStudent");
+                Long otpTime = (Long) session.getAttribute("otpTime");
+
+                if (sessionOtp == null || student == null || otpTime == null) {
+                        return "redirect:/signup";
+                }
+
+                long currentTime = System.currentTimeMillis();
+
+                // OTP valid for 60 seconds
+                if (currentTime - otpTime > 60000) {
+
+                        session.removeAttribute("otp");
+                        session.removeAttribute("otpTime");
+                        session.removeAttribute("pendingStudent");
+
+                        model.addAttribute("error", "OTP has expired. Please register again.");
+
+                        return "verify-otp";
+                }
+                if (!sessionOtp.equals(otp)) {
+
+                        model.addAttribute("error", "Invalid OTP");
+
+                        return "verify-otp";
+                }
+
+                student.setEmailVerified(true);
 
                 studentRepository.save(student);
 
+                session.removeAttribute("otp");
+                session.removeAttribute("otpTime");
+                session.removeAttribute("pendingStudent");
+
                 return "redirect:/login";
+        }
+
+        @PostMapping("/resend-otp")
+        public String resendOtp(HttpSession session, Model model) {
+
+                Student student = (Student) session.getAttribute("pendingStudent");
+
+                if (student == null) {
+                        return "redirect:/signup";
+                }
+
+                // Generate new OTP
+                int otp = 100000 + (int) (Math.random() * 900000);
+
+                // Save new OTP and new time
+                session.setAttribute("otp", String.valueOf(otp));
+                session.setAttribute("otpTime", System.currentTimeMillis());
+
+                try {
+
+                        emailService.sendEmail(
+                                        student.getEmail(),
+                                        "EventSphere Email Verification",
+                                        "Your new OTP is: " + otp);
+
+                        model.addAttribute("success", "A new OTP has been sent to your email.");
+
+                } catch (Exception e) {
+
+                        model.addAttribute("error", "Failed to resend OTP.");
+
+                }
+
+                return "verify-otp";
         }
 
         @GetMapping("/login")
@@ -93,6 +223,11 @@ public class StudentPageController {
 
                 return "redirect:/dashboard";
         }
+
+        // @GetMapping("/verify-otp")
+        // public String verifyOtpPage() {
+        // return "verify-otp";
+        // }
 
         @GetMapping("/dashboard")
         public String dashboard(
@@ -273,4 +408,18 @@ public class StudentPageController {
 
                 return "certificate-details";
         }
+
+        @GetMapping("/search-students")
+        public String searchStudents(@RequestParam("keyword") String keyword,
+                        Model model) {
+
+                List<Student> students = studentRepository
+                                .findByNameContainingIgnoreCaseOrEmailContainingIgnoreCaseOrDepartmentContainingIgnoreCase(
+                                                keyword, keyword, keyword);
+
+                model.addAttribute("students", students);
+
+                return "students";
+        }
+
 }
