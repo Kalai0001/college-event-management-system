@@ -1,9 +1,11 @@
+
 package com.eventsphere.controller;
 
 import com.eventsphere.repository.CertificateRepository;
 import com.eventsphere.repository.EventRepository;
 import com.eventsphere.repository.RegistrationRepository;
 import com.eventsphere.repository.StudentRepository;
+import com.eventsphere.entity.Event;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,7 +14,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.LinkedHashMap;
-import com.eventsphere.entity.Event;
 import java.util.List;
 
 @Controller
@@ -61,7 +62,9 @@ public class AdminController {
         long events = eventRepository.count();
         long registrations = registrationRepository.count();
         long certificates = certificateRepository.count();
-        long registeredStudentsCount = registrationRepository.countDistinctStudentsWithRegistration();
+        long registeredStudentsCount =
+                registrationRepository.countDistinctStudentsWithRegistration();
+
         long pendingCertificates = registeredStudentsCount - certificates;
 
         if (pendingCertificates < 0) {
@@ -78,24 +81,23 @@ public class AdminController {
         model.addAttribute("registrations", registrations);
         model.addAttribute("registeredStudentsCount", registeredStudentsCount);
         model.addAttribute("certificates", certificates);
-
         model.addAttribute("upcomingEventsCount", upcomingEventsCount);
         model.addAttribute("completedEventsCount", completedEventsCount);
 
-        // Registration Trend
         LinkedHashMap<String, Integer> monthlyRegistrations = new LinkedHashMap<>();
 
         for (Object[] row : registrationRepository.getMonthlyRegistrations()) {
-            monthlyRegistrations.put((String) row[0], ((Number) row[1]).intValue());
+            monthlyRegistrations.put(
+                    (String) row[0], ((Number) row[1]).intValue());
         }
 
         model.addAttribute("monthlyRegistrations", monthlyRegistrations);
 
-        // Certificate Trend
         LinkedHashMap<String, Integer> monthlyCertificates = new LinkedHashMap<>();
 
         for (Object[] row : certificateRepository.getMonthlyCertificates()) {
-            monthlyCertificates.put((String) row[0], ((Number) row[1]).intValue());
+            monthlyCertificates.put(
+                    (String) row[0], ((Number) row[1]).intValue());
         }
 
         model.addAttribute("monthlyCertificates", monthlyCertificates);
@@ -107,9 +109,13 @@ public class AdminController {
     public String eventSchedule(Model model) {
 
         List<Event> schedule = eventRepository.findAllByOrderByDateAscTimeAsc();
-
         model.addAttribute("schedule", schedule);
 
         return "event-schedule";
+    }
+
+    @GetMapping("/logout")
+    public String logout() {
+        return "redirect:/admin-login";
     }
 }
